@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InlaksIB", "InlaksIB\InlaksIB.csproj", "{B1EEC126-3ECE-40FB-87A4-FD9B9B8252C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackBone", "..\CLirecApp\BackBone\BackBone.csproj", "{5CA8C767-07D3-4FCF-BF87-6608395DAEEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackBone", "BackBone\BackBone.csproj", "{5CA8C767-07D3-4FCF-BF87-6608395DAEEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
