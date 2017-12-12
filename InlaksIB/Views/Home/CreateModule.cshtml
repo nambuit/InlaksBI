@@ -1,0 +1,147 @@
+﻿@model InlaksIB.Module
+
+@{
+    ViewBag.Title = "CreateModule";
+    Layout = "~/Views/Home/HomeLayout.cshtml";
+}
+
+
+<div class="col-md-9">
+
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">Module Setup</div>
+        </div>
+        <div class="panel-body">
+            @{     <div class="form-group">
+                    <label class="control-label" style="color:@ViewBag.errorclass" for="RoleID">@ViewBag.message</label>
+                </div>
+                            var mode = (string)ViewBag.mode;
+                            if ( mode == "edit")
+                            {
+                                Html.RenderPartial("EditModule", Model);
+                            }
+                            else
+                            if (mode == "delete")
+                            {
+                                Html.RenderPartial("DeleteModule", Model);
+                            }
+                            else
+                            {
+                                
+                                using (Html.BeginForm("ProcessModule", "home", new { mode = "create" , id=0}, FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    var industries = new InlaksBIContext().Industries.AsEnumerable();
+                                    var listItems = new List<SelectListItem>();
+
+                                    foreach (var industry in industries)
+                                    {
+                                        listItems.Add(new SelectListItem { Text = industry.IndustryName, Value = industry.IndustryID.ToString() });
+                                    }
+
+
+
+
+                        <div class="form-horizontal" style="width:60%;">
+
+
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ModuleName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ModuleName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ModuleName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.value, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.value, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.value, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.IndustryID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+
+                                    @Html.DropDownListFor(model => model.IndustryID, listItems, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.IndustryID, "", new { @class = "text-danger" })
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+            }
+            @{ var modules = new InlaksBIContext().Modules.ToList();
+               // Html.RenderPartial("ListModules", modules);
+            }
+        </div>
+    </div>
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">Modules</div>
+        </div>
+        <div class="panel-body">
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="migtable">
+                <thead>
+
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ModuleName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.value)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Industry.IndustryName)
+                        </th>
+
+
+                        <th></th>
+                </thead>
+                <tbody>
+                    @foreach (var item in modules)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModuleName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Industry.IndustryName)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit", "ModuleSetup", new { id = item.ModuleID, mode = "edit" }) |
+                                @Html.ActionLink("Delete", "ModuleSetup", new { id = item.ModuleID, mode = "delete" })
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    </div>
+
+

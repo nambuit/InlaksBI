@@ -1,0 +1,81 @@
+﻿@model ResourceReport
+
+
+@Html.AntiForgeryToken()
+@{
+    var modules = new InlaksBIContext().Modules.AsEnumerable();
+    var listItems = new List<SelectListItem>();
+    var list = new List<SelectListItem>();
+    listItems.Add(new SelectListItem { Text = "Select Module", Selected = true, Value = "null" });
+    foreach (var module in modules)
+    {
+        listItems.Add(new SelectListItem { Text = module.ModuleName, Value = module.ModuleID.ToString() });
+    }
+
+
+    <div class="form-horizontal" style="width:65%; ">
+        <h4>Design Report</h4>
+        <hr />
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModuleID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.DropDownListFor(model => model.ModuleID, listItems, htmlAttributes: new { @class = "form-control select2", @onchange = "showresources(this)", @id = "module" })
+                @Html.ValidationMessageFor(model => model.ModuleID, "", new { @class = "text-danger" })
+            </div>
+
+
+
+        </div>
+
+
+        <div id="datasetlist" class="form-group">
+            @Html.LabelFor(model => model.dataSet, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                <select name="dataSet" id="dataset" class="form-control" onchange="showColumns(this)"></select>
+            </div>
+        </div>
+
+        <div id="resourcelist" class="form-group">
+            @Html.LabelFor(model => model.Resource.ResourceName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Resource.ResourceID, list, htmlAttributes: new { @class = "form-control select2", @id = "resource" })
+                @Html.ValidationMessageFor(model => model.Resource.ResourceID, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div id="columnlist" class="form-group">
+            @Html.LabelFor(model => model.Filters, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div style="overflow:auto; max-height:200px;" class="col-md-10">
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Include</th><th>Column Name</th><th>Operation</th><th>Column Value</th></tr>
+                    </thead>
+
+                    <tbody id="columns"></tbody>
+
+                </table>
+
+
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="submit" type="submit" value="LoadReport" onclick="processSubmit(this)" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+    
+    
+   
+
+            }
+ 

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<ResourceReport>
+
+@{
+    ViewBag.Title = "Setup Resources";
+    Layout = "~/Views/Home/HomeLayout.cshtml";
+}
+<div class="col-md-9">
+
+    <div id="reportview" class="content-box-large">
+        <div class="panel-heading">
+
+        </div>
+        <div class="panel-body" style="min-height:400px;">
+            <div id="buildoutput" style="width:920px; max-height:500px; overflow:auto"></div>
+            
+
+
+            <div id="finalcontrols" class="form-group" style="padding-top:4px;">
+
+                <input id="commit" type="submit" value="Publish Report" onclick="processReport()" class="btn btn-primary" />
+            </div>
+
+
+        </div>
+    </div>
+    <div class="content-box-large">
+ 
+        <div class="panel-body">
+
+
+
+
+            @{
+                var mode = (string)ViewBag.Mode;
+
+                if (string.IsNullOrEmpty(mode))
+                {
+                    <p>
+                        @Html.ActionLink("Create New", "ResourceSetup", new { id = 0, mode = "create" })
+                    </p>
+                }
+                else
+                {
+                    var resourcereport = (ResourceReport)ViewBag.ResourceReport;
+
+                    Html.RenderPartial(mode, resourcereport);
+                }
+
+            }
+
+            </div>
+    </div>
+
+
+
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">Reports</div>
+        </div>
+        <div class="panel-body">
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="migtable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Resource.ResourceName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.dataSet)
+                        </th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+            {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Resource.ResourceName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dataSet)
+                            </td>
+
+                 
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+ 
+
+    </div>

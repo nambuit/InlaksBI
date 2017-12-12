@@ -1,0 +1,116 @@
+﻿@model InlaksIB.User
+
+@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Views/Home/HomeLayout.cshtml";
+}
+
+
+<div class="col-md-9">
+
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">User Setup</div>
+        </div>
+        <div class="panel-body">
+            @{     <div class="form-group">
+                    <label class="control-label" style="color:@Model.errorclass" for="RoleID">@Model.Message</label>
+                </div>
+                var mode = (string)ViewBag.mode;
+                if (!string.IsNullOrEmpty(mode) && mode == "edit")
+                {
+                    Html.RenderPartial("EditUser", Model);
+                }
+                else
+                {
+
+                    using (Html.BeginForm("ProcessUser", "home", new { mode = "create" }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        var roles = new InlaksBIContext().Roles.AsEnumerable();
+                        var listItems = new List<SelectListItem>();
+
+                        foreach (var role in roles)
+                        {
+                            listItems.Add(new SelectListItem { Text = role.RoleName,   Value = role.RoleID.ToString() });
+                        }
+
+
+
+
+                        <div class="form-horizontal" style="width:60%;">
+
+
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger", })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.RePassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(model => model.RePassword, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.RoleID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+
+                                    @Html.DropDownListFor(model => model.RoleID, listItems, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+            }
+            @{ var users = new InlaksBIContext().Users.Where(u=>u.UserID!="admin");
+                Html.RenderPartial("ListUsers", users);
+            }
+        </div>
+    </div>
+    </div>
+
+

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<InlaksIB.Role>
+
+@{
+    ViewBag.Title = "RoleSetup";
+    Layout = "~/Views/Home/HomeLayout.cshtml";
+}
+
+<div class="col-md-9">
+
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">Role Setup</div>
+        </div>
+        <div class="panel-body">
+
+
+
+
+            @{
+                var mode = (string)ViewBag.Mode;
+
+                if (string.IsNullOrEmpty(mode))
+                {
+                    <p>
+                        @Html.ActionLink("Create New", "RoleSetup", new { id = 0, mode = "create" })
+                    </p>
+                }
+                else
+                {
+                    var role = (Role)ViewBag.role;
+
+                    Html.RenderPartial(mode, role);
+                }
+
+            }
+
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RoleName)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoleName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "RoleSetup", new { id = item.RoleID,mode="edit" }) |
+                            @Html.ActionLink("Delete", "RoleSetup", new { id = item.RoleID, mode="delete" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+</div>
+</div>
+</div>

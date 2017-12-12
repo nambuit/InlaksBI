@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Login/Login_LayoutPage.cshtml";
+
+
+}
+
+@model User
+<div class="page-content  row">
+
+    
+      
+
+
+        
+        <div class="login-wrapper col-md-3 col-md-offset-5" style="padding-top:10%">
+            <div class="box">
+                <div class="content-wrap">
+                    <h6>Sign In</h6>
+
+                    @using (Html.BeginForm("Authenticate", "Login", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken();
+
+                        <div class="form-group @Model.errorclass">
+                            @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group @Model.errorclass">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                            @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                            <label class="control-label" for="Password">@Model.Message</label>
+                        </div>
+                                <div class="action">
+                                    <input type="submit" class="btn btn-primary" value="Sign in">
+                                </div>
+                    }
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+   
+
+        </div>
+  

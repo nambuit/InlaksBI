@@ -1,0 +1,285 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inlaks BI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <style>
+        body {
+            font-family: Verdana;
+        }
+    </style>
+    <!-- optional: mobile support with jqueryui-touch-punch -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+
+
+    <link href="~/css/core/jquery-ui.css" rel="stylesheet" />
+    <!-- Bootstrap -->
+    <link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- styles -->
+    <link href="~/css/styles.css" rel="stylesheet">
+   
+
+    <link href="~/vendors/form-helpers/css/bootstrap-formhelpers.min.css" rel="stylesheet">
+    <link href="~/vendors/select/bootstrap-select.min.css" rel="stylesheet">
+    <link href="~/vendors/tags/css/bootstrap-tags.css" rel="stylesheet">
+    <link href="~/css/databale-css.css" rel="stylesheet" />
+    <link href="~/css/forms.css" rel="stylesheet"> 
+
+</head>
+<body>
+
+    @{ 
+        var db = new InlaksBIContext();
+
+        var rand = new Random();
+
+
+        var model = db.Industries.ToList(); var user = (User)Session["User"];
+
+        var userole = user.UserRole;
+
+        var userresources = db.RolesResources.Where(r => r.Role.RoleID == userole.RoleID).ToList();
+        bool isAdmin = user.UserRole.RoleID == 1;
+        }
+    <div class="header">
+        <div class="container"  >
+            <div class="row"> 
+                <div class="col-md-5">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <h1><a href="~/home/Index">Inlaks BI</a></h1>
+                    </div>
+                </div>
+                <div class="col-md-5">
+
+                    <div class="navbar navbar-inverse" role="banner">
+                        <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+                            <ul class="nav navbar-nav">
+                                @if (isAdmin)
+                                {
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<b class="caret"></b></a>
+
+                                        <ul class="dropdown-menu animated fadeInUp">
+                                            <li>
+                                                <a href="~/Home/UserSetup/0?mode=create">User Setup</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="~/Home/AuthenticationSetup">Authentication Setup</a>
+                                            </li>
+
+                                            
+                                          
+                                            <li>
+                                                <a href="~/Home/RoleSetup/0?mode=list">Role Setup</a>
+                                            </li>
+                                            <li>
+                                                <a href="~/Home/ResourceSetup/0?mode=list">Resource Setup</a>
+                                            </li>
+                                            <li>
+                                                <a href="~/Home/RolesResources">Roles Resources Setup</a>
+                                            </li>
+                                            <li>
+                                                <a href="~/Home/ModuleSetup/0?mode=create">Module Setup</a>
+                                            </li>
+                                            <li>
+                                                <a href="~/Home/MigrationSetup/0?mode=list">Migration Setup</a>
+                                            </li>
+                                            <li>
+                                                <a href="~/Home/ReportSetup/0?mode=create">Report Setup</a>
+                                            </li>
+                                        </ul>
+
+
+
+                                    </li>
+
+                                }
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">@user.Name <b class="caret"></b></a>
+                                    <ul class="dropdown-menu animated fadeInUp">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                        <li><a href="~/Home/Logout"> Log Out</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-md-3" style="max-height:490px; overflow:auto">
+                <div class="sidebar content-box" style="display: block;">
+                    <ul class="nav">
+                        <!-- Main menu -->
+                        @foreach (var industry in model)
+                        {
+                            try
+                            {
+                                foreach (var module in industry.Modules.OrderBy(m=>m.ModuleName.Trim()))
+                                {
+
+                                    if ((userresources.FirstOrDefault(r => r.Resource.Module.ModuleID == module.ModuleID) != null) || isAdmin)
+                                    {
+                                        var assignedmenuresources = new List<Resource>();
+                                        foreach (var rres in userresources)
+                                        {
+                                            var res = module.Resources.FirstOrDefault(r => r.ResourceID == rres.Resource.ResourceID);
+                                            if (res != null)
+                                            {
+                                                assignedmenuresources.Add(res);
+                                            }
+                                        }
+                                        var availableResources = isAdmin ? module.Resources : assignedmenuresources;
+
+                            <li class="submenu">
+                                <a href="#"><i class="@module.IconClass"></i> @module.ModuleName <span class="caret pull-right"></span></a>
+
+                                
+
+                                @if (availableResources.Count > 0)
+                                {
+                                    <ul id="@module.value">
+
+                                        @foreach (var menu in availableResources.OrderBy(r=>r.ResourceName).ToList())
+                                        {
+                                            <li>
+                                               
+                                                @Html.ActionLink(menu.ResourceName, "ReportLauncher/"+menu.ResourceID, "Home")
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+
+                                    }
+                                }           
+                            }
+                            catch(Exception e)
+                            {
+
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+            <div style="max-height:550px;">
+            @RenderBody()
+<input type="hidden" value="@user.UserRole.RoleID" />
+<input type="hidden" value="@user.UserID" />
+              </div>
+
+        </div>
+        <input id="baseurl" value="~/" type="hidden" />
+       
+        
+    </div>
+   
+    <footer>
+        <div class="container">
+
+            <div class="copy text-center">
+                Copyright 2017 <a href='http://www.inlaks.com'>Inlaks Limited</a>
+            </div>
+
+        </div>
+    </footer>
+
+
+    <script src="~/js/jquery.js"></script>
+    <!-- jQuery UI -->
+    @*<script src="~/js/core/jquery-ui.js"></script>*@
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/js/core/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/vendors/form-helpers/js/bootstrap-formhelpers.min.js"></script>
+
+    <script src="~/vendors/select/bootstrap-select.min.js"></script>
+
+    <script src="~/vendors/tags/js/bootstrap-tags.min.js"></script>
+
+    <script src="~/vendors/mask/jquery.maskedinput.min.js"></script>
+
+    <script src="~/vendors/moment/moment.min.js"></script>
+
+    <script src="~/vendors/wizard/jquery.bootstrap.wizard.min.js"></script>
+
+    <link href="~/css/core/jquery-confirm.min.css" rel="stylesheet" />
+    <script src="~/js/core/jquery-confirm.min.js"></script>
+    <script src="~/vendors/jquery.knob.js"></script>
+    <script src="~/vendors/raphael-min.js"></script>
+    <script src="~/vendors/morris/morris.min.js"></script>
+
+    <script src="~/vendors/flot/jquery.flot.js"></script>
+    <script src="~/vendors/flot/jquery.flot.categories.js"></script>
+    <script src="~/vendors/flot/jquery.flot.pie.js"></script>
+    <script src="~/vendors/flot/jquery.flot.time.js"></script>
+    <script src="~/vendors/flot/jquery.flot.stack.js"></script>
+    <script src="~/vendors/flot/jquery.flot.resize.js"></script>
+
+
+
+
+
+
+    <!-- PivotTable.js libs from ../dist -->
+    <link href="~/dist/c3core.css" rel="stylesheet" />
+    <script src="~/dist/d3core.js"></script>
+    <script src="~/js/punch.min.js"></script>
+    <script src="~/dist/c3core1.js"></script>
+    <script src="~/js/Gformat.js"></script>
+    <link href="~/js/Gcontrols.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/dist/pivot.css">
+    <script type="text/javascript" src="~/dist/pivot.js"></script>
+    <script src="~/dist/export_renderers.js"></script>
+    <script src="~/dist/d3_renderers.js"></script>
+    <script src="~/dist/c3_renderers.js"></script>
+    <script src="~/dist/gchart_renderers.js"></script>
+    <script src="~/dist/subtotal.js"></script>
+    <link href="~/dist/subtotal.css" rel="stylesheet" />
+   
+   
+    
+    
+  
+   
+   
+
+
+   
+
+
+    <!-- bootstrap-datetimepicker -->
+    <script src="~/js/loadingoverlay.min.js"></script>
+  
+    <link href="~/vendors/bootstrap-datetimepicker/datetimepicker.css" rel="stylesheet">
+    <script src="~/vendors/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script src="~/js/jquery-dataTable.js"></script>
+    <script src="~/js/bootstrap-datatable.js"></script>
+    <script src="~/js/jquery.validate.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/core/tableExport.js"></script>
+    <script src="~/js/core/base64.js"></script>`
+    <script src="~/js/core/sprintf.js"></script>
+    <script src="~/js/core/jspdf.js"></script>
+    <script src="~/js/core/jquery.base64.js"></script>
+    <script src="~/js/core/html2canvas.js"></script>
+    <script src="~/js/custom.js"></script>
+    <script src="~/js/forms.js"></script>
+
+    <script src="~/js/core/Reportscripts.js?a=@rand.Next(0, 999999999)"></script>
+    <script src="~/js/homehandler.js"></script>
+
+</body>
+</html>

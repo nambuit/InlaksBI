@@ -1,0 +1,124 @@
+﻿@model IEnumerable<InlaksIB.Migration_Schedule>
+
+@{
+    ViewBag.Title = "Setup Migration";
+    Layout = "~/Views/Home/HomeLayout.cshtml";
+}
+<div class="col-md-9">
+
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">Migration Setup</div>
+        </div>
+        <div class="panel-body">
+
+
+
+
+            @{
+                var mode = (string)ViewBag.Mode;
+
+                if (string.IsNullOrEmpty(mode))
+                {
+                    <p>
+                        @Html.ActionLink("Create New", "MigrationSetup", new { id = 0, mode = "create" })
+                    </p>
+                }
+                else
+                {
+                    var schedule = (Migration_Schedule)ViewBag.schedule;
+
+                    Html.RenderPartial(mode, schedule);
+                }
+
+            }
+          
+      
+           
+
+
+
+        
+    
+
+           
+            </div>
+        </div>
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">Migration Schedules</div>
+        </div>
+        <div class="panel-body">
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="migtable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Application_Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateFilter)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MaxDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Time)
+                        </th>
+                  
+                        <th style="width:1%;">
+                            @Html.DisplayNameFor(model => model.Interval)
+                        </thstyle="width:1%;">
+                        <th>
+                            @Html.DisplayNameFor(model => model.IntervalDescription)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AllowWeekends)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+            {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Application_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateFilter)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaxDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Time)
+                            </td>
+                     
+                            <td >
+                                @Html.DisplayFor(modelItem => item.Interval)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IntervalDescription)
+                            </td>
+                            <td>
+                                @(item.AllowWeekends ? "Yes" : "No")
+                            </td>
+                            <td>
+                                @(item.Status ? "Activated" : "Deactivated")
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "MigrationSetup", new { id = item.ID, mode = "edit" }) |
+                                @Html.ActionLink("Delete", "MigrationSetup", new { id = item.ID, mode = "delete" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    </div>

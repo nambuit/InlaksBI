@@ -1,0 +1,58 @@
+﻿@model ReportModel
+@{
+    
+    Layout = "~/Views/Home/HomeLayout.cshtml";
+}
+
+
+
+<div class="col-md-9">
+
+<div class="content-box-large">
+    <div class="panel-heading">
+        <div class="panel-title">@ViewBag.Title</div>
+    </div>
+    <div id="rptpanel" class="panel-body" style="min-height:400px;">
+        <div id="export" class="btn-group">
+            <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa"></i> Export Table Data</button>
+            <ul class="dropdown-menu " role="menu">
+               
+               
+   
+   
+   
+                <li><a href="#" onclick="$('#pvtTable').tableExport({type:'csv',escape:'false'});">
+                        <img src="~/img/csv.png" width="24" />  CSV</a></li>
+        
+               
+
+                <li><a href="#" onclick="$('#pvtTable').tableExport({ type: 'excel', escape: 'true', htmlContent: 'true' });">
+                        <img src="~/img/xls.png" width="24px" />  XLS</a></li>
+
+                <li class="divider"></li>
+                <li><a href="#" onclick="$('#pvtTable').tableExport({type:'doc',escape:'false'});">
+                        <img src="~/img/word.png" width="24px" /> Word</a></li>
+
+
+                <li><a href="#" onclick="$('#pvtTable').tableExport({type:'pdf',pdfFontSize:'7',escape:'false'});">
+                        <img src="~/img/pdf.png" width="24px"> PDF</a></li>
+
+
+            </ul>
+        </div>
+
+        <div id="output" style="width:920px; overflow:auto"></div>
+ 
+
+</div>
+    <div class="panel-body">
+    <button id="state" onclick="saveState()" class="ui-button-icon-primary"> Save State</button>
+        <button id="print" onclick="PrintElem('pvt')" class="ui-button-icon-primary">Print State</button>
+        
+    <input type="hidden" id="params" value='@(Model == null?"No":Newtonsoft.Json.JsonConvert.SerializeObject(Model))'/>
+    <input type="hidden" id="title" value="@ViewBag.Title" />
+</div>
+
+  
+</div>
+</div>

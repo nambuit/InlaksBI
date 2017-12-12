@@ -1,0 +1,59 @@
+﻿@model Module
+
+@using (Html.BeginForm("ProcessModule","home", new { mode = "edit", id=Model.ModuleID }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    var industries = new InlaksBIContext().Industries.AsEnumerable();
+    var listItems = new List<SelectListItem>();
+
+    foreach (var industry in industries)
+    {
+        listItems.Add(new SelectListItem { Text = industry.IndustryName, Value = industry.IndustryID.ToString() });
+    }
+
+
+    <div class="form-horizontal">
+        <h4>Edit Module</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModuleName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ModuleName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ModuleName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.value, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.value, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.value, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IndustryID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.DropDownListFor(model => model.IndustryID, listItems, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IndustryID, "", new { @class = "text-danger" })
+            </div>
+
+
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "ModuleSetup/create")
+</div>
