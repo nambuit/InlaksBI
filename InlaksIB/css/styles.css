@@ -26,16 +26,17 @@ footer{
 }
 
 .lg-shadow{
-    background-image: url('../img/landingpage.jpg');
+   
     height: 600px;
     width: 100%;
 }
 
 @media only screen and (min-device-height:600px)  {
 .lg-shadow{
-    background-image: url('../img/landingpage.jpg');
-    height: 789px;
+   
+    height: 600px;
     width: 100%;
+    padding-top:30px;
 }
 
 .page-content{

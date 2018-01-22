@@ -44,7 +44,7 @@ namespace InlaksIB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=debenson;database=inlaksbiwarehouse")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Host=localhost;Database=inlaksbiwarehouse;Username=inlaksbi;Password=own2morrow")]
         public string warehousedb {
             get {
                 return ((string)(this["warehousedb"]));

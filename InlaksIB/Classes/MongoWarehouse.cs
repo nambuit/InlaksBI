@@ -31,6 +31,26 @@ namespace InlaksIB
 
             return pairs;
         }
+
+        public void DeleteDataSet(string datasetname)
+        {
+            var db = new PostgreSQLDBInterface(new Settings().warehousedb);
+            db.Execute(" drop materialized view \"" + datasetname + "\"");
+        }
+
+
+        public List<ValuePair> getViewColumns(string tablename)
+        {
+            DBInterface db;
+            db = new MySQLDBInterface(new Settings().warehousedb);
+            var pairs = db.getValuePair("Field", "Extra", "show columns from " + tablename);
+
+
+
+            return pairs;
+        }
+
+
         public List<ValuePair> getDataSets(string moduleid)
         {
 
@@ -48,6 +68,18 @@ namespace InlaksIB
 
             return pairs;
         }
+
+
+        public List<ValuePair> getTables()
+        {
+
+            var pairs = new List<ValuePair>();
+
+
+            return pairs;
+        }
+
+
 
 
         public DataTable FilteredData(string dataset, List<DataSetFilter> filters)

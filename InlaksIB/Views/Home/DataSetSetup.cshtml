@@ -1,0 +1,86 @@
+﻿@model IEnumerable<DataSetDetail>
+
+@{
+    ViewBag.Title = "Create DataSet";
+    Layout = "~/Views/Home/HomeLayout.cshtml";
+}
+<div class="col-md-9">
+
+    <div class="content-box-large">
+      
+        <div class="panel-body">
+
+
+
+
+            @{
+                var mode = (string)ViewBag.Mode;
+
+                if (string.IsNullOrEmpty(mode))
+                {
+                    <p>
+                        @Html.ActionLink("Create New", "ResourceSetup", new { id = 0, mode = "create" })
+                    </p>
+                }
+                else
+                {
+                    var datasetdetails = (DataSetDetail)ViewBag.DataSetDetail;
+
+                    Html.RenderPartial(mode, datasetdetails);
+                }
+
+            }
+
+        </div>
+    </div>
+
+
+
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">DataSets</div>
+        </div>
+        <div class="panel-body">
+
+
+
+
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="migtable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Module.ModuleName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DataSetName)
+                        </th>
+                        <th></th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+            {
+                        <tr class="dsetrow">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Module.ModuleName)
+                            </td>
+                            <td class="dsetname">
+                                @Html.DisplayFor(modelItem => item.DataSetName)
+                            </td>
+                            <td>
+                                <button id="remtable" onclick="removeSet(this)" class="btn-danger">Delete</button>
+                            </td>
+                 
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+ 
+
+    </div>

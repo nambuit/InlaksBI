@@ -21,6 +21,25 @@ namespace InlaksIB
 
             return pairs;
         }
+
+        public void DeleteDataSet(string datasetname)
+        {
+            var db = new MySQLDBInterface(new Settings().warehousedb);
+            db.Execute(" drop materialized view \"" + datasetname + "\"");
+        }
+
+
+        public List<ValuePair> getViewColumns(string tablename)
+        {
+            DBInterface db;
+            db = new MySQLDBInterface(new Settings().warehousedb);
+            var pairs = db.getValuePair("Field", "Extra", "show columns from " + tablename);
+
+
+
+            return pairs;
+        }
+
         public List<ValuePair> getDataSets(string moduleid)
         {
             DBInterface db;
@@ -30,6 +49,18 @@ namespace InlaksIB
 
             return pairs;
         }
+
+
+        public List<ValuePair> getTables()
+        {
+            DBInterface db;
+            db = new MySQLDBInterface(new Settings().warehousedb);
+            db = new MySQLDBInterface(new Settings().warehousedb);
+            var pairs = db.getValuePair("table_name", "table_name", "select table_name from listviews");
+
+            return pairs;
+        }
+
 
 
         public DataTable FilteredData(string dataset, List<DataSetFilter> filters)

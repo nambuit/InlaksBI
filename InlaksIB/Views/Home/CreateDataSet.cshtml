@@ -1,0 +1,118 @@
+﻿@model DataSetDetail
+
+
+@Html.AntiForgeryToken()
+@{
+    var modules = new InlaksBIContext().Modules.AsEnumerable();
+    var listItems = new List<SelectListItem>();
+    var list = new List<SelectListItem>();
+    listItems.Add(new SelectListItem { Text = "Select Module", Selected = true, Value = "null" });
+    foreach (var module in modules)
+    {
+        listItems.Add(new SelectListItem { Text = module.ModuleName, Value = module.ModuleID.ToString() });
+    }
+
+    WarehouseInterface warehouse = new InlaksBIContext().getWarehouse("pgsql");
+
+    var tables = warehouse.getTables();
+
+
+    <div class="form-horizontal" style="width:98%; ">
+        <h4>Create Dataset</h4>
+        <hr />
+
+
+        <div class="form-group">
+           
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Module.ModuleID, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownListFor(model => model.Module.ModuleID, listItems, htmlAttributes: new { @class = "form-control select2", @onchange = "showresources(this)", @id = "module" })
+                @Html.ValidationMessageFor(model => model.Module.ModuleID, "", new { @class = "text-danger", @id = "module" })
+            </div>
+            
+            
+
+        </div>
+       
+  
+            <div class="form-group">
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.DataSetName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(model => model.DataSetName, new { htmlAttributes = new { @class = "form-control", @id = "dsetname" } })
+                    @Html.ValidationMessageFor(model => model.DataSetName, "", new { @class = "text-danger" })
+                </div>
+
+
+
+            </div>
+          
+
+
+
+
+        <div class="form-group">
+        <button id="addtable" onclick="addTable()" class="btn-success">Add Table</button>
+            </div>
+   
+        <div class="form-group tablegroup" id="group1">
+        
+            <div class="col-md-4 tselect">
+                <label for="tpick1">Table1</label>
+                <select onchange="processtable(this)" id="tpick1" class="form-control tpick select2">
+                 <option value="none">Select Table</option>
+                 @foreach(var table in tables)
+                 {
+                    <option value="@table.ID">@table.Value</option>
+                 }
+
+                </select>
+            </div>
+            <div  class="cselect col-md-4">
+                <label for="cpick1">Columns</label>
+                <select  id="cpick1" class="form-control cpick">
+                 
+
+                </select>
+            </div>
+            <div class="col-md-4 lselect" style="display:none">
+                <label for="link1">Table2 Link</label>
+                <select id="link1" class="form-control select2 link">
+                    
+                </select>
+            </div>
+
+    
+             
+            
+
+            
+            </div>
+        
+       
+        @*<div  class="form-group">
+            @Html.LabelFor(model => model.Script, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Script, htmlAttributes: new { @class = "form-control select2", @rows="12", @cols="8",@disabled="disabled" })
+       
+            </div>
+        </div>*@
+
+   
+
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-3">
+                <input id="submit" type="submit" onclick="processDataSet()" value="Save DataSet" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+    
+    
+   
+
+            }
+ 

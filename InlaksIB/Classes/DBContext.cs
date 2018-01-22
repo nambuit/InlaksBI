@@ -55,6 +55,7 @@ namespace InlaksIB
 
         public DbSet<UserReportState> UserReportStates { get; set; }
 
+        public DbSet<DataSetDetail> DataSets { get; set; }
 
         public void PopulateDefaultData()
         {
@@ -103,6 +104,9 @@ namespace InlaksIB
                     warehouse = new MongoWarehouse();
                     break;
 
+                case "pgsql":
+                    warehouse = new PostgreSqlWarehouse();
+                    break;
                 default:
                     warehouse = new MySqlWarehouse();
                     break;

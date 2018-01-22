@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,20 +18,21 @@ namespace InlaksIB.Controllers
         {
             var user = (User)context.HttpContext.Session["User"];
 
-            if(user ==null||((string)context.HttpContext.Session["LoggedIn"]) == "False"){
+            if (user == null || ((string)context.HttpContext.Session["LoggedIn"]) == "False")
+            {
 
                 context.HttpContext.Response.Redirect("~/Login");
             }
 
         }
 
-      
-        
+
+
         // GET: Home
         public ActionResult Index()
         {
-           
-        
+
+
 
             Session["Industry"] = new Properties.Settings().ActiveIndustry;
             return View();
@@ -40,7 +42,7 @@ namespace InlaksIB.Controllers
 
         public ActionResult ReportLauncher(string id)
         {
-          
+
 
             var reportid = id;//Request.QueryString.Get("id");
 
@@ -49,7 +51,7 @@ namespace InlaksIB.Controllers
             switch (reportid.Trim().ToLower())
             {
                 default:
-                    return RedirectToAction("ProcessStandard", "Report", new { id = id});
+                    return RedirectToAction("ProcessStandard", "Report", new { id = id });
             }
 
         }
@@ -70,11 +72,11 @@ namespace InlaksIB.Controllers
             {
                 case "list":
 
-                    return View("RoleSetup", new InlaksBIContext().Roles.Where(r=>r.RoleID>1));
+                    return View("RoleSetup", new InlaksBIContext().Roles.Where(r => r.RoleID > 1));
 
                 case "create":
                     ViewBag.Mode = "CreateRole";
-                    ViewBag.role = new Role(); 
+                    ViewBag.role = new Role();
                     return View("RoleSetup", new InlaksBIContext().Roles.Where(r => r.RoleID > 1));
 
                 default:
@@ -125,46 +127,47 @@ namespace InlaksIB.Controllers
 
         public ActionResult ProcessModule(Module module, int id, string mode)
         {
-            try { 
-            var dbcontext = new InlaksBIContext();
-            module.Industry = dbcontext.Industries.FirstOrDefault(i => i.IndustryID == module.IndustryID);
-                module.IconClass = "glyphicon glyphicon-list";
-            switch (mode)
+            try
             {
-                case "create":
+                var dbcontext = new InlaksBIContext();
+                module.Industry = dbcontext.Industries.FirstOrDefault(i => i.IndustryID == module.IndustryID);
+                module.IconClass = "glyphicon glyphicon-list";
+                switch (mode)
+                {
+                    case "create":
                         module.ModuleID = id;
-                    dbcontext.Modules.Add(module);
-                    dbcontext.SaveChanges();
+                        dbcontext.Modules.Add(module);
+                        dbcontext.SaveChanges();
                         ViewBag.errorclass = "green";
                         ViewBag.message = "Module Created successfully";
                         break;
-                case "edit":
-                    var old = dbcontext.Modules.FirstOrDefault(t => t.ModuleID == id);
-                    old.ModuleName = module.ModuleName;
-                    old.value = module.value;
-                    old.Industry = module.Industry;
-                    dbcontext.SaveChanges();
+                    case "edit":
+                        var old = dbcontext.Modules.FirstOrDefault(t => t.ModuleID == id);
+                        old.ModuleName = module.ModuleName;
+                        old.value = module.value;
+                        old.Industry = module.Industry;
+                        dbcontext.SaveChanges();
                         ViewBag.errorclass = "green";
                         ViewBag.message = "Module modified successfully";
                         break;
 
-                case "delete":
-                    var item = dbcontext.Modules.FirstOrDefault(t => t.ModuleID == id);
-                    dbcontext.Modules.Remove(item);
+                    case "delete":
+                        var item = dbcontext.Modules.FirstOrDefault(t => t.ModuleID == id);
+                        dbcontext.Modules.Remove(item);
 
-                    dbcontext.SaveChanges();
+                        dbcontext.SaveChanges();
                         ViewBag.message = "Module deleted successfully";
                         ViewBag.errorclass = "green";
                         break;
-                        }
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ViewBag.errorclass = "red";
                 ViewBag.message = "Operation failed. Please seek technical assistance";
             }
 
-            return RedirectToAction("ModuleSetup", new { id=0,mode="create" });
+            return RedirectToAction("ModuleSetup", new { id = 0, mode = "create" });
         }
 
 
@@ -238,6 +241,49 @@ namespace InlaksIB.Controllers
         }
 
 
+        public ActionResult DataSetSetup(string id, string mode)
+        {
+            if (mode.isNull()) mode = "create"; int ID = 0;
+            if (!id.isNull())
+            {
+                ID = id.toInt();
+            }
+            switch (mode.ToLower())
+            {
+                case "list":
+
+                    return View("DataSetSetup", new InlaksBIContext().DataSets.ToList());
+
+                case "create":
+                    ViewBag.Mode = "CreateDataSet";
+                    ViewBag.DataSetDetail = new DataSetDetail();
+                    return View("DataSetSetup", new InlaksBIContext().DataSets.ToList());
+
+                default:
+
+
+                    if (mode.Trim() == "edit")
+                    {
+                        ViewBag.Mode = "EditReport";
+                    }
+                    else
+                    {
+                        ViewBag.Mode = "DeleteReport";
+                    }
+
+                    ViewBag.DataSetDetail = new InlaksBIContext().DataSets.FirstOrDefault(t => t.ID == ID);
+                    return View("DataSetSetup", new InlaksBIContext().DataSets.ToList());
+            }
+
+        }
+
+
+
+
+
+
+
+
         public ActionResult ResourceSetup(int id, string mode)
         {
             switch (mode.ToLower())
@@ -306,14 +352,14 @@ namespace InlaksIB.Controllers
 
                 case "edit":
 
-                    
+
 
                     ViewBag.mode = "edit";
                     return View("CreateModule", module);
 
                 default:
                     ViewBag.mode = "delete";
-                    
+
                     return View("CreateModule", module);
             }
 
@@ -349,9 +395,9 @@ namespace InlaksIB.Controllers
                     old.Interval = schedule.Interval;
                     old.IntervalDescription = schedule.IntervalDescription;
                     old.AllowWeekends = schedule.AllowWeekends;
-                   
+
                     //dbcontext.MigrationSchedules.Remove(old);
-                   // dbcontext.MigrationSchedules.Add(schedule);
+                    // dbcontext.MigrationSchedules.Add(schedule);
                     dbcontext.SaveChanges();
 
                     break;
@@ -403,11 +449,11 @@ namespace InlaksIB.Controllers
 
                 return RedirectToAction("ResourceSetup", new { id = 0, mode = "list" });
             }
-            catch(Exception d)
+            catch (Exception d)
             {
                 return RedirectToAction("ResourceSetup", new { id = 0, mode = "list" });
             }
-   
+
         }
 
         public ActionResult ProcessReport(ResourceReport resource, int id, string mode)
@@ -456,7 +502,7 @@ namespace InlaksIB.Controllers
                 oldauth.Server = auth.Server;
                 db.SaveChanges();
 
-                ViewBag.message = auth.AuthType+" Authentication Mode Activated Successfully";
+                ViewBag.message = auth.AuthType + " Authentication Mode Activated Successfully";
                 ViewBag.errorclass = "green";
             }
             catch (Exception e)
@@ -464,8 +510,8 @@ namespace InlaksIB.Controllers
                 ViewBag.message = "Failed to apply changes, please seek technical assistance";
                 ViewBag.errorclass = "red";
             }
-            
-       
+
+
 
 
             return View("AuthSetup", auth);
@@ -547,7 +593,7 @@ namespace InlaksIB.Controllers
         public ActionResult ChangePassword()
         {
 
-            return View("ChangePassword",new PasswordChange());
+            return View("ChangePassword", new PasswordChange());
 
         }
 
@@ -560,7 +606,7 @@ namespace InlaksIB.Controllers
             }
             catch
             {
-                
+
                 //db.SaveChanges();
 
                 return AuthenticationSetup();
@@ -570,7 +616,7 @@ namespace InlaksIB.Controllers
 
         }
 
-        
+
 
         public ActionResult RolesResources()
         {
@@ -581,29 +627,30 @@ namespace InlaksIB.Controllers
         [HttpGet]
         public string RoleResources(int id)
         {
-           var  rolesresources= new InlaksBIContext().RolesResources.ToList();
+            var rolesresources = new InlaksBIContext().RolesResources.ToList();
 
-           var  selected = rolesresources.Where(r => r.Role.RoleID == id).ToList();
+            var selected = rolesresources.Where(r => r.Role.RoleID == id).ToList();
 
             var others = new InlaksBIContext().Resources.ToList();
 
             var resourcelist = new List<RoleResourceList>();
 
-            others.ForEach(re => {
-                resourcelist.Add(new RoleResourceList() { ResourceID=re.ResourceID,RoleID=id,ResourceName=re.ResourceName, selected="" });
+            others.ForEach(re =>
+            {
+                resourcelist.Add(new RoleResourceList() { ResourceID = re.ResourceID, RoleID = id, ResourceName = re.ResourceName, selected = "" });
             });
 
             selected.ForEach(r =>
             {
                 var re = resourcelist.FirstOrDefault(t => t.ResourceID == r.Resource.ResourceID);
-                if (re.ResourceName!=null)
+                if (re.ResourceName != null)
                 {
                     resourcelist.Remove(re);
                     re.selected = "selected";
                     resourcelist.Add(re);
                 }
-        
-                
+
+
             });
 
 
@@ -612,12 +659,38 @@ namespace InlaksIB.Controllers
         }
 
 
+        [HttpGet]
+        public string DataSetColumns(string id)
+        {
+            var warehouse = new InlaksBIContext().getWarehouse(new Settings().warehousedbtype);
+
+            var pairs = warehouse.getFilterColumns(id);
+
+
+
+
+            return JsonConvert.SerializeObject(pairs);
+        }
+
+        [HttpGet]
+        public string TableList()
+        {
+            var warehouse = new InlaksBIContext().getWarehouse(new Settings().warehousedbtype);
+
+            var pairs = warehouse.getTables();
+
+
+
+
+            return JsonConvert.SerializeObject(pairs);
+        }
+
         public ActionResult ProcessRoleResources()
         {
-            
+
             var currole = Request.Form["role"];
 
-            if(currole == null)
+            if (currole == null)
             {
                 ViewBag.Message = "A role must be selected";
 
@@ -652,9 +725,9 @@ namespace InlaksIB.Controllers
 
                         db.RolesResources.Add(rolesresource);
 
-                        
 
-                       
+
+
                     }
 
                 }
@@ -667,7 +740,7 @@ namespace InlaksIB.Controllers
                 db.SaveChanges();
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ViewBag.Message = "Failed to Assign Resource(s); Please seek technical assistance";
 
@@ -676,28 +749,28 @@ namespace InlaksIB.Controllers
 
 
 
-            return  View("RolesResources");
+            return View("RolesResources");
         }
 
         public ActionResult ProcessPassword(PasswordChange change)
         {
-           
+
             var message = "";
             var errorclass = "green";
             var context = new InlaksBIContext();
             try
             {
-                if(change.Password == change.NewPassword)
+                if (change.Password == change.NewPassword)
                 {
                     goto End;
                 }
-              
+
                 var user = (User)Session["User"];
                 var hasher = new BasicHash();
                 var olduser = context.Users.FirstOrDefault(u => u.UserID == user.UserID);
-                if (!hasher.VerifyHashedPassword(olduser.Password,change.Password))
+                if (!hasher.VerifyHashedPassword(olduser.Password, change.Password))
                 {
-                   
+
                     message = "Current Password is Invalid";
                     errorclass = "red";
                 }
@@ -725,13 +798,13 @@ namespace InlaksIB.Controllers
 
 
         [HttpGet]
-        public  string getValuePair(string id, string param)
+        public string getValuePair(string id, string param)
         {
             if (param.isNull())
             {
 
             }
-           
+
             var pairs = new List<ValuePair>();
             WarehouseInterface warehouse = new InlaksBIContext().getWarehouse(new Settings().warehousedbtype);
             switch (id.CleanUp())
@@ -740,8 +813,8 @@ namespace InlaksIB.Controllers
                     int mid = param.toInt();
 
                     var res = new InlaksBIContext().Resources.Where(r => r.Module.ModuleID == mid).ToList();
-                  
-                    foreach(var re in res)
+
+                    foreach (var re in res)
                     {
                         ValuePair pair = new ValuePair();
                         pair.ID = re.ResourceID.ToString();
@@ -753,22 +826,22 @@ namespace InlaksIB.Controllers
 
 
                 case "dataset":
-                   int modid = param.toInt();
+                    int modid = param.toInt();
                     var module = new InlaksBIContext().Modules.FirstOrDefault(m => m.ModuleID == modid);
-                   
+
                     pairs = warehouse.getDataSets(module.value);
                     return JsonConvert.SerializeObject(pairs);
 
                 case "datasetcolumns":
 
-                    pairs = warehouse.getFilterColumns(param);
+                    pairs = warehouse.getViewColumns(param);
                     return JsonConvert.SerializeObject(pairs);
 
 
                 default:
                     return "";
-                    
-                    
+
+
             }
         }
 
@@ -776,10 +849,10 @@ namespace InlaksIB.Controllers
         public string getFilterColumns(string id)
         {
             WarehouseInterface warehouse = new InlaksBIContext().getWarehouse(new Settings().warehousedbtype);
-            var pairs = warehouse.getFilterColumns(id);
+            var pairs = warehouse.getViewColumns(id);
             var filters = new List<DataSetFilter>();
 
-            foreach(var pair in pairs)
+            foreach (var pair in pairs)
             {
                 var filter = new DataSetFilter();
                 filter.ColumnName = pair.ID;
@@ -791,10 +864,166 @@ namespace InlaksIB.Controllers
 
             return JsonConvert.SerializeObject(filters);
 
+        }
+
+
+        [HttpGet]
+        public string DeleteDataSet(string id)
+        {
+
+            try
+            {
+                var db = new InlaksBIContext();
+                var dataset = db.DataSets.FirstOrDefault(d => d.DataSetName == id.Trim());
+                db.DataSets.Remove(dataset);
+                db.SaveChanges();
+
+                var warehouse = db.getWarehouse(new Settings().warehousedbtype);
+
+                warehouse.DeleteDataSet(id);
+
+                return "0";
             }
+            catch (Exception s)
+            {
+                return "1";
+            }
+
+        }
+
+        
+
+        [HttpPost]
+        public string CreateDataSet()
+        {
+
+
+            try
+            {
+
+                var data = Request.Form["datasetdata"];
+
+                var moduleid = Request.Form["module"].toInt();
+
+                var datasetobject = JsonConvert.DeserializeObject<List<DatasetObject>>(data);
+
+                bool isduplicateTable = datasetobject.GroupBy(d => d.TableName).Count() < datasetobject.Count;
+
+                if (isduplicateTable)
+                {
+                    return "1";
+
+                }
+
+                StringBuilder sb = new StringBuilder();
+                StringBuilder sb2 = new StringBuilder();
+
+                int tcounter = 0;
+
+                int ccounter = 0;
+
+                string[] tags = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+
+                foreach (DatasetObject tbitem in datasetobject)
+                {
+
+                    if (tcounter == 0)    //handling the first table
+                    {
+                        sb2.Append(" from \"" + tbitem.TableName + "\" " + tags[0]);
+                    }
+                    else
+                    {
+                        var pretag = tags[tcounter - 1];       //setting previous table values
+                        var pretable = datasetobject[tcounter - 1];
+                        sb2.Append(" inner join \"" + tbitem.TableName + "\" " + tags[tcounter] + " on (" + pretag + ".\"" + pretable.NxtTable + "\"=" + tags[tcounter] + ".\"" + tbitem.PreTable + "\") ");
+                    }
+
+                    ccounter = 0;
+
+                    if (tbitem.Columns.isNull())
+                    {
+                        sb.Append(tags[tcounter]+".*");
+                    }
+                    else
+                    {
+                        foreach (string column in tbitem.Columns)
+                        {
+                            ccounter++;
+
+                            sb.Append(tags[tcounter] + ".\"" + column + "\"");
+
+                            if (ccounter < tbitem.Columns.Length)
+                            {
+                                sb.Append(",");
+                            }
+                        }
+
+                    }
+                    tcounter++;
+
+                    if (tcounter < datasetobject.Count)
+                    {
+                        sb.Append(",");
+                    }
+
+
+
+                }
+
+                string cols = sb.ToString();
+
+
+                string tabs = sb2.ToString();
+
+                var db = new InlaksBIContext();
+
+                var script = "CREATE MATERIALIZED VIEW public." + datasetobject[0].DataSetName + " AS   Select ";
+
+                var dataset = new DataSetDetail();
+
+                dataset.Script = script + cols + tabs;
+
+                dataset.DataSetName = datasetobject[0].DataSetName;
+
+
+                DBInterface dbinterface = new PostgreSQLDBInterface(new Settings().warehousedb);
+
+                int resp = dbinterface.Execute(dataset.Script);
+
+                var sql = "select * from \"" + dataset.DataSetName + "\" LIMIT 1";
+
+                var dt = dbinterface.getData(sql);
+
+
+                dataset.Module = db.Modules.Where(m => m.ModuleID == moduleid).FirstOrDefault();
+
+                db.DataSets.Add(dataset);
+
+                db.SaveChanges();
+
+                if (dt.Rows.Count > 0)
+                {
+
+                    return "0";
+                }
+
+                else
+                {
+                    return "DataSet Created sucessfully but has no data";
+                }
+            }
+
+
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
         }
 
 
     }
+
+}
 
 

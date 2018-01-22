@@ -15,7 +15,9 @@ namespace InlaksIB
         public string Operator { get; set; }
 
         public string ColumnValue { get; set; }
-        
+
+        public string DisplayName { get; set; }
+
         public bool IsIncluded { get; set; }
 
         [Key]
@@ -30,6 +32,8 @@ namespace InlaksIB
         public string ColumnName { get; set; }
 
         public string ColumnValue { get; set; }
+
+        public string DisplayName { get; set; }
 
         public bool IsIncluded { get; set; }
 

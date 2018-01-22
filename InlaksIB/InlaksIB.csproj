@@ -154,6 +154,7 @@
     <Content Include="css\databale-css.css" />
     <Content Include="css\forms.css" />
     <Content Include="css\picker.css" />
+    <Content Include="css\select2.css" />
     <Content Include="css\stats.css" />
     <Content Include="css\styles.css" />
     <Content Include="dist\c3core.css" />
@@ -201,8 +202,11 @@
     <Content Include="dist\subtotal.min.js" />
     <Content Include="dist\tips_data.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="img\business-intelligence.png" />
     <Content Include="img\csv.png" />
     <Content Include="img\gears.gif" />
+    <Content Include="img\inlaks-own-tomorrow.jpg" />
+    <Content Include="img\landingpage2.jpg" />
     <Content Include="img\inlaks.png" />
     <Content Include="img\landingpage.jpg" />
     <Content Include="img\pdf.png" />
@@ -284,6 +288,7 @@
     <Content Include="js\modernizr-2.6.2.js" />
     <Content Include="js\picker.js" />
     <Content Include="js\punch.min.js" />
+    <Content Include="js\select2.js" />
     <Content Include="js\stats.js" />
     <Content Include="js\tables.js" />
     <Content Include="Report.aspx" />
@@ -367,6 +372,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthSetup.cs" />
     <Compile Include="Classes\DBContext.cs" />
+    <Compile Include="Models\DataSet.cs" />
     <Compile Include="Models\DataSetFilters.cs" />
     <Compile Include="Models\Industry.cs" />
     <Compile Include="Models\Migration_Schedule.cs" />
@@ -506,6 +512,8 @@
     <Content Include="subtotal.coffee" />
     <Content Include="Views\Home\ReportSetup.cshtml" />
     <Content Include="Views\Home\CreateReport.cshtml" />
+    <Content Include="Views\Home\DataSetSetup.cshtml" />
+    <Content Include="Views\Home\CreateDataSet.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

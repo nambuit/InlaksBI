@@ -27,6 +27,7 @@
     <link href="~/vendors/tags/css/bootstrap-tags.css" rel="stylesheet">
     <link href="~/css/databale-css.css" rel="stylesheet" />
     <link href="~/css/forms.css" rel="stylesheet"> 
+    <link href="~/css/select2.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -92,6 +93,11 @@
                                             <li>
                                                 <a href="~/Home/ReportSetup/0?mode=create">Report Setup</a>
                                             </li>
+                                            <li>
+                                                <a href="~/Home/DataSetSetup">Dataset Setup</a>
+                                            </li>
+
+                                            
                                         </ul>
 
 
@@ -262,7 +268,8 @@
 
     <!-- bootstrap-datetimepicker -->
     <script src="~/js/loadingoverlay.min.js"></script>
-  
+
+    <script src="~/js/select2.js"></script>
     <link href="~/vendors/bootstrap-datetimepicker/datetimepicker.css" rel="stylesheet">
     <script src="~/vendors/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
     <script src="~/js/jquery-dataTable.js"></script>
@@ -279,7 +286,7 @@
     <script src="~/js/forms.js"></script>
 
     <script src="~/js/core/Reportscripts.js?a=@rand.Next(0, 999999999)"></script>
-    <script src="~/js/homehandler.js"></script>
+    <script src="~/js/homehandler.js?a=@rand.Next(0, 999999999)"></script>
 
 </body>
 </html>

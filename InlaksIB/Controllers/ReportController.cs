@@ -143,13 +143,13 @@ namespace InlaksIB.Controllers
             {
                 var dataset = Request.Form["dataset"];
                 var filtersstring = Request.Form["filters"];
+                WarehouseInterface warehouse = new InlaksBIContext().getWarehouse(new Settings().warehousedbtype);
 
                 var filters = JsonConvert.DeserializeObject<List<DataSetFilter>>(filtersstring);
 
-                WarehouseInterface warehouse = new InlaksBIContext().getWarehouse(new Settings().warehousedbtype);
-
                 var dt = warehouse.FilteredData(dataset, filters);
 
+                
                 return dt.DataTableToJson();
             }
             catch(Exception s)

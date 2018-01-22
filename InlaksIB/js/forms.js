@@ -3,12 +3,12 @@ $(document).ready(function(){
    
 
 
-
+    ///$("#npick").select2();
 
     // Select
    // $('.selectpicker').selectpicker();
 
-   // $('.select2').select2();
+    $('.select2').select2();
 
     // Tags
     $("#tags").tags({

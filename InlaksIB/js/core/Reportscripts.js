@@ -288,7 +288,8 @@ function showColumns(object) {
 
             for (var i = 0; i < data.length; i++) {
 
-                $("#columns").append("<tr class='filters'><td><input class='IsIncluded' Value='" + JSON.stringify(data[i]) + "'  type='checkbox' /></td><td><input class='ColumnName form-control'   Value='" + data[i].ColumnName + "' type='text' disabled='disabled' /></td><td>"+operatorslist+"</td><td><input  class='ColumnValue form-control' value='' type='text' /></td></tr>");
+                $("#columns").append("<tr class='filters'><td><input class='IsIncluded' Value='" + JSON.stringify(data[i]) + "'  type='checkbox' /></td><td  ><input class='ColumnName form-control'   Value='" + data[i].ColumnName + "' type='text' disabled='disabled' /></td><td>" + operatorslist +
+                "</td><td><input  class='ColumnValue form-control' value='' type='text' /></td><td><input  class='DisplayName form-control' value='' type='text' /></td></tr>");
             }
         }
     });
@@ -454,6 +455,10 @@ function getFilters(){
         var operatorobject = $(icheck).closest('.filters').find('.operator');
 
         filter.Operator = $(operatorobject).val();
+
+        var displayobject = $(icheck).closest('.filters').find('.DisplayName');
+
+        filter.DisplayName = $(displayobject).val();
 
         filters[i] = filter;
     }
