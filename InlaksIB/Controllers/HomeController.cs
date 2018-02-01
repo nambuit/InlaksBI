@@ -1,14 +1,11 @@
-﻿using BackBone;
-using CrystalDecisions.CrystalReports.Engine;
+﻿using CrystalDecisions.CrystalReports.Engine;
 using InlaksIB.Properties;
 using InlaksIB.Reports;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InlaksIB.Controllers
@@ -1044,7 +1041,7 @@ namespace InlaksIB.Controllers
 
                     var myDataColumn = new DataColumn
                     {
-                        DataType = Type.Ge,
+                        DataType = Type.GetType("System.String"),
                         ColumnName = "SECTOR"
                     };
 
@@ -1052,7 +1049,7 @@ namespace InlaksIB.Controllers
         
                      myDataColumn = new DataColumn
                     {
-                        DataType = Type.GetType("System.int"),
+                        DataType = typeof(int),
                         ColumnName = "NO_OF_LOANS"
                     };
 
@@ -1086,14 +1083,14 @@ namespace InlaksIB.Controllers
     
            
             report.SetDataSource(dt);
-            report.SetParameterValue("mfbcode", "50629");
-            report.SetParameterValue("mfbname", "NPF MICROFINANCE BANK PLC");
-            report.SetParameterValue("returncode", "MMFBR M00");
-            report.SetParameterValue("returnname", "Sectoral Analysis of Loans and Advances");
-            report.SetParameterValue("stCode", "MMFBR M00");
-            report.SetParameterValue("stName", "MMFBR M00");
-            report.SetParameterValue("lgCode", "MMFBR M00");
-            report.SetParameterValue("lgCode", "MMFBR M00");
+            report.SetParameterValue("?mfbcode", "50629");
+            report.SetParameterValue("?mfbname", "NPF MICROFINANCE BANK PLC");
+            report.SetParameterValue("?returncode", "MMFBR M00");
+            report.SetParameterValue("?returnname", "Sectoral Analysis of Loans and Advances");
+            report.SetParameterValue("?stCode", "MMFBR M00");
+            report.SetParameterValue("?stName", "MMFBR M00");
+            report.SetParameterValue("?lgCode", "MMFBR M00");
+            report.SetParameterValue("?lgCode", "MMFBR M00");
 
             Session["report"] = report;
 
