@@ -1,8 +1,11 @@
 ﻿using BackBone;
+using CrystalDecisions.CrystalReports.Engine;
 using InlaksIB.Properties;
+using InlaksIB.Reports;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -1022,8 +1025,92 @@ namespace InlaksIB.Controllers
         }
 
 
+
+
+
+        [HttpGet]
+        public string LaunchStatic(string id)
+        {
+
+
+            switch (id.ToLower())
+            {
+                
+            default:
+                    ReportDocument report = new crmcbase1();
+                    DataTable dt = new DataTable();
+
+                    LoadCBNReturnsReport(dt, report);
+
+                    var myDataColumn = new DataColumn
+                    {
+                        DataType = Type.Ge,
+                        ColumnName = "SECTOR"
+                    };
+
+                    dt.Columns.Add(myDataColumn);
+        
+                     myDataColumn = new DataColumn
+                    {
+                        DataType = Type.GetType("System.int"),
+                        ColumnName = "NO_OF_LOANS"
+                    };
+
+                    dt.Columns.Add(myDataColumn);
+
+                    myDataColumn = new DataColumn
+                    {
+                        DataType = Type.GetType("System.Decimal"),
+                        ColumnName = "AMOUNT"
+                    };
+
+                    dt.Columns.Add(myDataColumn);
+
+                    myDataColumn = new DataColumn
+                    {
+                        DataType = Type.GetType("System.String"),
+                        ColumnName = "PERCENTAGE"
+                    };
+
+
+                    return "";
+                  
+            }
+
+        
+        }
+
+
+        private void LoadCBNReturnsReport(DataTable dt, ReportDocument report)
+        {
+    
+           
+            report.SetDataSource(dt);
+            report.SetParameterValue("mfbcode", "50629");
+            report.SetParameterValue("mfbname", "NPF MICROFINANCE BANK PLC");
+            report.SetParameterValue("returncode", "MMFBR M00");
+            report.SetParameterValue("returnname", "Sectoral Analysis of Loans and Advances");
+            report.SetParameterValue("stCode", "MMFBR M00");
+            report.SetParameterValue("stName", "MMFBR M00");
+            report.SetParameterValue("lgCode", "MMFBR M00");
+            report.SetParameterValue("lgCode", "MMFBR M00");
+
+            Session["report"] = report;
+
+
+
+
+            report.SetDataSource(dt);
+        }
+
+
+
+
     }
+
+
 
 }
 
 
+    

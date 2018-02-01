@@ -16,14 +16,14 @@ namespace InlaksIB.Reports {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class Test : ReportClass {
+    public class crmcbase1 : ReportClass {
         
-        public Test() {
+        public crmcbase1() {
         }
         
         public override string ResourceName {
             get {
-                return "Test.rpt";
+                return "crmcbase1.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace InlaksIB.Reports {
         
         public override string FullResourceName {
             get {
-                return "InlaksIB.Reports.Test.rpt";
+                return "InlaksIB.Reports.crmcbase1.rpt";
             }
             set {
                 // Do nothing
@@ -87,12 +87,76 @@ namespace InlaksIB.Reports {
                 return this.ReportDefinition.Sections[4];
             }
         }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_mfbCode {
+            get {
+                return this.DataDefinition.ParameterFields[0];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_mfbName {
+            get {
+                return this.DataDefinition.ParameterFields[1];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_returnCode {
+            get {
+                return this.DataDefinition.ParameterFields[2];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_returnName {
+            get {
+                return this.DataDefinition.ParameterFields[3];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_stName {
+            get {
+                return this.DataDefinition.ParameterFields[4];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_stCode {
+            get {
+                return this.DataDefinition.ParameterFields[5];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_lgCode {
+            get {
+                return this.DataDefinition.ParameterFields[6];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_lgName {
+            get {
+                return this.DataDefinition.ParameterFields[7];
+            }
+        }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedTest : Component, ICachedReport {
+    public class Cachedcrmcbase1 : Component, ICachedReport {
         
-        public CachedTest() {
+        public Cachedcrmcbase1() {
         }
         
         [Browsable(false)]
@@ -129,7 +193,7 @@ namespace InlaksIB.Reports {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            Test rpt = new Test();
+            crmcbase1 rpt = new crmcbase1();
             rpt.Site = this.Site;
             return rpt;
         }

@@ -156,11 +156,19 @@
                                 {
                                     <ul id="@module.value">
 
-                                        @foreach (var menu in availableResources.OrderBy(r=>r.ResourceName).ToList())
+                                        @foreach (var menu in availableResources.OrderBy(r => r.ResourceName).ToList())
                                         {
                                             <li>
-                                               
-                                                @Html.ActionLink(menu.ResourceName, "ReportLauncher/"+menu.ResourceID, "Home")
+                                                @if (menu.Url.Equals("#"))
+                                                {
+
+                                                    <a id="@menu.value" onclick="processStatic(this)" href="#">@menu.ResourceName</a>
+                                                }
+                                                else
+                                                {
+                                                    @Html.ActionLink(menu.ResourceName, "ReportLauncher/" + menu.ResourceID, "Home");
+                                                
+                                                }
                                             </li>
                                         }
                                     </ul>

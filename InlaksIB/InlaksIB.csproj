@@ -402,16 +402,19 @@
     <Compile Include="Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\Test.cs">
+    <Compile Include="Reports\crmcbase1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Test.rpt</DependentUpon>
+      <DependentUpon>crmcbase1.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\test.Designer.cs">
+    <Compile Include="Reports\mbase11.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>test.xsd</DependentUpon>
+      <DependentUpon>mbase1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\mcbase1.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportTemplates\SampleReport1.cs">
       <AutoGen>True</AutoGen>
@@ -431,16 +434,16 @@
     </None>
     <Content Include="Views\Login\Login_LayoutPage.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Reports\test.xsc">
-      <DependentUpon>test.xsd</DependentUpon>
+    <Content Include="Reports\mbase1.xsc">
+      <DependentUpon>mbase1.xsd</DependentUpon>
     </Content>
-    <None Include="Reports\test.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Reports\mbase1.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>test.Designer.cs</LastGenOutput>
+      <LastGenOutput>mbase11.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
-    <Content Include="Reports\test.xss">
-      <DependentUpon>test.xsd</DependentUpon>
+    <Content Include="Reports\mbase1.xss">
+      <DependentUpon>mbase1.xsd</DependentUpon>
     </Content>
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AMCOMReports.cshtml" />
@@ -530,9 +533,9 @@
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports\Test.rpt">
+    <EmbeddedResource Include="Reports\crmcbase1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Test.cs</LastGenOutput>
+      <LastGenOutput>crmcbase1.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportTemplates\SampleReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

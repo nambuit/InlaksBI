@@ -550,3 +550,27 @@ function enableExport(object){
 function Export() {
 
 }
+
+
+
+function processStatic(object) {
+
+    var val = object.id;
+
+
+
+    var myrand = Math.floor(Math.random() * 1000000);
+    var url =  localStorage.baseurl+"Home/LaunchStatic/" + val + "?rand=" + myrand;
+
+    jQuery.ajax({
+        url:url,
+        type: "GET",
+        success: function (result) {
+           
+            window.open("Report.aspx", "PopupWindow", "width=1200,height=700,scrollbars=yes,resizable=1");
+    
+        }
+    });
+
+
+}
