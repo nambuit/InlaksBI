@@ -16,14 +16,14 @@ namespace InlaksIB.Reports {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class crmcbase1 : ReportClass {
+    public class crmbase1 : ReportClass {
         
-        public crmcbase1() {
+        public crmbase1() {
         }
         
         public override string ResourceName {
             get {
-                return "crmcbase1.rpt";
+                return "crmbase1.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace InlaksIB.Reports {
         
         public override string FullResourceName {
             get {
-                return "InlaksIB.Reports.crmcbase1.rpt";
+                return "InlaksIB.Reports.crmbase1.rpt";
             }
             set {
                 // Do nothing
@@ -154,9 +154,9 @@ namespace InlaksIB.Reports {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class Cachedcrmcbase1 : Component, ICachedReport {
+    public class Cachedcrmbase1 : Component, ICachedReport {
         
-        public Cachedcrmcbase1() {
+        public Cachedcrmbase1() {
         }
         
         [Browsable(false)]
@@ -193,7 +193,7 @@ namespace InlaksIB.Reports {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            crmcbase1 rpt = new crmcbase1();
+            crmbase1 rpt = new crmbase1();
             rpt.Site = this.Site;
             return rpt;
         }

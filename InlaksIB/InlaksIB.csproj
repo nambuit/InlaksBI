@@ -49,7 +49,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="BackBone">
-      <HintPath>..\..\CLirecApp\BackBone\bin\Debug\BackBone.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\InlaksBI\bin\BackBone.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
@@ -74,25 +74,29 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MongoDB.Bson, Version=2.3.0.157, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\net45\MongoDB.Bson.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\InlaksBI\bin\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver, Version=2.3.0.157, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\net45\MongoDB.Driver.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\InlaksBI\bin\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver.Core">
-      <HintPath>..\..\..\..\..\Downloads\net45\MongoDB.Driver.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\InlaksBI\bin\MongoDB.Driver.Core.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver.GridFS">
-      <HintPath>..\..\..\..\..\Downloads\net45\MongoDB.Driver.GridFS.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\InlaksBI\bin\MongoDB.Driver.GridFS.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver.Legacy">
-      <HintPath>..\..\..\..\..\Downloads\net45\MongoDB.Driver.Legacy.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\InlaksBI\bin\MongoDB.Driver.Legacy.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
-    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\InlaksBI\bin\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\InlaksBI\bin\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\CLirecApp\bin\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\InlaksBI\bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Npgsql, Version=3.2.6.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.3.2.6\lib\net451\Npgsql.dll</HintPath>
@@ -402,10 +406,10 @@
     <Compile Include="Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\crmcbase1.cs">
+    <Compile Include="Reports\crmbase1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>crmcbase1.rpt</DependentUpon>
+      <DependentUpon>crmbase1.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\mbase11.Designer.cs">
@@ -533,9 +537,9 @@
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports\crmcbase1.rpt">
+    <EmbeddedResource Include="Reports\crmbase1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>crmcbase1.cs</LastGenOutput>
+      <LastGenOutput>crmbase1.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportTemplates\SampleReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

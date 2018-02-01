@@ -1,4 +1,5 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
+﻿using BackBone;
+using CrystalDecisions.CrystalReports.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,13 @@ namespace InlaksIB
                 crT = (ReportDocument)Session["report"];
            
             CrystalReportViewer1.ReportSource = crT;
+
+            var reportparams = (List<ValuePair>)Session["reportparams"];
+
+            foreach(var p in reportparams)
+            {
+                crT.SetParameterValue(p.ID, p.Value);
+            }
 
         }
 
