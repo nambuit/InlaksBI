@@ -1089,7 +1089,7 @@ namespace InlaksIB.Controllers
     
            
             report.SetDataSource(dt);
-            report.SetParameterValue("mfbCode", "50629");
+            report.SetParameterValue("mfbCode","50629");
             report.SetParameterValue("mfbName", "NPF MICROFINANCE BANK PLC");
             report.SetParameterValue("returnCode", "MMFBR M00");
             report.SetParameterValue("returnName", "Sectoral Analysis of Loans and Advances");
