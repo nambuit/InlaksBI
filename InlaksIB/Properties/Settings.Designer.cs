@@ -53,19 +53,10 @@ namespace InlaksIB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=debenson;database=inlaksbisource")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Host=localhost;Database=inlaksbisource;Username=inlaksbi;Password=own2morrow")]
         public string sourcedb {
             get {
                 return ((string)(this["sourcedb"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mysql")]
-        public string warehousedbtype {
-            get {
-                return ((string)(this["warehousedbtype"]));
             }
         }
         
@@ -76,6 +67,15 @@ namespace InlaksIB.Properties {
         public string DBConstr {
             get {
                 return ((string)(this["DBConstr"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("pgsql")]
+        public string warehousedbtype {
+            get {
+                return ((string)(this["warehousedbtype"]));
             }
         }
     }

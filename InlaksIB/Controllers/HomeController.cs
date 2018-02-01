@@ -1037,7 +1037,7 @@ namespace InlaksIB.Controllers
             {
                 
             default:
-                    ReportDocument report = new crmcbase1();
+                    ReportDocument report = new crmbase1();
                     DataTable dt = new DataTable();
 
                     
@@ -1052,9 +1052,9 @@ namespace InlaksIB.Controllers
         
                      myDataColumn = new DataColumn
                     {
-                        DataType = typeof(int),
-                        ColumnName = "NO_OF_LOANS"
-                    };
+                        DataType = typeof(Int32),
+                        ColumnName = "NUMBER_OF_LOANS"
+                     };
 
                     dt.Columns.Add(myDataColumn);
 
@@ -1068,11 +1068,52 @@ namespace InlaksIB.Controllers
 
                     myDataColumn = new DataColumn
                     {
-                        DataType = Type.GetType("System.String"),
+                        DataType = Type.GetType("System.Decimal"),
                         ColumnName = "PERCENTAGE"
                     };
 
                     dt.Columns.Add(myDataColumn);
+
+                    var sql = "select a.*,b.* from \"LD_LOANS_AND_DEPOSITS\" a inner join  \"SECTOR\" b on (a.\"SECTOR\"=b.\"@ID\")";
+
+                    var db = new PostgreSQLDBInterface(new Settings().sourcedb);
+
+                    var data = db.getData(sql);
+
+                    //dt.Columns.Add(myDataColumn);
+
+                    myDataColumn = new DataColumn
+                    {
+                        DataType = Type.GetType("System.Decimal"),
+                        ColumnName = "CONVERTED_AMOUNT"
+                    };
+
+                    data.Columns.Add(myDataColumn);
+
+
+                    data = data.AsEnumerable().Select(t => {
+                        t["CONVERTED_AMOUNT"] = t["AMOUNT"].ToString();
+
+                        return t;}).CopyToDataTable();
+
+                    var total = data.AsEnumerable().Sum(t=> t["CONVERTED_AMOUNT"].toDecimal());
+
+                    var sectgroup = data.AsEnumerable().GroupBy(r => r["SECTOR"]).Select(grp => grp.ToList());
+
+                    foreach(var grp in sectgroup)
+                    {
+                        var row = dt.NewRow();
+
+                        row["SECTOR"] = grp[0]["SHORT_NAME"].ToString();
+                        row["NUMBER_OF_LOANS"] = grp.Count;
+                        var amount = grp.Sum(t => t["CONVERTED_AMOUNT"].toDecimal());
+                        row["AMOUNT"] = amount;
+                        row["PERCENTAGE"] = (amount / total);
+
+                        dt.Rows.Add(row);
+                    }
+
+
 
                     LoadCBNReturnsReport(dt, report);
 
@@ -1086,24 +1127,50 @@ namespace InlaksIB.Controllers
 
         private void LoadCBNReturnsReport(DataTable dt, ReportDocument report)
         {
-    
-           
-            report.SetDataSource(dt);
-            report.SetParameterValue("mfbCode", "50629");
-            report.SetParameterValue("mfbName", "NPF MICROFINANCE BANK PLC");
-            report.SetParameterValue("returnCode", "MMFBR M00");
-            report.SetParameterValue("returnName", "Sectoral Analysis of Loans and Advances");
-            report.SetParameterValue("stCode", "MMFBR M00");
-            report.SetParameterValue("stName", "MMFBR M00");
-            report.SetParameterValue("lgCode", "MMFBR M00");
-            report.SetParameterValue("lgCode", "MMFBR M00");
 
+            report.SetDataSource(dt);
+
+            var reportparams = new List<ValuePair>();
+
+            var p = new ValuePair();
+            p.ID = "mfbCode"; p.Value = "50629";
+            reportparams.Add(p);
+
+            p = new ValuePair();
+            p.ID = "mfbName"; p.Value = "NPF MICROFINANCE BANK PLC";
+            reportparams.Add(p);
+
+            p = new ValuePair();
+            p.ID = "returnCode"; p.Value = "MMFBR M00";
+            reportparams.Add(p);
+
+            p = new ValuePair();
+            p.ID = "stCode"; p.Value = "MMFBR M00";
+            reportparams.Add(p);
+
+            p = new ValuePair();
+            p.ID = "stName"; p.Value = "LAGOS";
+            reportparams.Add(p);
+
+            p = new ValuePair();
+            p.ID = "lgCode"; p.Value = "MMFBR M00";
+            reportparams.Add(p);
+
+            p = new ValuePair();
+            p.ID = "lgName"; p.Value = "LAGOS ISLAND";
+            reportparams.Add(p);
+
+            p = new ValuePair();
+            p.ID = "returnName"; p.Value = "Sectoral Analysis of Loans and Advances";
+            reportparams.Add(p);
+
+            Session["reportparams"] = reportparams;
             Session["report"] = report;
 
 
 
-
-            report.SetDataSource(dt);
+           
+          
         }
 
 

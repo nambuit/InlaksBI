@@ -389,7 +389,7 @@ namespace InlaksIB.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public mcbase1Row Addmcbase1Row(string SECTOR, string NUMBER_OF_LOANS, string AMOUNT, string PERCENTAGE) {
+            public mcbase1Row Addmcbase1Row(string SECTOR, int NUMBER_OF_LOANS, decimal AMOUNT, decimal PERCENTAGE) {
                 mcbase1Row rowmcbase1Row = ((mcbase1Row)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         SECTOR,
@@ -429,11 +429,11 @@ namespace InlaksIB.Reports {
             private void InitClass() {
                 this.columnSECTOR = new global::System.Data.DataColumn("SECTOR", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSECTOR);
-                this.columnNUMBER_OF_LOANS = new global::System.Data.DataColumn("NUMBER_OF_LOANS", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnNUMBER_OF_LOANS = new global::System.Data.DataColumn("NUMBER_OF_LOANS", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNUMBER_OF_LOANS);
-                this.columnAMOUNT = new global::System.Data.DataColumn("AMOUNT", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnAMOUNT = new global::System.Data.DataColumn("AMOUNT", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAMOUNT);
-                this.columnPERCENTAGE = new global::System.Data.DataColumn("PERCENTAGE", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnPERCENTAGE = new global::System.Data.DataColumn("PERCENTAGE", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPERCENTAGE);
             }
             
@@ -593,10 +593,10 @@ namespace InlaksIB.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string NUMBER_OF_LOANS {
+            public int NUMBER_OF_LOANS {
                 get {
                     try {
-                        return ((string)(this[this.tablemcbase1.NUMBER_OF_LOANSColumn]));
+                        return ((int)(this[this.tablemcbase1.NUMBER_OF_LOANSColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'NUMBER_OF_LOANS\' in table \'mcbase1\' is DBNull.", e);
@@ -609,10 +609,10 @@ namespace InlaksIB.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AMOUNT {
+            public decimal AMOUNT {
                 get {
                     try {
-                        return ((string)(this[this.tablemcbase1.AMOUNTColumn]));
+                        return ((decimal)(this[this.tablemcbase1.AMOUNTColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'AMOUNT\' in table \'mcbase1\' is DBNull.", e);
@@ -625,10 +625,10 @@ namespace InlaksIB.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string PERCENTAGE {
+            public decimal PERCENTAGE {
                 get {
                     try {
-                        return ((string)(this[this.tablemcbase1.PERCENTAGEColumn]));
+                        return ((decimal)(this[this.tablemcbase1.PERCENTAGEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'PERCENTAGE\' in table \'mcbase1\' is DBNull.", e);
