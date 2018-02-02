@@ -1031,101 +1031,145 @@ namespace InlaksIB.Controllers
         [HttpGet]
         public string LaunchStatic(string id)
         {
-
-
-            switch (id.ToLower())
+            string result;
+            try
             {
+                ReportDocument report;
+                DataTable dt;
                 
-            default:
-                    ReportDocument report = new crmbase1();
-                    DataTable dt = new DataTable();
+                switch (id.ToLower())
+                {
 
-                    
+                    default:
+                        result = "failed";
+                        break;
 
-                    var myDataColumn = new DataColumn
-                    {
-                        DataType = Type.GetType("System.String"),
-                        ColumnName = "SECTOR"
-                    };
+                    case "sec_analysis":
+                        report = new crmbase1();
+                        dt = new DataTable();
 
-                    dt.Columns.Add(myDataColumn);
-        
-                     myDataColumn = new DataColumn
-                    {
-                        DataType = typeof(Int32),
-                        ColumnName = "NUMBER_OF_LOANS"
-                     };
+                        sec_analysis(dt, report);
 
-                    dt.Columns.Add(myDataColumn);
+                        
 
-                    myDataColumn = new DataColumn
-                    {
-                        DataType = Type.GetType("System.Decimal"),
-                        ColumnName = "AMOUNT"
-                    };
+                        LoadCBNReturnsReport(dt, report,id);
+                        result = "success";
+                        break;
 
-                    dt.Columns.Add(myDataColumn);
+                    case "due_bal":
+                        report = new due_bal221();
 
-                    myDataColumn = new DataColumn
-                    {
-                        DataType = Type.GetType("System.Decimal"),
-                        ColumnName = "PERCENTAGE"
-                    };
+                        var sql = "select distinct '' as \"Code\", \"ACCOUNT_TITLE_1\" as \"NAME_OF_BANK\", CAST(COALESCE(NULLIF(\"WORKING_BALANCE\",''),'0') as decimal) as \"Amount\"  from \"ACCOUNT\" where \"CATEGORY\" >= '5000' and \"CATEGORY\" <='5999'";
 
-                    dt.Columns.Add(myDataColumn);
+                        var db = new PostgreSQLDBInterface(new Settings().sourcedb);
 
-                    var sql = "select a.*,b.* from \"LD_LOANS_AND_DEPOSITS\" a inner join  \"SECTOR\" b on (a.\"SECTOR\"=b.\"@ID\")";
+                        dt = db.getData(sql);
 
-                    var db = new PostgreSQLDBInterface(new Settings().sourcedb);
-
-                    var data = db.getData(sql);
-
-                    //dt.Columns.Add(myDataColumn);
-
-                    myDataColumn = new DataColumn
-                    {
-                        DataType = Type.GetType("System.Decimal"),
-                        ColumnName = "CONVERTED_AMOUNT"
-                    };
-
-                    data.Columns.Add(myDataColumn);
-
-
-                    data = data.AsEnumerable().Select(t => {
-                        t["CONVERTED_AMOUNT"] = t["AMOUNT"].ToString();
-
-                        return t;}).CopyToDataTable();
-
-                    var total = data.AsEnumerable().Sum(t=> t["CONVERTED_AMOUNT"].toDecimal());
-
-                    var sectgroup = data.AsEnumerable().GroupBy(r => r["SECTOR"]).Select(grp => grp.ToList());
-
-                    foreach(var grp in sectgroup)
-                    {
-                        var row = dt.NewRow();
-
-                        row["SECTOR"] = grp[0]["SHORT_NAME"].ToString();
-                        row["NUMBER_OF_LOANS"] = grp.Count;
-                        var amount = grp.Sum(t => t["CONVERTED_AMOUNT"].toDecimal());
-                        row["AMOUNT"] = amount;
-                        row["PERCENTAGE"] = (amount / total);
-
-                        dt.Rows.Add(row);
-                    }
+                        LoadCBNReturnsReport(dt, report,id);
+                        result = "success";
+                        break;
 
 
 
-                    LoadCBNReturnsReport(dt, report);
+                }
 
-                    return "";
-                  
+               
+
+                return result;
+            }
+            catch(Exception d)
+            {
+                return "failed";
             }
 
         
         }
 
 
-        private void LoadCBNReturnsReport(DataTable dt, ReportDocument report)
+        
+
+        private void sec_analysis(DataTable dt, ReportDocument report)
+        {
+          
+            var myDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.String"),
+                ColumnName = "SECTOR"
+            };
+
+            dt.Columns.Add(myDataColumn);
+
+            myDataColumn = new DataColumn
+            {
+                DataType = typeof(Int32),
+                ColumnName = "NUMBER_OF_LOANS"
+            };
+
+            dt.Columns.Add(myDataColumn);
+
+            myDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.Decimal"),
+                ColumnName = "AMOUNT"
+            };
+
+            dt.Columns.Add(myDataColumn);
+
+            myDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.Decimal"),
+                ColumnName = "PERCENTAGE"
+            };
+
+            dt.Columns.Add(myDataColumn);
+
+            var sql = "select a.*,b.* from \"LD_LOANS_AND_DEPOSITS\" a inner join  \"SECTOR\" b on (a.\"SECTOR\"=b.\"@ID\")";
+
+            var db = new PostgreSQLDBInterface(new Settings().sourcedb);
+
+            var data = db.getData(sql);
+
+            //dt.Columns.Add(myDataColumn);
+
+            myDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.Decimal"),
+                ColumnName = "CONVERTED_AMOUNT"
+            };
+
+            data.Columns.Add(myDataColumn);
+
+
+            data = data.AsEnumerable().Select(t =>
+            {
+                t["CONVERTED_AMOUNT"] = t["AMOUNT"].ToString();
+
+                return t;
+            }).CopyToDataTable();
+
+            var total = data.AsEnumerable().Sum(t => t["CONVERTED_AMOUNT"].toDecimal());
+
+            var sectgroup = data.AsEnumerable().GroupBy(r => r["SECTOR"]).Select(grp => grp.ToList());
+
+            foreach (var grp in sectgroup)
+            {
+                var row = dt.NewRow();
+
+                row["SECTOR"] = grp[0]["SHORT_NAME"].ToString();
+                row["NUMBER_OF_LOANS"] = grp.Count;
+                var amount = grp.Sum(t => t["CONVERTED_AMOUNT"].toDecimal());
+                row["AMOUNT"] = amount;
+                row["PERCENTAGE"] = (amount / total)*100;
+
+                dt.Rows.Add(row);
+            }
+        }
+
+
+
+
+
+        private void LoadCBNReturnsReport(DataTable dt, ReportDocument report, string id)
         {
 
             report.SetDataSource(dt);
@@ -1153,15 +1197,19 @@ namespace InlaksIB.Controllers
             reportparams.Add(p);
 
             p = new ValuePair();
-            p.ID = "lgCode"; p.Value = "MMFBR M00";
+            p.ID = "lgCode"; p.Value = "ETI-OSA";
             reportparams.Add(p);
 
             p = new ValuePair();
             p.ID = "lgName"; p.Value = "LAGOS ISLAND";
             reportparams.Add(p);
 
+            var reportobject = new InlaksBIContext().Resources.FirstOrDefault(r => r.value == id);
+
+            var title = reportobject.isNull() ? "" : reportobject.ResourceName;
+
             p = new ValuePair();
-            p.ID = "returnName"; p.Value = "Sectoral Analysis of Loans and Advances";
+            p.ID = "returnName"; p.Value = title;
             reportparams.Add(p);
 
             Session["reportparams"] = reportparams;

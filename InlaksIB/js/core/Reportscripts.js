@@ -567,7 +567,20 @@ function processStatic(object) {
         type: "GET",
         success: function (result) {
            
-            window.open("Report.aspx", "PopupWindow", "width=1200,height=700,scrollbars=yes,resizable=1");
+            if (result == "success") {
+                window.open("Report.aspx", "PopupWindow", "width=1200,height=700,scrollbars=yes,resizable=1");
+            }
+            else {
+                $.alert({
+                    title: 'Missing Report Configuration',
+                    content: "A Report is yet to be configured for this resource. Contact Admin",
+                    buttons: {
+                        Okay: function () {
+                            window.location = localStorage.baseurl;
+                        }
+                    }
+                });
+            }
     
         }
     });

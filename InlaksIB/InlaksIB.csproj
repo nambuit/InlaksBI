@@ -412,6 +412,17 @@
       <DependentUpon>crmbase1.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\dataset221.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dataset221.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\due_bal221.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>due_bal221.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\mbase11.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -440,6 +451,17 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Reports\mbase1.xsc">
       <DependentUpon>mbase1.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\dataset221.xsc">
+      <DependentUpon>dataset221.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\dataset221.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dataset221.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\dataset221.xss">
+      <DependentUpon>dataset221.xsd</DependentUpon>
     </Content>
     <None Include="Reports\mbase1.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -540,6 +562,10 @@
     <EmbeddedResource Include="Reports\crmbase1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crmbase1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\due_bal221.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>due_bal221.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportTemplates\SampleReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
