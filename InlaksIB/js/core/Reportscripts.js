@@ -26,7 +26,9 @@ $(document).ready(function () {
     $("#reportview").hide();
    
     $("#finalcontrols").hide();
-    localStorage.baseurl = $("#baseurl").val();
+    if (localStorage.baseurl == 'undefined' ||localStorage.baseurl == null) {
+        localStorage.baseurl = $("#baseurl").val();
+    }
     localStorage.title = $("#title").val();
      
     paramsvalue = $("#params").val();
@@ -568,7 +570,7 @@ function processStatic(object) {
         success: function (result) {
            
             if (result == "success") {
-                window.open("Report.aspx", "PopupWindow", "width=1200,height=700,scrollbars=yes,resizable=1");
+                window.open(localStorage.baseurl+"Report.aspx", "PopupWindow", "width=1200,height=700,scrollbars=yes,resizable=1");
             }
             else {
                 $.alert({
