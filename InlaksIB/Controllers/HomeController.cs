@@ -860,6 +860,7 @@ namespace InlaksIB.Controllers
                 var filter = new DataSetFilter();
                 filter.ColumnName = pair.ID;
                 filter.ColumnValue = pair.Value;
+
                 filter.IsIncluded = false;
                 filters.Add(filter);
             }
@@ -1044,7 +1045,7 @@ namespace InlaksIB.Controllers
                         result = "failed";
                         break;
 
-                    case "sec_analysis":
+                    case "sect_analysis":
                         report = new crmbase1();
                         dt = new DataTable();
 
@@ -1123,7 +1124,7 @@ namespace InlaksIB.Controllers
 
             dt.Columns.Add(myDataColumn);
 
-            var sql = "select a.*,b.* from \"LD_LOANS_AND_DEPOSITS\" a inner join  \"SECTOR\" b on (a.\"SECTOR\"=b.\"@ID\")";
+            var sql = "select a.*,b.* from \"AA_LOANS_IL\" a inner join  \"SECTOR\" b on (a.\"Sector\"=b.\"@ID\")";
 
             var db = new PostgreSQLDBInterface(new Settings().sourcedb);
 
@@ -1142,7 +1143,7 @@ namespace InlaksIB.Controllers
 
             data = data.AsEnumerable().Select(t =>
             {
-                t["CONVERTED_AMOUNT"] = t["AMOUNT"].ToString();
+                t["CONVERTED_AMOUNT"] = t["Amount"].ToString().isNull()?0: t["Amount"].toDecimal();
 
                 return t;
             }).CopyToDataTable();

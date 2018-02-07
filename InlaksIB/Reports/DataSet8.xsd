@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet8" targetNamespace="http://tempuri.org/DataSet8.xsd" xmlns:mstns="http://tempuri.org/DataSet8.xsd" xmlns="http://tempuri.org/DataSet8.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet8" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet8" msprop:Generator_UserDSName="DataSet8">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="_x0037_11" msprop:Generator_TableClassName="_711DataTable" msprop:Generator_TableVarName="table711" msprop:Generator_RowChangedName="_711RowChanged" msprop:Generator_TablePropName="_711" msprop:Generator_RowDeletingName="_711RowDeleting" msprop:Generator_RowChangingName="_711RowChanging" msprop:Generator_RowEvHandlerName="_711RowChangeEventHandler" msprop:Generator_RowDeletedName="_711RowDeleted" msprop:Generator_RowClassName="_711Row" msprop:Generator_UserTableName="711" msprop:Generator_RowEvArgName="_711RowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="S_x002F_N" msprop:Generator_ColumnVarNameInTable="_columnS_N" msprop:Generator_ColumnPropNameInRow="_S_N" msprop:Generator_ColumnPropNameInTable="_S_NColumn" msprop:Generator_UserColumnName="S/N" type="xs:string" minOccurs="0" />
+              <xs:element name="Lending_Model" msprop:Generator_ColumnVarNameInTable="columnLending_Model" msprop:Generator_ColumnPropNameInRow="Lending_Model" msprop:Generator_ColumnPropNameInTable="Lending_ModelColumn" msprop:Generator_UserColumnName="Lending_Model" type="xs:string" minOccurs="0" />
+              <xs:element name="Number" msprop:Generator_ColumnVarNameInTable="columnNumber" msprop:Generator_ColumnPropNameInRow="Number" msprop:Generator_ColumnPropNameInTable="NumberColumn" msprop:Generator_UserColumnName="Number" type="xs:int" minOccurs="0" />
+              <xs:element name="Amount_N_x0027_000" msprop:Generator_ColumnVarNameInTable="_columnAmount_N_000" msprop:Generator_ColumnPropNameInRow="_Amount_N_000" msprop:Generator_ColumnPropNameInTable="_Amount_N_000Column" msprop:Generator_UserColumnName="Amount_N'000" type="xs:decimal" minOccurs="0" />
+              <xs:element name="_x0025_" msprop:Generator_ColumnVarNameInTable="_column_" msprop:Generator_ColumnPropNameInRow="__" msprop:Generator_ColumnPropNameInTable="__Column" msprop:Generator_UserColumnName="%" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

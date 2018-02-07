@@ -58,6 +58,7 @@ namespace InlaksIB.Controllers
                     {
                         ColumnName = filter.ColumnName,
                         ColumnValue = filter.ColumnValue,
+                        DisplayName = filter.DisplayName,
                         ID = filter.ID,
                         IsIncluded = filter.IsIncluded,
                         ReportID = filter.Report.ReportID,
