@@ -860,6 +860,7 @@ namespace InlaksIB.Controllers
                 var filter = new DataSetFilter();
                 filter.ColumnName = pair.ID;
                 filter.ColumnValue = pair.Value;
+
                 filter.IsIncluded = false;
                 filters.Add(filter);
             }
@@ -1035,7 +1036,7 @@ namespace InlaksIB.Controllers
             try
             {
                 ReportDocument report;
-                DataTable dt;
+                DataTable dt; string sql = ""; DBInterface db;
                 
                 switch (id.ToLower())
                 {
@@ -1044,7 +1045,7 @@ namespace InlaksIB.Controllers
                         result = "failed";
                         break;
 
-                    case "sec_analysis":
+                    case "sect_analysis":
                         report = new crmbase1();
                         dt = new DataTable();
 
@@ -1059,13 +1060,26 @@ namespace InlaksIB.Controllers
                     case "due_bal":
                         report = new due_bal221();
 
-                        var sql = "select distinct '' as \"Code\", \"ACCOUNT_TITLE_1\" as \"NAME_OF_BANK\", CAST(COALESCE(NULLIF(\"WORKING_BALANCE\",''),'0') as decimal) as \"Amount\"  from \"ACCOUNT\" where \"CATEGORY\" >= '5000' and \"CATEGORY\" <='5999'";
+                         sql = "select distinct '' as \"Code\", \"ACCOUNT_TITLE_1\" as \"NAME_OF_BANK\", CAST(COALESCE(NULLIF(\"WORKING_BALANCE\",''),'0') as decimal) as \"Amount\"  from \"ACCOUNT\" where \"CATEGORY\" >= '5000' and \"CATEGORY\" <='5999'";
 
-                        var db = new PostgreSQLDBInterface(new Settings().sourcedb);
+                         db = new PostgreSQLDBInterface(new Settings().sourcedb);
 
                         dt = db.getData(sql);
 
                         LoadCBNReturnsReport(dt, report,id);
+                        result = "success";
+                        break;
+
+                    case "ml_lend_model":
+                        report = new SLMLL_711();
+
+                      dt = new DataTable();
+
+
+                        ml_lend_model(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id);
+
                         result = "success";
                         break;
 
@@ -1086,7 +1100,76 @@ namespace InlaksIB.Controllers
         }
 
 
-        
+        private void ml_lend_model(DataTable dt, ReportDocument report)
+        {
+
+            var myDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.String"),
+                ColumnName = "S/N"
+            };
+
+            dt.Columns.Add(myDataColumn);
+
+            myDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.String"),
+                ColumnName = "Lending_Model"
+            };
+
+            dt.Columns.Add(myDataColumn);
+
+            myDataColumn = new DataColumn
+            {
+                DataType = typeof(Int32),
+                ColumnName = "Number"
+            };
+
+            dt.Columns.Add(myDataColumn);
+
+            myDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.Decimal"),
+                ColumnName = "Amount_N'000"
+            };
+
+            dt.Columns.Add(myDataColumn);
+
+
+            myDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.Decimal"),
+                ColumnName = "%"
+            };
+
+            dt.Columns.Add(myDataColumn);
+
+
+            var sql = "SELECT  b.\"DESCRIPTION\" as Lending_Model, CAST(COALESCE(NULLIF(a.\"Amount\",''),'0') as decimal) as \"Amount\" FROM \"AA_LOANS_IL\" a inner join \"CATEGORY\" b on (a.\"Category\"=b.\"@ID\");";
+
+            var db = new PostgreSQLDBInterface(new Settings().sourcedb);
+
+            var data = db.getData(sql);
+
+     
+            var total = data.AsEnumerable().Sum(t => t["Amount"].toDecimal());
+
+            var sectgroup = data.AsEnumerable().GroupBy(r => r["Lending_Model"]).Select(grp => grp.ToList());
+            int i = 1;
+
+            foreach (var grp in sectgroup)
+            {
+                var row = dt.NewRow();
+                row["S/N"] = i++;
+                row["Lending_Model"] = grp[0]["Lending_Model"].ToString();
+                row["Number"] = grp.Count;
+                var amount = grp.Sum(t => t["Amount"].toDecimal());
+                row["Amount_N'000"] = amount;
+                row["%"] = (amount / total) * 100;
+
+                dt.Rows.Add(row);
+            }
+        }
 
         private void sec_analysis(DataTable dt, ReportDocument report)
         {
@@ -1123,7 +1206,7 @@ namespace InlaksIB.Controllers
 
             dt.Columns.Add(myDataColumn);
 
-            var sql = "select a.*,b.* from \"LD_LOANS_AND_DEPOSITS\" a inner join  \"SECTOR\" b on (a.\"SECTOR\"=b.\"@ID\")";
+            var sql = "select a.*,b.* from \"AA_LOANS_IL\" a inner join  \"SECTOR\" b on (a.\"Sector\"=b.\"@ID\")";
 
             var db = new PostgreSQLDBInterface(new Settings().sourcedb);
 
@@ -1142,7 +1225,7 @@ namespace InlaksIB.Controllers
 
             data = data.AsEnumerable().Select(t =>
             {
-                t["CONVERTED_AMOUNT"] = t["AMOUNT"].ToString();
+                t["CONVERTED_AMOUNT"] = t["Amount"].ToString().isNull()?0: t["Amount"].toDecimal();
 
                 return t;
             }).CopyToDataTable();

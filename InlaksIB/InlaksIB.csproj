@@ -417,6 +417,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dataset221.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DataSet8.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet8.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\due_bal221.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -429,6 +434,12 @@
       <DependentUpon>mbase1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reports\mcbase1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\SLMLL_711.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SLMLL_711.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportTemplates\SampleReport1.cs">
@@ -462,6 +473,17 @@
     </None>
     <Content Include="Reports\dataset221.xss">
       <DependentUpon>dataset221.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSet8.xsc">
+      <DependentUpon>DataSet8.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSet8.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet8.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Reports\DataSet8.xss">
+      <DependentUpon>DataSet8.xsd</DependentUpon>
     </Content>
     <None Include="Reports\mbase1.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -566,6 +588,10 @@
     <EmbeddedResource Include="Reports\due_bal221.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>due_bal221.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\SLMLL_711.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SLMLL_711.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportTemplates\SampleReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
