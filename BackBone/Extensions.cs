@@ -35,6 +35,23 @@ namespace BackBone
         }
 
 
+        public static void AddTableColumns(this DataTable dt, string [] columns)
+        {
+           foreach(var column in columns)
+            {
+                var myDataColumn = new DataColumn
+                {
+                    DataType = Type.GetType("System.String"),
+                    ColumnName = column
+                };
+
+                dt.Columns.Add(myDataColumn);
+            }
+          
+
+        }
+
+
         public static string  DataTableToJson(this DataTable dataTable)
         {
             var result = new StringBuilder();

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -1081,6 +1082,11 @@ namespace InlaksIB.Controllers
                         LoadCBNReturnsReport(dt, report, id);
 
                         result = "success";
+                        
+                        break;
+
+                    case "sch_int_rates":
+                        result = "success";
                         break;
 
 
@@ -1099,6 +1105,80 @@ namespace InlaksIB.Controllers
         
         }
 
+        
+
+        private void sch_int_rates(DataTable dt, ReportDocument report)
+        {
+
+            dt.AddTableColumns(new string[] { "TYPE_OF_ACCOUNT","0-30", "31-60", "61-90","91-180","181-360","Over360" });
+            
+            //var myDataColumn = new DataColumn
+            //{
+            //    DataType = Type.GetType("System.String"),
+            //    ColumnName = ""
+            //};
+
+            //dt.Columns.Add(myDataColumn);
+
+            //myDataColumn = new DataColumn
+            //{
+            //    DataType = Type.GetType("System.String"),
+            //    ColumnName = "0-30"
+            //};
+
+            //dt.Columns.Add(myDataColumn);
+
+            //myDataColumn = new DataColumn
+            //{
+            //    DataType = Type.GetType("System.String"),
+            //    ColumnName = "31-60"
+            //};
+
+            //dt.Columns.Add(myDataColumn);
+
+            //myDataColumn = new DataColumn
+            //{
+            //    DataType = Type.GetType("System.String"),
+            //    ColumnName = "61-90"
+            //};
+
+            //dt.Columns.Add(myDataColumn);
+
+
+            //myDataColumn = new DataColumn
+            //{
+            //    DataType = Type.GetType("System.String"),
+            //    ColumnName = "91-180"
+            //};
+
+            //dt.Columns.Add(myDataColumn);
+
+
+            //myDataColumn = new DataColumn
+            //{
+            //    DataType = Type.GetType("System.String"),
+            //    ColumnName = "61-90"
+            //};
+
+            //dt.Columns.Add(myDataColumn);
+
+            var sql = "select distinct a.\"CONDITION_CODE\", a.\"DESCRIPTION\" as Type_of_Account, b.\"GROUP_CY_DATE\", TRIM(both 'N D' from(substring(b.\"GROUP_CY_DATE\" FROM 5 FOR 9))) as effective_date from \"ACCT_GEN_CONDITION\" a join \"GROUP_CREDIT_INT\" b on \n" +
+                    "(a.\"CONDITION_CODE\"=TRIM(both 'N' from substring(b.\"GROUP_CY_DATE\",'..')))";
+
+            var db = new PostgreSQLDBInterface(new Settings().sourcedb);
+
+            var data = db.getData(sql);
+
+            foreach(DataRow row in data.Rows)
+            {
+                var datestr = row["effective_date"].ToString();
+
+                var efdate = DateTime.ParseExact(datestr,"yyyyMMdd", new CultureInfo("en-US"));
+                
+            }
+
+
+        }
 
         private void ml_lend_model(DataTable dt, ReportDocument report)
         {

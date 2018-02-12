@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dataset221" targetNamespace="http://tempuri.org/dataset221.xsd" xmlns:mstns="http://tempuri.org/dataset221.xsd" xmlns="http://tempuri.org/dataset221.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dataset221" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dataset221" msprop:Generator_UserDSName="dataset221">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataTable11" msprop:Generator_TableClassName="DataTable11DataTable" msprop:Generator_TableVarName="tableDataTable11" msprop:Generator_TablePropName="DataTable11" msprop:Generator_RowDeletingName="DataTable11RowDeleting" msprop:Generator_RowChangingName="DataTable11RowChanging" msprop:Generator_RowEvHandlerName="DataTable11RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable11RowDeleted" msprop:Generator_UserTableName="DataTable11" msprop:Generator_RowChangedName="DataTable11RowChanged" msprop:Generator_RowEvArgName="DataTable11RowChangeEvent" msprop:Generator_RowClassName="DataTable11Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TYPE_OF_ACCOUNT" msprop:Generator_ColumnVarNameInTable="columnTYPE_OF_ACCOUNT" msprop:Generator_ColumnPropNameInRow="TYPE_OF_ACCOUNT" msprop:Generator_ColumnPropNameInTable="TYPE_OF_ACCOUNTColumn" msprop:Generator_UserColumnName="TYPE_OF_ACCOUNT" type="xs:string" minOccurs="0" />
+              <xs:element name="_x0030_-30" msprop:Generator_ColumnVarNameInTable="_column0_30" msprop:Generator_ColumnPropNameInRow="_0_30" msprop:Generator_ColumnPropNameInTable="_0_30Column" msprop:Generator_UserColumnName="0-30" type="xs:string" minOccurs="0" />
+              <xs:element name="_x0033_1-60" msprop:Generator_ColumnVarNameInTable="_column31_60" msprop:Generator_ColumnPropNameInRow="_31_60" msprop:Generator_ColumnPropNameInTable="_31_60Column" msprop:Generator_UserColumnName="31-60" type="xs:string" minOccurs="0" />
+              <xs:element name="_x0036_1-90" msprop:Generator_ColumnVarNameInTable="_column61_90" msprop:Generator_ColumnPropNameInRow="_61_90" msprop:Generator_ColumnPropNameInTable="_61_90Column" msprop:Generator_UserColumnName="61-90" type="xs:string" minOccurs="0" />
+              <xs:element name="_x0039_1-180" msprop:Generator_ColumnVarNameInTable="_column91_180" msprop:Generator_ColumnPropNameInRow="_91_180" msprop:Generator_ColumnPropNameInTable="_91_180Column" msprop:Generator_UserColumnName="91-180" type="xs:string" minOccurs="0" />
+              <xs:element name="_x0031_81-360" msprop:Generator_ColumnVarNameInTable="_column181_360" msprop:Generator_ColumnPropNameInRow="_181_360" msprop:Generator_ColumnPropNameInTable="_181_360Column" msprop:Generator_UserColumnName="181-360" type="xs:string" minOccurs="0" />
+              <xs:element name="OVER360" msprop:Generator_ColumnVarNameInTable="columnOVER360" msprop:Generator_ColumnPropNameInRow="OVER360" msprop:Generator_ColumnPropNameInTable="OVER360Column" msprop:Generator_UserColumnName="OVER360" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
