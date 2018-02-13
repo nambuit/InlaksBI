@@ -413,6 +413,11 @@
       <DependentUpon>crmbase1.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\DataSet10.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet10.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\dataset221.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -457,6 +462,12 @@
       <DependentUpon>SLMLL_711.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\SOLC_761.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SOLC_761.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ReportTemplates\SampleReport1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -481,6 +492,17 @@
     </Content>
     <Content Include="Reports\dataset764.xsc">
       <DependentUpon>dataset764.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSet10.xsc">
+      <DependentUpon>DataSet10.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSet10.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet10.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Reports\DataSet10.xss">
+      <DependentUpon>DataSet10.xsd</DependentUpon>
     </Content>
     <None Include="Reports\dataset764.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -617,6 +639,10 @@
     <EmbeddedResource Include="Reports\SLMLL_711.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>SLMLL_711.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\SOLC_761.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SOLC_761.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportTemplates\SampleReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

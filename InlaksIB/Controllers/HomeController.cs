@@ -1086,6 +1086,14 @@ namespace InlaksIB.Controllers
                         break;
 
                     case "sch_int_rates":
+                        report = new ITR764();
+
+                        dt = new DataTable();
+
+                        sch_int_rates(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id);
+
                         result = "success";
                         break;
 
@@ -1110,71 +1118,45 @@ namespace InlaksIB.Controllers
         private void sch_int_rates(DataTable dt, ReportDocument report)
         {
 
-            dt.AddTableColumns(new string[] { "TYPE_OF_ACCOUNT","0-30", "31-60", "61-90","91-180","181-360","Over360" });
+            dt.AddTableColumns(new string[] { "TYPE_OF_ACCOUNT","0-30", "31-60", "61-90","91-180","181-360","OVER360" });
             
-            //var myDataColumn = new DataColumn
-            //{
-            //    DataType = Type.GetType("System.String"),
-            //    ColumnName = ""
-            //};
+          
 
-            //dt.Columns.Add(myDataColumn);
-
-            //myDataColumn = new DataColumn
-            //{
-            //    DataType = Type.GetType("System.String"),
-            //    ColumnName = "0-30"
-            //};
-
-            //dt.Columns.Add(myDataColumn);
-
-            //myDataColumn = new DataColumn
-            //{
-            //    DataType = Type.GetType("System.String"),
-            //    ColumnName = "31-60"
-            //};
-
-            //dt.Columns.Add(myDataColumn);
-
-            //myDataColumn = new DataColumn
-            //{
-            //    DataType = Type.GetType("System.String"),
-            //    ColumnName = "61-90"
-            //};
-
-            //dt.Columns.Add(myDataColumn);
-
-
-            //myDataColumn = new DataColumn
-            //{
-            //    DataType = Type.GetType("System.String"),
-            //    ColumnName = "91-180"
-            //};
-
-            //dt.Columns.Add(myDataColumn);
-
-
-            //myDataColumn = new DataColumn
-            //{
-            //    DataType = Type.GetType("System.String"),
-            //    ColumnName = "61-90"
-            //};
-
-            //dt.Columns.Add(myDataColumn);
-
-            var sql = "select distinct a.\"CONDITION_CODE\", a.\"DESCRIPTION\" as Type_of_Account, b.\"GROUP_CY_DATE\", TRIM(both 'N D' from(substring(b.\"GROUP_CY_DATE\" FROM 5 FOR 9))) as effective_date from \"ACCT_GEN_CONDITION\" a join \"GROUP_CREDIT_INT\" b on \n" +
-                    "(a.\"CONDITION_CODE\"=TRIM(both 'N' from substring(b.\"GROUP_CY_DATE\",'..')))";
+            var sql = "select distinct a.\"CONDITION_CODE\", a.\"DESCRIPTION\" as Type_of_Account,b.\"CR_INT_RATE\" as interest_rate, b.\"GROUP_CY_DATE\", TRIM(both 'N D' from(substring(b.\"GROUP_CY_DATE\" FROM 5 FOR 9))) as effective_date from \"ACCT_GEN_CONDITION\" a join \"GROUP_CREDIT_INT\" b on \n" +
+                     "(a.\"CONDITION_CODE\"=TRIM(both 'N' from substring(b.\"GROUP_CY_DATE\",'..')))";
 
             var db = new PostgreSQLDBInterface(new Settings().sourcedb);
 
             var data = db.getData(sql);
+
+            data.AddTableColumns(new string[] {"AgeGroup"});
 
             foreach(DataRow row in data.Rows)
             {
                 var datestr = row["effective_date"].ToString();
 
                 var efdate = DateTime.ParseExact(datestr,"yyyyMMdd", new CultureInfo("en-US"));
+
+                row["AgeGroup"] = efdate.getAgeGroup();
+
                 
+            }
+
+
+            var grps = data.AsEnumerable().GroupBy(g => g["Type_of_Account"]).Select(grp => grp.ToList());
+
+            foreach(var grp in grps)
+            {
+                var row = dt.NewRow();
+
+                row["TYPE_OF_ACCOUNT"] = grp[0]["Type_of_Account"].ToString();
+
+                foreach(DataRow grprow in grp)
+                {
+                    row[grprow["AgeGroup"].ToString()] = grprow["interest_rate"].ToString() + "%";
+                }
+
+                dt.Rows.Add(row);
             }
 
 

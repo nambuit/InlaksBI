@@ -35,6 +35,50 @@ namespace BackBone
         }
 
 
+
+        public static string getAgeGroup(this DateTime date)
+        {
+            var age = Utils.getAge(date);
+
+            if (age <= 30)
+            {
+                return "0-30";
+            }
+
+
+            if (age > 30 && age <=60)
+            {
+                return "31-60";
+            }
+
+            if (age > 60 && age <= 90)
+            {
+                return "61-90";
+            }
+
+            if (age > 60 && age <= 90)
+            {
+                return "61-90";
+            }
+
+            if (age > 90 && age <= 180)
+            {
+                return "91-180";
+            }
+
+            if (age > 180 && age <= 360)
+            {
+                return "181-360";
+            }
+
+     
+            return "OVER360";
+            
+
+        }
+
+
+
         public static void AddTableColumns(this DataTable dt, string [] columns)
         {
            foreach(var column in columns)
