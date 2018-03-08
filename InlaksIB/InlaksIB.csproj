@@ -413,6 +413,11 @@
       <DependentUpon>crmbase1.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\DataSet001.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet001.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSet10.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -456,6 +461,12 @@
     <Compile Include="Reports\mcbase1.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\mem001.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>mem001.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\SLMLL_711.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -495,6 +506,17 @@
     </Content>
     <Content Include="Reports\DataSet10.xsc">
       <DependentUpon>DataSet10.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSet001.xsc">
+      <DependentUpon>DataSet001.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSet001.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet001.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSet001.xss">
+      <DependentUpon>DataSet001.xsd</DependentUpon>
     </Content>
     <None Include="Reports\DataSet10.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -635,6 +657,10 @@
     <EmbeddedResource Include="Reports\ITR764.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ITR764.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\mem001.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>mem001.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\SLMLL_711.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

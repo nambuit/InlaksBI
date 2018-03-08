@@ -343,7 +343,7 @@ namespace BackBone
                 
                
                 smtpClient.Credentials = new System.Net.NetworkCredential(info.From, info.smtppass);
-                smtpClient.UseDefaultCredentials = true;
+                smtpClient.UseDefaultCredentials = false;
                
                 
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;

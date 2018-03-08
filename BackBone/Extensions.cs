@@ -163,7 +163,7 @@ namespace BackBone
                 var value = input.Substring(6, input.Length - 6);
 
                 var key = input.Substring(0, 6);
-
+                
                 return AES.Decrypt(value, key);
             }
             catch
