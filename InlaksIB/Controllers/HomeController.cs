@@ -1357,6 +1357,12 @@ namespace InlaksIB.Controllers
             p.ID = "returnName"; p.Value = title;
             reportparams.Add(p);
 
+
+
+
+
+
+
             Session["reportparams"] = reportparams;
             Session["report"] = report;
 

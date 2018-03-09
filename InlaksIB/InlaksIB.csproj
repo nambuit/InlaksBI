@@ -467,6 +467,12 @@
       <DependentUpon>mem001.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\pnl1000.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pnl1000.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\SLMLL_711.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -661,6 +667,10 @@
     <EmbeddedResource Include="Reports\mem001.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>mem001.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\pnl1000.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>pnl1000.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\SLMLL_711.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
