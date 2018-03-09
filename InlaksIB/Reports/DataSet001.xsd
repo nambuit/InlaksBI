@@ -14,6 +14,10 @@
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowClassName="DataTable1Row">
           <xs:complexType>
+            <xs:sequence>
+              <xs:element name="int_income" msprop:Generator_ColumnVarNameInTable="columnint_income" msprop:Generator_ColumnPropNameInRow="int_income" msprop:Generator_ColumnPropNameInTable="int_incomeColumn" msprop:Generator_UserColumnName="int_income" type="xs:decimal" minOccurs="0" />
+              <xs:element name="less_int_expense" msprop:Generator_ColumnVarNameInTable="columnless_int_expense" msprop:Generator_ColumnPropNameInRow="less_int_expense" msprop:Generator_ColumnPropNameInTable="less_int_expenseColumn" msprop:Generator_UserColumnName="less_int_expense" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
           </xs:complexType>
         </xs:element>
       </xs:choice>
