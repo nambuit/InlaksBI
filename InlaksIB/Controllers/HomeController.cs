@@ -1098,6 +1098,29 @@ namespace InlaksIB.Controllers
                         break;
 
 
+                    case "pnlacct_montly":
+                        report = new pnl1000();
+
+                        dt = new DataTable();
+
+                        pnlacct_montly(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id);
+
+                        result = "success";
+                        break;
+
+                    case "mem_items":
+                        report = new mem001();
+
+                        dt = new DataTable();
+
+                        mem_items(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id);
+
+                        result = "success";
+                        break;
 
                 }
 
@@ -1113,7 +1136,66 @@ namespace InlaksIB.Controllers
         
         }
 
-        
+
+
+
+        private void pnlacct_montly(DataTable dt, ReportDocument report)
+        {
+            dt.AddTableColumns(new string[] { "int_income", "less_int_expense", "commision", "Fees/Charges", "inc_from_inv", "oth_inc_from_non_fin",
+           "Staff_cost","Directors","Depreciation","Prov_For_Bad_Debts","Overheads","Bad_Debts_Written_Off","Penalties_Paid","eoi_items","tax_on_eoi","Less_Provision_For_Taxation" });
+            
+
+            var row = dt.NewRow();
+
+            row["int_income"] = 1342332.23;
+            row["less_int_expense"] = 42312.23;
+            row["commision"] = 3213231.32;
+            row["Fees/Charges"] = 3213231.32;
+            row["inc_from_inv"] = 3213231.32;
+            row["oth_inc_from_non_fin"] = 3213231.32;
+            row["Staff_cost"] = 3213231.32;
+            row["Directors"] = 3213231.32;
+            row["Depreciation"] = 3213231.32;
+            row["Prov_For_Bad_Debts"] = 3213231.32;
+            row["Overheads"] = 3213231.32;
+            row["Bad_Debts_Written_Off"] = 3213231.32;
+            row["Penalties_Paid"] = 2433423.24;
+            row["eoi_items"] = 33.23;
+            row["tax_on_eoi"] = 3433.23;
+            row["Less_Provision_For_Taxation"] = 3433.23;
+
+
+            dt.Rows.Add(row);
+        }
+
+        private void mem_items(DataTable dt, ReportDocument report)
+        {
+            dt.AddTableColumns(new string[] { "int_income", "less_int_expense", "commision", "Fees/Charges", "inc_from_inv", "oth_inc_from_non_fin",
+           "Staff_cost","Directors","Depreciation","Prov_For_Bad_Debts","Overheads","Bad_Debts_Written_Off","Penalties_Paid","eoi_items","tax_on_eoi","Less_Provision_For_Taxation" });
+
+
+            var row = dt.NewRow();
+
+            row["int_income"] = 1342332.23;
+            row["less_int_expense"] = 42312.23;
+            row["commision"] = 3213231.32;
+            row["Fees/Charges"] = 3213231.32;
+            row["inc_from_inv"] = 3213231.32;
+            row["oth_inc_from_non_fin"] = 3213231.32;
+            row["Staff_cost"] = 3213231.32;
+            row["Directors"] = 3213231.32;
+            row["Depreciation"] = 3213231.32;
+            row["Prov_For_Bad_Debts"] = 3213231.32;
+            row["Overheads"] = 3213231.32;
+            row["Bad_Debts_Written_Off"] = 3213231.32;
+            row["Penalties_Paid"] = 2433423.24;
+            row["eoi_items"] = 33.23;
+            row["tax_on_eoi"] = 3433.23;
+            row["Less_Provision_For_Taxation"] = 3433.23;
+
+
+            dt.Rows.Add(row);
+        }
 
         private void sch_int_rates(DataTable dt, ReportDocument report)
         {

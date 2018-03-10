@@ -473,6 +473,18 @@
       <DependentUpon>pnl1000.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\sch_loan763.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>sch_loan763.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\sds201.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>sds201.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\SLMLL_711.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -671,6 +683,14 @@
     <EmbeddedResource Include="Reports\pnl1000.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>pnl1000.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\sch_loan763.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>sch_loan763.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\sds201.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>sds201.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\SLMLL_711.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

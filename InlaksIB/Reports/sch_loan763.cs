@@ -16,14 +16,14 @@ namespace InlaksIB.Reports {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class pnl1000 : ReportClass {
+    public class sch_loan763 : ReportClass {
         
-        public pnl1000() {
+        public sch_loan763() {
         }
         
         public override string ResourceName {
             get {
-                return "pnl1000.rpt";
+                return "sch_loan763.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace InlaksIB.Reports {
         
         public override string FullResourceName {
             get {
-                return "InlaksIB.Reports.pnl1000.rpt";
+                return "InlaksIB.Reports.sch_loan763.rpt";
             }
             set {
                 // Do nothing
@@ -151,20 +151,12 @@ namespace InlaksIB.Reports {
                 return this.DataDefinition.ParameterFields[7];
             }
         }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_My_Parameter {
-            get {
-                return this.DataDefinition.ParameterFields[8];
-            }
-        }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class Cachedpnl1000 : Component, ICachedReport {
+    public class Cachedsch_loan763 : Component, ICachedReport {
         
-        public Cachedpnl1000() {
+        public Cachedsch_loan763() {
         }
         
         [Browsable(false)]
@@ -201,7 +193,7 @@ namespace InlaksIB.Reports {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            pnl1000 rpt = new pnl1000();
+            sch_loan763 rpt = new sch_loan763();
             rpt.Site = this.Site;
             return rpt;
         }
