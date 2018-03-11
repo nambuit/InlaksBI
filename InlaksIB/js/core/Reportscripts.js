@@ -17,6 +17,7 @@ $('#input').dataTable();
 
 
 $(document).ready(function () {
+    $("#busy").hide();
     $("#state").hide();
     $("#export").hide();
     $("#print").hide();
@@ -586,6 +587,12 @@ function processStatic(object) {
     
         }
     });
+
+
+}
+
+
+function ProcessExcel(reportname){
 
 
 }

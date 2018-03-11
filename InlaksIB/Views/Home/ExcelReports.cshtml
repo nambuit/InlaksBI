@@ -1,0 +1,44 @@
+﻿
+@{
+    
+    Layout = "~/Views/Home/HomeLayout.cshtml";
+}
+
+<div class="col-md-9">
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">@ViewBag.Title</div>
+        </div>
+        <div class="panel-body">
+            <label for="sd">Select report start and end date:</label>
+            <div class="form-group">
+              
+                <div id="sd" data-name="startdate"  class="col-md-4 bfh-datepicker" data-format="d-m-y" data-date="today">
+                  
+                </div>
+               
+              
+               
+                <div data-name="endddate"  class="col-md-4 bfh-datepicker" data-format="d-m-y" data-date="today">
+
+                </div>
+              
+                <button onclick="ProcessExcel('@ViewBag.Title')" class="btn  btn-success">Download Report
+                
+                </button>
+            </div>
+            
+         
+            <div class="form-group">
+                <img style="margin-left:33%" id="busy" src="~/img/waiting_icon.gif" />
+
+            </div>
+
+
+
+              
+            </div>
+
+    </div>
+
+    </div>

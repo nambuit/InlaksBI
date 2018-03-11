@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -49,13 +50,20 @@ namespace InlaksIB.Controllers
 
 
             var reportid = id;//Request.QueryString.Get("id");
-
+            var report = new InlaksBIContext().Resources.FirstOrDefault(r => r.value == id);
+         id =  report.ResourceID.ToString();
 
 
             switch (reportid.Trim().ToLower())
             {
                 default:
                     return RedirectToAction("ProcessStandard", "Report", new { id = id });
+
+                case "excelwritter":
+                    ViewBag.Title = report.ResourceName;
+
+                    return View("ExcelReports");
+               
             }
 
         }
@@ -139,7 +147,7 @@ namespace InlaksIB.Controllers
                 switch (mode)
                 {
                     case "create":
-                        module.ModuleID = id;
+                       // module.ModuleID = id;
                         dbcontext.Modules.Add(module);
                         dbcontext.SaveChanges();
                         ViewBag.errorclass = "green";
@@ -379,7 +387,7 @@ namespace InlaksIB.Controllers
             {
                 schedule.MaxDate = DateTime.ParseExact(schedule.MaxDate, "dd-MM-yyyy", new System.Globalization.CultureInfo("en-US")).ToString("dd MMM yyyy");
             }
-
+            
             switch (mode)
             {
                 case "create":
@@ -429,8 +437,14 @@ namespace InlaksIB.Controllers
                 switch (mode)
                 {
                     case "create":
-                        resource.Module = dbcontext.Modules.FirstOrDefault(m => m.ModuleID == resource.ModuleID);
-                        dbcontext.Resources.Add(resource);
+                      var   re = dbcontext.Resources.Create();
+
+                        re.Module = dbcontext.Modules.FirstOrDefault(m => m.ModuleID == resource.ModuleID);
+                        re.ResourceName = resource.ResourceName;
+                        re.SubMenus = resource.SubMenus;
+                        re.value = resource.value;
+                        re.Url = resource.Url;
+                        dbcontext.Resources.Add(re);
                         dbcontext.SaveChanges();
                         break;
                     case "edit":
@@ -1455,6 +1469,68 @@ namespace InlaksIB.Controllers
         }
 
 
+        [HttpPost]
+        public string LaunchExcel()
+        {
+            try
+            {
+
+                var startdate = Request.Form["startdate"];
+                var enddate = Request.Form["endate"];
+                var reportname = Request.Form["reportname"];
+
+                switch (reportname)
+                {
+                    case "failed items":
+
+                       Session["file"] = generateTestExcel(startdate, enddate);
+
+                        break;
+
+                  
+                }
+
+                return "Success";
+            }
+            catch (Exception d)
+            {
+                return d.Message;
+            }
+
+        }
+
+
+
+        string generateTestExcel(string startdate, string enddate)
+        {
+            return "";
+        }
+
+
+
+
+
+
+        public void DownloadCurrentReportFile()
+        {
+            try
+            {
+                string path = (string)Session["file"];
+                var fileInfo = new FileInfo(path);
+
+
+                Response.Clear();
+                Response.ContentType = "application/vnd.openxmlformats";
+                Response.AddHeader("Content-Disposition",
+                                   "attachment; filename=" + fileInfo.Name);
+                Response.WriteFile(fileInfo.FullName);
+                Response.Flush();
+            }
+            catch (Exception d)
+            {
+                throw (d);
+            }
+        }
 
 
     }

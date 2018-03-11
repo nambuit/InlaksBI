@@ -216,6 +216,7 @@
     <Content Include="img\landingpage.jpg" />
     <Content Include="img\pdf.png" />
     <Content Include="img\ppt.png" />
+    <Content Include="img\waiting_icon.gif" />
     <Content Include="img\word.png" />
     <Content Include="img\xls.png" />
     <Content Include="img\xml.png" />
@@ -648,6 +649,7 @@
     <Content Include="Views\Home\CreateReport.cshtml" />
     <Content Include="Views\Home\DataSetSetup.cshtml" />
     <Content Include="Views\Home\CreateDataSet.cshtml" />
+    <Content Include="Views\Home\ExcelReports.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
