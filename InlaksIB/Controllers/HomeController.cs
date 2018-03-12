@@ -3,6 +3,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using InlaksIB.Properties;
 using InlaksIB.Reports;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace InlaksIB.Controllers
@@ -1478,12 +1480,12 @@ namespace InlaksIB.Controllers
                 var startdate = Request.Form["startdate"];
                 var enddate = Request.Form["endate"];
                 var reportname = Request.Form["reportname"];
-
+                var downpath = HostingEnvironment.MapPath("~/exceldownloads/");
                 switch (reportname)
                 {
                     case "failed items":
 
-                       Session["file"] = generateTestExcel(startdate, enddate);
+                       Session["file"] = generateAMLReport(startdate, enddate,downpath,reportname);
 
                         break;
 
@@ -1501,16 +1503,100 @@ namespace InlaksIB.Controllers
 
 
 
-        string generateTestExcel(string startdate, string enddate)
+        string generateAMLReport(string startdate, string enddate, string downpath, string reportname)
         {
-            var sd = DateTime.Parse(startdate);
-            var ed = DateTime.Parse(enddate);
-            var Startdate = sd.ToString("dd-MMM-yyyy 23:5");
-            var Enddate = ed.ToString("dd-MMM-yyyy 23:59:59");
+            var sql = "";
 
-            return " ";
+            var db = new PostgreSQLDBInterface(new Settings().sourcedb);
+
+            var dt = db.getData(sql);
+
+            downpath = downpath + startdate + "-" + enddate + reportname + ".xlsx";
+
+
+            ExcelWorksheet oSheet;
+            ExcelPackage xlPackage;
+
+
+            FileInfo newFile = new FileInfo(downpath);
+
+            if (newFile.Exists)
+            {
+                newFile.Delete();
+            }
+            xlPackage = new ExcelPackage(newFile);
+
+
+            oSheet = xlPackage.Workbook.Worksheets.Add("Currency Transaction Report");
+
+            int count = 0; int curRow = 3;
+
+
+
+            var branchgroups = dt.AsEnumerable().GroupBy(r => r["branchcode"].ToString()).Select(grp => grp.ToList());
+
+
+            foreach (var branchdata in branchgroups)
+            {
+
+
+                oSheet.Cells[curRow, 2].Value = "NPF MICROFINANCE BANK PLC";
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+                //oSheet.Cells[3, 1, 3, 13].Merge = true;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = branchdata[0]["branchname"].ToString();
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = "BRANCH ADDRESS";
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = "BRANCH NAME";
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = "REPORT TITLE";
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+                var headers = new string[] { "S/N", "BRANCH CODE", "BANK CODE", "REPORT TYPE", "CUSTOMER TYPE", "SURNAME/NAME OF ORGANISATION", "FIRST NAME", "MIDDLE NAME", "NATIONALITY", "D.O.B", "D.O.I", "OCCUPATION", "LINE OF BUS.", "TYPE OF IDENTIFICATION", "IDENTIFICATION NUMBER", "REGISTRATION CERTIFICATE NO.", "DATE OF ISSUE", "PLACE OF ISSUE", "ISSUING AUTHORITY", "CUSTOMER ADDRESS TYPE", "FIRST ADDRESS LINE", "SECOND ADDRESS LINE", "TOWN/CITY", "STATE", "TELEPHONE", "E-MAIL", "ACCOUNT TYPE", "ACCOUNT NO.", "ACCOUNT STATUS", "DATE ACCOUNT WAS OPENED", "LINK/CONNECTED ACCOUNTS", "TRANSACTION NUMBER", "TRANSACTION DATE", "TRANSACTION TYPE", "DR/CR", "TRANSACTION PARTICULARS", "CURRENCY TYPE", "AMOUNT", "PURPOSE OF TRANSACTION", "SOURCE/ORIGIN OF FUND", "NAME OF BENEFICIARY", "ADDRESS OF BENEFICIARY", "REASONS FOR SUSPICION" };
+                int curcel = 2;
+                foreach (var header in headers)
+                {
+                    oSheet.Cells[curRow, 2].Value = header;
+                    oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                    oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                    curcel = curcel + 1;
+                }
+
+
+                curRow = curRow + 1;
+
+                foreach (DataRow row in branchdata)
+                {
+                    oSheet.Cells[curRow, 2].Value = row[""].ToString();
+                    oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                    oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+                }
+
+            }
+
+
+            return downpath;
         }
-
 
 
 
