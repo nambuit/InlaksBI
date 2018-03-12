@@ -1503,7 +1503,12 @@ namespace InlaksIB.Controllers
 
         string generateTestExcel(string startdate, string enddate)
         {
-            return "";
+            var sd = DateTime.Parse(startdate);
+            var ed = DateTime.Parse(enddate);
+            var Startdate = sd.ToString("dd-MMM-yyyy 23:5");
+            var Enddate = ed.ToString("dd-MMM-yyyy 23:59:59");
+
+            return " ";
         }
 
 

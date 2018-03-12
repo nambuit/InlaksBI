@@ -594,5 +594,42 @@ function processStatic(object) {
 
 function ProcessExcel(reportname){
 
+    $("#busy").show();
+
+    var url = localStorage.baseurl + "Home/LaunchExcel";
+
+    var startdate = document.getElementsByName("startdate")[0].value;
+    var enddate = document.getElementsByName("enddate")[0].value;
+
+    var formdata = $.param({ reportname: reportname, startdate: startdate, endate:enddate });
+
+    $.ajax({
+        url: url,
+        type: "POST",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        data: formdata,
+        success: function (result) {
+            if (result == "Success") {
+
+
+            } else
+            {
+                $.alert({
+                    title: 'Response Message',
+                    content: result,
+                    buttons: {
+                        Okay: function () {
+                            $("#busy").hide();
+                        }
+                    }
+                });
+            }
+
+        }
+    });
+
+
+
+
 
 }
