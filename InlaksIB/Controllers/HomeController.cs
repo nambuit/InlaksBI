@@ -3,6 +3,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using InlaksIB.Properties;
 using InlaksIB.Reports;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace InlaksIB.Controllers
@@ -1478,12 +1480,12 @@ namespace InlaksIB.Controllers
                 var startdate = Request.Form["startdate"];
                 var enddate = Request.Form["endate"];
                 var reportname = Request.Form["reportname"];
-
+                var path = HostingEnvironment.MapPath("~/exceldownloads/");
                 switch (reportname)
                 {
                     case "failed items":
 
-                       Session["file"] = generateTestExcel(startdate, enddate);
+                       Session["file"] = generateTestExcel(startdate, enddate,downpath,reportname);
 
                         break;
 
@@ -1501,12 +1503,37 @@ namespace InlaksIB.Controllers
 
 
 
-        string generateTestExcel(string startdate, string enddate)
+        string generateTestExcel(string startdate, string enddate, string downpath, string reportname)
         {
-            var sd = DateTime.Parse(startdate);
-            var ed = DateTime.Parse(enddate);
-            var Startdate = sd.ToString("dd-MMM-yyyy 23:5");
-            var Enddate = ed.ToString("dd-MMM-yyyy 23:59:59");
+            var sql = "";
+
+           // var db = new 
+
+            downpath = downpath + startdate + "-" + enddate + reportname+".xlsx";
+
+
+            ExcelWorksheet oSheet;
+            ExcelPackage xlPackage;
+
+
+            FileInfo newFile = new FileInfo(downpath);
+
+            if (newFile.Exists)
+            {
+                newFile.Delete();
+            }
+            xlPackage = new ExcelPackage(newFile);
+
+
+            oSheet = xlPackage.Workbook.Worksheets.Add("Finacle Reports");
+
+            int count = 0; int curRow = 0; int curRow2 = 0;
+
+
+            oSheet.Cells[1, 1].Value = "Type of Report";
+            oSheet.Cells[1, 1].Style.Font.Bold = true;
+            oSheet.Cells[1, 1].Style.Font.UnderLine = true;
+            //oSheet.Cells[curRow - 3, 1, curRow - 3, 13].Merge = true;
 
             return " ";
         }
