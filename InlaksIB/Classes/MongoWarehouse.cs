@@ -358,6 +358,15 @@ namespace InlaksIB
             return dt;
         }
 
+        public DataTable testobject(string objectname)
+        {
+            return new DataTable();
+        }
+
+        public string getDatasetBuilder(List<DatasetObject> datasetobject)
+        {
+            return "";
+        }
 
     }
 

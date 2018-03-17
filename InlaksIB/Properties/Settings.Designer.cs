@@ -44,15 +44,6 @@ namespace InlaksIB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Host=localhost;Database=inlaksbiwarehouse;Username=inlaksbi;Password=own2morrow")]
-        public string warehousedb {
-            get {
-                return ((string)(this["warehousedb"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Host=localhost;Database=inlaksbisource;Username=inlaksbi;Password=own2morrow")]
         public string sourcedb {
             get {
@@ -62,8 +53,18 @@ namespace InlaksIB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("sqlserver")]
+        public string warehousedbtype {
+            get {
+                return ((string)(this["warehousedbtype"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Host=localhost;Database=inlaksbi;Username=inlaksbi;Password=own2morrow")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SRVNIBSS\\MSSQLSERVER01;Initial Catalog=inlaksbi;User ID=inlaks;Passwo" +
+            "rd=own2morrow")]
         public string DBConstr {
             get {
                 return ((string)(this["DBConstr"]));
@@ -72,10 +73,11 @@ namespace InlaksIB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("pgsql")]
-        public string warehousedbtype {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SRVNIBSS\\MSSQLSERVER01;Initial Catalog=inlaksbiwarehouse;User ID=inla" +
+            "ks;Password=own2morrow")]
+        public string warehousedb {
             get {
-                return ((string)(this["warehousedbtype"]));
+                return ((string)(this["warehousedb"]));
             }
         }
     }

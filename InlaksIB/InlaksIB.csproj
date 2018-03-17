@@ -371,6 +371,7 @@
     <Compile Include="Classes\MongoWarehouse.cs" />
     <Compile Include="Classes\PostgreSqlWarehouse.cs" />
     <Compile Include="Classes\MySqlWarehouse.cs" />
+    <Compile Include="Classes\SqlServerWarehouse.cs" />
     <Compile Include="Classes\WarehouseInterface.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -383,6 +384,7 @@
     <Compile Include="Classes\DBContext.cs" />
     <Compile Include="Models\DataSet.cs" />
     <Compile Include="Models\DataSetFilters.cs" />
+    <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Industry.cs" />
     <Compile Include="Models\Migration_Schedule.cs" />
     <Compile Include="Models\Module.cs" />
@@ -493,6 +495,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SLMLL_711.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\soa_811.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>soa_811.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\SOLC_761.cs">
@@ -701,6 +709,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>SLMLL_711.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\soa_811.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>soa_811.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\SOLC_761.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>SOLC_761.cs</LastGenOutput>
@@ -728,7 +740,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>20510</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/InlaksIB</IISUrl>
+          <IISUrl>http://localhost:8233/InlaksIB</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -12,7 +12,7 @@
         listItems.Add(new SelectListItem { Text = module.ModuleName, Value = module.ModuleID.ToString() });
     }
 
-    WarehouseInterface warehouse = new InlaksBIContext().getWarehouse("pgsql");
+    WarehouseInterface warehouse = new InlaksBIContext().getWarehouse((string)Session["warehousedbtype"]);
 
     var tables = warehouse.getTables();
 

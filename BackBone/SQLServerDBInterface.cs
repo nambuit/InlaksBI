@@ -216,9 +216,49 @@ namespace BackBone
             return FindTable;
         }
 
+
         public void CreateTable(string tablename, DataTable dt)
         {
+            SqlConnection conn = new SqlConnection(_ConnectionString);
+            try
+            {
+                conn.Open();
+                var builtStr = new StringBuilder();
+                builtStr.Append("CREATE TABLE[dbo].[" + tablename + "](");
 
+                int count = 1;
+                foreach (DataColumn column in dt.Columns)
+                {
+                    var comma = "";
+
+                    if (count < dt.Columns.Count)
+                    {
+                        comma = ",";
+                    }
+
+                    count++;
+
+                    builtStr.Append("[" + column + "] [nvarchar](max) NULL" + comma);
+                }
+
+                builtStr.Append(") ON [PRIMARY]");
+
+                var sql = builtStr.ToString();
+
+                SqlCommand cmd = new SqlCommand(sql);
+
+                cmd.Connection = conn;
+
+                cmd.ExecuteNonQuery();
+
+
+
+            }
+            catch (Exception w)
+            {
+
+            }
         }
+
     }
 }

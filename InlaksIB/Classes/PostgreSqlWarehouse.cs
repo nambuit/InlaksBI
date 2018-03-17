@@ -166,6 +166,90 @@ namespace InlaksIB
         }
 
 
+        public string getDatasetBuilder(List<DatasetObject> datasetobject)
+        {
+            
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+
+        int tcounter = 0;
+
+        int ccounter = 0;
+
+        string[] tags = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+
+                foreach (DatasetObject tbitem in datasetobject)
+                {
+
+                    if (tcounter == 0)    //handling the first table
+                    {
+                        sb2.Append(" from \"" + tbitem.TableName + "\" " + tags[0]);
+                    }
+                    else
+                    {
+                        var pretag = tags[tcounter - 1];       //setting previous table values
+    var pretable = datasetobject[tcounter - 1];
+    sb2.Append(" inner join \"" + tbitem.TableName + "\" " + tags[tcounter] + " on (" + pretag + ".\"" + pretable.NxtTable + "\"=" + tags[tcounter] + ".\"" + tbitem.PreTable + "\") ");
+                    }
+
+ccounter = 0;
+
+                    if (tbitem.Columns.isNull())
+                    {
+                        sb.Append(tags[tcounter]+".*");
+                    }
+                    else
+                    {
+                        foreach (string column in tbitem.Columns)
+                        {
+                            ccounter++;
+
+                            sb.Append(tags[tcounter] + ".\"" + column + "\"");
+
+                            if (ccounter<tbitem.Columns.Length)
+                            {
+                                sb.Append(",");
+                            }
+                        }
+
+                    }
+                    tcounter++;
+
+                    if (tcounter<datasetobject.Count)
+                    {
+                        sb.Append(",");
+                    }
+
+
+
+                }
+
+                string cols = sb.ToString();
+
+
+string tabs = sb2.ToString();
+
+
+
+var script = "CREATE MATERIALIZED VIEW public." + datasetobject[0].DataSetName + " AS   Select ";
+
+
+
+         script = script + cols + tabs;
+
+            return script;
+       }
+
+
+
+     public DataTable testobject(string objectname)
+     {
+            var sql = "select * from \"" + objectname + "\" LIMIT 1";
+
+            var dt = new PostgreSQLDBInterface(new Settings().warehousedb).getData(sql);
+
+            return dt;
+        }
 
 
     }

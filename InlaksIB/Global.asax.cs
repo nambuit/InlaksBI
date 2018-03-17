@@ -1,4 +1,5 @@
 ﻿
+using InlaksIB.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace InlaksIB
     {
         protected void Application_Start()
         {
+            
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             using (var db = new InlaksBIContext())
@@ -33,7 +35,7 @@ namespace InlaksIB
         public static void ISUserLoggedIn(Controller controller)
         {
             string loggedin = (string)controller.Session["LoggedIn"];
-
+            controller.Session["warehousedbtype"] = new Settings().warehousedbtype;
             if (string.IsNullOrEmpty(loggedin) || loggedin != "True")
             {
                 throw new InvalidOperationException("User Session not Active");

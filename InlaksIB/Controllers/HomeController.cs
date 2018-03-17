@@ -936,91 +936,30 @@ namespace InlaksIB.Controllers
 
                 }
 
-                StringBuilder sb = new StringBuilder();
-                StringBuilder sb2 = new StringBuilder();
+                var dbcontext = new InlaksBIContext();
 
-                int tcounter = 0;
+                var dataset = dbcontext.DataSets.Create();
 
-                int ccounter = 0;
-
-                string[] tags = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
-
-                foreach (DatasetObject tbitem in datasetobject)
-                {
-
-                    if (tcounter == 0)    //handling the first table
-                    {
-                        sb2.Append(" from \"" + tbitem.TableName + "\" " + tags[0]);
-                    }
-                    else
-                    {
-                        var pretag = tags[tcounter - 1];       //setting previous table values
-                        var pretable = datasetobject[tcounter - 1];
-                        sb2.Append(" inner join \"" + tbitem.TableName + "\" " + tags[tcounter] + " on (" + pretag + ".\"" + pretable.NxtTable + "\"=" + tags[tcounter] + ".\"" + tbitem.PreTable + "\") ");
-                    }
-
-                    ccounter = 0;
-
-                    if (tbitem.Columns.isNull())
-                    {
-                        sb.Append(tags[tcounter]+".*");
-                    }
-                    else
-                    {
-                        foreach (string column in tbitem.Columns)
-                        {
-                            ccounter++;
-
-                            sb.Append(tags[tcounter] + ".\"" + column + "\"");
-
-                            if (ccounter < tbitem.Columns.Length)
-                            {
-                                sb.Append(",");
-                            }
-                        }
-
-                    }
-                    tcounter++;
-
-                    if (tcounter < datasetobject.Count)
-                    {
-                        sb.Append(",");
-                    }
+                WarehouseInterface warehouse = dbcontext.getWarehouse(new Settings().warehousedbtype);
 
 
+                DBInterface db = dbcontext.getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
 
-                }
-
-                string cols = sb.ToString();
-
-
-                string tabs = sb2.ToString();
-
-                var db = new InlaksBIContext();
-
-                var script = "CREATE MATERIALIZED VIEW public." + datasetobject[0].DataSetName + " AS   Select ";
-
-                var dataset = new DataSetDetail();
-
-                dataset.Script = script + cols + tabs;
 
                 dataset.DataSetName = datasetobject[0].DataSetName;
 
+                dataset.Script = warehouse.getDatasetBuilder(datasetobject);
+             
 
-                DBInterface dbinterface = new PostgreSQLDBInterface(new Settings().warehousedb);
+                int resp = db.Execute(dataset.Script);
 
-                int resp = dbinterface.Execute(dataset.Script);
+                var dt = warehouse.testobject(dataset.DataSetName);
 
-                var sql = "select * from \"" + dataset.DataSetName + "\" LIMIT 1";
+                dataset.Module = dbcontext.Modules.Where(m => m.ModuleID == moduleid).FirstOrDefault();
 
-                var dt = dbinterface.getData(sql);
+                dbcontext.DataSets.Add(dataset);
 
-
-                dataset.Module = db.Modules.Where(m => m.ModuleID == moduleid).FirstOrDefault();
-
-                db.DataSets.Add(dataset);
-
-                db.SaveChanges();
+                dbcontext.SaveChanges();
 
                 if (dt.Rows.Count > 0)
                 {

@@ -18,7 +18,11 @@ namespace InlaksIB
 
         List<ValuePair> getTables();
 
+        string getDatasetBuilder(List<DatasetObject> datasetobject);
+
         void DeleteDataSet(string datasetname);
+
+        DataTable testobject(string objectname);
 
         DataTable FilteredData(string dataset, List<DataSetFilter> filters);
     }

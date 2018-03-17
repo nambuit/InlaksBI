@@ -9,13 +9,13 @@ using System.Web;
 
 namespace InlaksIB
 {
-    public class MySqlWarehouse:WarehouseInterface
+    public class SqlServerWarehouse:WarehouseInterface
     {
          public  List<ValuePair> getFilterColumns(string tablename)
         {
             DBInterface db;
-            db = new MySQLDBInterface(new Settings().warehousedb);
-            var pairs = db.getValuePair("Field", "Extra", "show columns from " + tablename);
+            db = new SQLServerDBInterfac(new Settings().warehousedb);
+            var pairs = db.getValuePair("name", "name", "select c.name from sys.columns c where c.object_id = OBJECT_ID('"+tablename+"')");
 
 
 
@@ -24,16 +24,16 @@ namespace InlaksIB
 
         public void DeleteDataSet(string datasetname)
         {
-            var db = new MySQLDBInterface(new Settings().warehousedb);
-            db.Execute(" drop materialized view \"" + datasetname + "\"");
+            var db = new SQLServerDBInterfac(new Settings().warehousedb);
+            db.Execute(" drop view " + datasetname );
         }
 
 
         public List<ValuePair> getViewColumns(string tablename)
         {
             DBInterface db;
-            db = new MySQLDBInterface(new Settings().warehousedb);
-            var pairs = db.getValuePair("Field", "Extra", "show columns from " + tablename);
+            db = new SQLServerDBInterfac(new Settings().warehousedb);
+            var pairs = db.getValuePair("name", "name", "select c.name from sys.columns c where c.object_id = OBJECT_ID('" + tablename + "')");
 
 
 
@@ -42,21 +42,28 @@ namespace InlaksIB
 
         public List<ValuePair> getDataSets(string moduleid)
         {
-            DBInterface db;
-            db = new MySQLDBInterface(new Settings().warehousedb);
-            db = new MySQLDBInterface(new Settings().warehousedb);
-           var pairs = db.getValuePair("table_name", "table_name", "select table_name from listviews where table_name like'%" +moduleid+ "%'");
+
+            var db = new InlaksBIContext();
+
+            var pairs = new List<ValuePair>();
+
+            foreach (DataSetDetail set in db.DataSets.Where(d => d.Module.value == moduleid))
+            {
+                var pair = new ValuePair();
+                pair.ID = set.DataSetName;
+                pair.Value = set.DataSetName;
+                pairs.Add(pair);
+            }
 
             return pairs;
         }
 
-
         public List<ValuePair> getTables()
         {
             DBInterface db;
-            db = new MySQLDBInterface(new Settings().warehousedb);
-            db = new MySQLDBInterface(new Settings().warehousedb);
-            var pairs = db.getValuePair("table_name", "table_name", "select table_name from listviews");
+            db = new SQLServerDBInterfac(new Settings().warehousedb);
+            db = new SQLServerDBInterfac(new Settings().warehousedb);
+            var pairs = db.getValuePair("table_name", "table_name", "select c.name as table_name from sys.objects c where c.type_desc in('USER_TABLE','VIEW')");
 
             return pairs;
         }
@@ -71,21 +78,25 @@ namespace InlaksIB
 
             var included = filters.Where(f => f.IsIncluded).ToList();
 
-            if (included.Count > 0)
-            {
+            bool isIncluded = included.Count > 0;
+
+            included = isIncluded ? included : filters;
+
+            //if ()
+            //{
                 var includecolums = new string[included.Count];
 
                 for (int i = 0; i < included.Count; i++)
                 {
-                    includecolums[i] = included[i].ColumnName;
+                    includecolums[i] = included[i].DisplayName.isNull()?included[i].ColumnName: (included[i].ColumnName+" as "+ included[i].DisplayName);
                 }
 
                 querybuild.Append(string.Join(",", includecolums));
-            }
-            else
-            {
-                querybuild.Append("*");
-            }
+            //}
+            //else
+            //{
+            //    querybuild.Append("*");
+            //}
 
             querybuild.Append(" from ").Append(dataset);
 
@@ -116,7 +127,7 @@ namespace InlaksIB
             }
             var sql = querybuild.ToString();
 
-            DBInterface db = new MySQLDBInterface(new Settings().warehousedb);
+            DBInterface db = new SQLServerDBInterfac(new Settings().warehousedb);
 
             return db.getData(sql);
 
@@ -196,13 +207,18 @@ namespace InlaksIB
             return script;
         }
 
+
         public DataTable testobject(string objectname)
         {
-            var sql = "select * from " + objectname + " LIMIT 1";
+            var sql = "select TOP 1 * from " + objectname + "";
 
-            var dt = new MySQLDBInterface(new Settings().warehousedb).getData(sql);
+            var dt = new SQLServerDBInterfac(new Settings().warehousedb).getData(sql);
 
             return dt;
         }
+
+
     }
+
+ 
 }

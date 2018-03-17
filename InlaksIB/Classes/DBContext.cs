@@ -38,6 +38,8 @@ namespace InlaksIB
 
         public DbSet<Resource> Resources { get; set; }
 
+        public DbSet<Company> Comapanies { get; set; }
+
         public DbSet<SubMenu> SubMenus { get; set; }
 
         public DbSet<SubSubMenu> SubSubMenus { get; set; }
@@ -108,11 +110,38 @@ namespace InlaksIB
                     warehouse = new PostgreSqlWarehouse();
                     break;
                 default:
-                    warehouse = new MySqlWarehouse();
+                    warehouse = new SqlServerWarehouse();
                     break;
             }
 
             return warehouse;
+        }
+
+
+
+        public DBInterface getDBInterface(string dbtype, string constr)
+        {
+            DBInterface dbinterface;
+
+            switch (dbtype.CleanUp())
+            {
+                case "mysql":
+                    dbinterface = new MySQLDBInterface(constr);
+                    break;
+
+                case "mongodb":
+                    dbinterface = null;
+                    break;
+
+                case "pgsql":
+                    dbinterface = new PostgreSQLDBInterface(constr);
+                    break;
+                default:
+                    dbinterface = new SQLServerDBInterfac(constr);
+                    break;
+            }
+
+            return dbinterface;
         }
 
     }
