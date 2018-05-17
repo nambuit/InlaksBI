@@ -179,4 +179,21 @@ namespace BackBone
     }
 
 
+    public struct MergeDetails
+    {
+        public string sourceTb;
+
+        public string destTb;
+
+        public string sourceDB;
+
+        public string destDB;
+
+        public string sourcereference;
+
+        public string destreference;
+
+
+    }
+
 }

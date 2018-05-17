@@ -24,6 +24,7 @@ $(document).ready(function () {
     $("#resourcelist").hide();
     $("#datasetlist").hide();
     $("#columnlist").hide();
+    $("#branchlist").hide();
     $("#reportview").hide();
    
     $("#finalcontrols").hide();
@@ -293,6 +294,30 @@ function showColumns(object) {
 
                 $("#columns").append("<tr class='filters'><td><input class='IsIncluded' Value='" + JSON.stringify(data[i]) + "'  type='checkbox' /></td><td  ><input class='ColumnName form-control'   Value='" + data[i].ColumnName + "' type='text' disabled='disabled' /></td><td>" + operatorslist +
                 "</td><td><input  class='ColumnValue form-control' value='' type='text' /></td><td><input  class='DisplayName form-control' value='' type='text' /></td></tr>");
+            }
+        }
+    });
+
+}
+
+
+
+function showBranches(object) {
+    var leadcomp = object.value;
+    var myrand = Math.floor(Math.random() * 1000000);
+    $("#branchlist").show();
+
+    jQuery.ajax({
+        url: "../getValuePair/branchlist?param=" + leadcomp + "&rand=" + myrand,
+        type: "GET",
+        success: function (result) {
+            var data = $.parseJSON(result);
+
+            $("#Branch").empty();
+
+            for (var i = 0; i < data.length; i++) {
+
+                $("#Branch").append("<option value='" + data[i].ID + "'>" + data[i].Value + "</option>");
             }
         }
     });
@@ -609,9 +634,11 @@ function ProcessExcel(reportname){
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         data: formdata,
         success: function (result) {
+
             if (result == "Success") {
 
-
+                window.open(localStorage.baseurl + "Home/DownloadCurrentReportFile", "PopupWindow", "width=600,height=400,scrollbars=yes,resizable=1");
+                $("#busy").hide();
             } else
             {
                 $.alert({

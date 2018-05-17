@@ -17,6 +17,8 @@ namespace InlaksIB
 
         public virtual List<Module> Modules { get; set; }
 
+        public string AccessFlag { get; set; }
+
     }
 
 }

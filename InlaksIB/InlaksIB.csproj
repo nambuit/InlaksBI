@@ -368,6 +368,7 @@
   <ItemGroup>
     <Compile Include="App_Data\App_Start\RouteConfig.cs" />
     <Compile Include="Classes\ActiveDirectoryInterface.cs" />
+    <Compile Include="Classes\ExcelReports.cs" />
     <Compile Include="Classes\MongoWarehouse.cs" />
     <Compile Include="Classes\PostgreSqlWarehouse.cs" />
     <Compile Include="Classes\MySqlWarehouse.cs" />

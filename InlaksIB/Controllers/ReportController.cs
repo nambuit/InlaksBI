@@ -150,6 +150,10 @@ namespace InlaksIB.Controllers
 
                 var dt = warehouse.FilteredData(dataset, filters);
 
+                //if (dataset.CleanUp().Contains("line"))
+                //{
+                //    dt = dt.AsEnumerable().OrderBy(r => r["LINE_SEQUENCE"]).CopyToDataTable();
+                //}
                 
                 return dt.DataTableToJson();
             }

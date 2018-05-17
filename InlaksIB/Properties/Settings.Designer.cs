@@ -63,8 +63,7 @@ namespace InlaksIB.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SRVNIBSS\\MSSQLSERVER01;Initial Catalog=inlaksbi;User ID=inlaks;Passwo" +
-            "rd=own2morrow")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SRVNIBSS;Initial Catalog=inlaksbi;User ID=inlaks;Password=own2morrow")]
         public string DBConstr {
             get {
                 return ((string)(this["DBConstr"]));
@@ -73,8 +72,8 @@ namespace InlaksIB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SRVNIBSS\\MSSQLSERVER01;Initial Catalog=inlaksbiwarehouse;User ID=inla" +
-            "ks;Password=own2morrow")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SRVNIBSS;Initial Catalog=inlaksbiwarehouse;User ID=inlaks;Password=ow" +
+            "n2morrow")]
         public string warehousedb {
             get {
                 return ((string)(this["warehousedb"]));

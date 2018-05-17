@@ -29,10 +29,21 @@
                         @Html.AntiForgeryToken()
                         var roles = new InlaksBIContext().Roles.AsEnumerable();
                         var listItems = new List<SelectListItem>();
+                        var leadcompanies = new List<SelectListItem>();
 
                         foreach (var role in roles)
                         {
                             listItems.Add(new SelectListItem { Text = role.RoleName,   Value = role.RoleID.ToString() });
+                        }
+
+                        var companies = new InlaksBIContext().Comapanies.ToList();
+
+                        leadcompanies.Add(new SelectListItem { Text = "", Value = "null" });
+
+                        foreach (var comp in companies.GroupBy(c=> c.leadcompcode).Select(c => c.ToList()))
+                        {
+                            var leadcomp = comp.FirstOrDefault(l => l.CompanyCode == comp[0].leadcompcode);
+                            leadcompanies.Add(new SelectListItem { Text = leadcomp.CompanyName, Value = leadcomp.leadcompcode });
                         }
 
 
@@ -93,6 +104,27 @@
 
 
 
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.LeadCompany, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+
+                                    @Html.DropDownListFor(model => model.LeadCompany, leadcompanies, htmlAttributes: new { @class = "form-control select2", @onchange = "showBranches(this)" })
+                                    @Html.ValidationMessageFor(model => model.LeadCompany, "", new { @class = "text-danger" })
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div id="branchlist" class="form-group">
+                                @Html.LabelFor(model => model.Branch, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+
+                                    <select name="Branch" id="Branch" class="form-control select2" ></select>
+                                </div>
                             </div>
 
 

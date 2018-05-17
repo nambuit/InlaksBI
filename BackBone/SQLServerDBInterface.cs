@@ -260,5 +260,52 @@ namespace BackBone
             }
         }
 
+        public void MergeData(MergeDetails details)
+        {
+            StringBuilder querybuilder = new StringBuilder();
+
+            querybuilder.Append("MERGE [" + details.destDB + "].[dbo].[" + details.destTb + "] AS target USING [" + details.sourceDB + "].[dbo].[" + details.sourceTb + "] AS source ON(LTRIM(RTRIM(source." + details.sourcereference + ")) = LTRIM(RTRIM(target." + details.destreference + ")))");
+
+            var dt = getData("select TOP 1 * from " + details.sourceTb);
+
+
+            querybuilder.Append(" WHEN MATCHED THEN UPDATE SET ");
+
+            string[] columns = new string[dt.Columns.Count];
+
+            int i = 0;
+
+            foreach (DataColumn column in dt.Columns)
+            {
+                querybuilder.Append("target." + column.ColumnName + "=source." + column.ColumnName);
+
+                if ((i + 1) < dt.Columns.Count)
+                {
+                    querybuilder.Append(",");
+                }
+
+                columns[i] = column.ColumnName;
+
+                i++;
+            }
+            querybuilder.Append(" WHEN NOT MATCHED THEN INSERT ");
+
+            querybuilder.Append("("+string.Join(",", columns) +") VALUES ");
+
+            string values = string.Join(",source.", columns);
+
+            values = "source." + values;
+
+            querybuilder.Append("(" + values + ");");
+
+
+            string query = querybuilder.ToString();
+
+         int result =   Execute(query);
+
+          
+
+        }
+
     }
 }

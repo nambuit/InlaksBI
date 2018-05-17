@@ -127,7 +127,7 @@
                 <div class="sidebar content-box" style="display: block;">
                     <ul class="nav">
                         <!-- Main menu -->
-                        @foreach (var industry in model)
+                        @foreach (var industry in model.Where(m=>m.AccessFlag.Trim() == user.LeadCompany.Trim()||m.AccessFlag.Trim()=="G"))
                         {
                             try
                             {

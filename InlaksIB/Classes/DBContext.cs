@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using BackBone;
+using InlaksIB.Properties;
 
 namespace InlaksIB
 {
@@ -39,6 +40,8 @@ namespace InlaksIB
         public DbSet<Resource> Resources { get; set; }
 
         public DbSet<Company> Comapanies { get; set; }
+
+        public DbSet<TempCompany> Comapanies_Temp { get; set; }
 
         public DbSet<SubMenu> SubMenus { get; set; }
 
@@ -144,6 +147,16 @@ namespace InlaksIB
             return dbinterface;
         }
 
+
+        public void populateCompanies()
+        {
+            var db = getDBInterface(new Settings().warehousedbtype, new Settings().DBConstr);
+
+            var dt = db.getData("");
+
+
+        }
+
     }
 
   
@@ -203,6 +216,10 @@ namespace InlaksIB
             return ValidationResult.Success;
         }
 
+     
+
     }
+
+ 
 
 }

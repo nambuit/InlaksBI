@@ -24,4 +24,21 @@ namespace InlaksIB
 
     }
 
+    public class TempCompany
+    {
+
+
+        [Key]
+        public string CompanyCode { get; set; }
+
+
+        public string branchcode { get; set; }
+
+        public string leadcompcode { get; set; }
+
+        public string CompanyName { get; set; }
+
+
+
+    }
 }

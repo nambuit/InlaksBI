@@ -53,6 +53,14 @@ namespace InlaksIB
 
         public virtual Role UserRole { get; set; }
 
+        [Display(Name = "Select Company")]
+        [Required]
+        public string LeadCompany { get; set; }
+
+        [Display(Name = "Select Branch")]
+        [Required]
+        public string Branch { get; set; }
+
 
     }
 }

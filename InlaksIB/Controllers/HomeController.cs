@@ -1,5 +1,6 @@
 ﻿using BackBone;
 using CrystalDecisions.CrystalReports.Engine;
+using InlaksIB.Classes;
 using InlaksIB.Properties;
 using InlaksIB.Reports;
 using Newtonsoft.Json;
@@ -7,6 +8,7 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Validation;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -19,6 +21,8 @@ namespace InlaksIB.Controllers
 {
     public class HomeController : Controller
     {
+        private  static string Message = "";
+        private static string errorClass = "";
 
         override
             protected void OnActionExecuting(ActionExecutingContext context)
@@ -149,11 +153,14 @@ namespace InlaksIB.Controllers
                 switch (mode)
                 {
                     case "create":
-                       // module.ModuleID = id;
+                        // module.ModuleID = id;
+                        //var newmodule = dbcontext.Modules.Create();
+                        //newmodule.ModuleName = module.ModuleName;
+                        //newmodule.Industry = module.Industry;
                         dbcontext.Modules.Add(module);
                         dbcontext.SaveChanges();
-                        ViewBag.errorclass = "green";
-                        ViewBag.message = "Module Created successfully";
+                        errorClass = "green";
+                        Message = "Module Created successfully";
                         break;
                     case "edit":
                         var old = dbcontext.Modules.FirstOrDefault(t => t.ModuleID == id);
@@ -161,8 +168,8 @@ namespace InlaksIB.Controllers
                         old.value = module.value;
                         old.Industry = module.Industry;
                         dbcontext.SaveChanges();
-                        ViewBag.errorclass = "green";
-                        ViewBag.message = "Module modified successfully";
+                        errorClass = "green";
+                        Message = "Module modified successfully";
                         break;
 
                     case "delete":
@@ -170,15 +177,16 @@ namespace InlaksIB.Controllers
                         dbcontext.Modules.Remove(item);
 
                         dbcontext.SaveChanges();
-                        ViewBag.message = "Module deleted successfully";
-                        ViewBag.errorclass = "green";
+                        Message = "Module deleted successfully";
+                        errorClass = "green";
                         break;
                 }
             }
             catch (Exception e)
             {
-                ViewBag.errorclass = "red";
-                ViewBag.message = "Operation failed. Please seek technical assistance";
+                
+                errorClass = "red";
+                Message = "Operation failed. Please seek technical assistance";
             }
 
             return RedirectToAction("ModuleSetup", new { id = 0, mode = "create" });
@@ -334,30 +342,36 @@ namespace InlaksIB.Controllers
 
         public ActionResult UserSetup(string id, string mode)
         {
+            var user = new InlaksBIContext().Users.FirstOrDefault(u => u.UserID == id);
+            if (user == null)
+            {
+                user = new User() { errorclass = errorClass, Message = Message };
+            }
             switch (mode)
             {
                 case "create":
                     ViewBag.mode = "create";
-                    return View("CreateUser", new User() { Message = "", errorclass = "" });
+                    return View("CreateUser", user);
 
                 case "edit":
-
-                    var user = new InlaksBIContext().Users.FirstOrDefault(u => u.UserID == id);
 
                     ViewBag.mode = "edit";
                     return View("CreateUser", user);
 
                 default:
-
-                    return View("CreateUser", new User() { Message = "", errorclass = "" });
+                    ViewBag.mode = "create";
+                    return View("CreateUser", user);
             }
 
         }
 
         public ActionResult ModuleSetup(int id, string mode)
         {
-            ViewBag.errorclass = ""; ViewBag.message = "";
+            ViewBag.errorclass = errorClass; ViewBag.message = Message;
             var module = new InlaksBIContext().Modules.FirstOrDefault(u => u.ModuleID == id);
+
+     
+
             switch (mode)
             {
                 case "create":
@@ -451,9 +465,13 @@ namespace InlaksIB.Controllers
                         break;
                     case "edit":
                         var old = dbcontext.Resources.FirstOrDefault(t => t.ResourceID == id);
-                        resource.Module = dbcontext.Modules.FirstOrDefault(m => m.ModuleID == resource.ModuleID);
-                        dbcontext.Resources.Remove(old);
-                        dbcontext.Resources.Add(resource);
+                        old.Module = dbcontext.Modules.FirstOrDefault(m => m.ModuleID == resource.ModuleID);
+                        old.ResourceName = resource.ResourceName;
+                       // old.Url = resource.Url;
+                        old.value = resource.value;
+                       
+                        //dbcontext.Resources.Remove(old);
+                        //dbcontext.Resources.Add(resource);
                         dbcontext.SaveChanges();
 
                         break;
@@ -541,8 +559,8 @@ namespace InlaksIB.Controllers
 
         public ActionResult ProcessUser(User user, string id, string mode)
         {
-            var message = "";
-            var errorclass = "green";
+            
+            errorClass = "green";
             var context = new InlaksBIContext();
             switch (mode)
             {
@@ -554,22 +572,43 @@ namespace InlaksIB.Controllers
                         var role = context.Roles.FirstOrDefault(r => r.RoleID == user.RoleID);
 
                         IPasswordHasher hash = new BasicHash();
-
-                        user.Password = hash.HashPassword(user.Password);
-                        user.RePassword = (user.Password);
-                        user.UserRole = role;
-
-                        context.Users.Add(user);
+                        var newuser = context.Users.Create();
+                        newuser.Password = hash.HashPassword(user.Password);
+                        newuser.RePassword = (user.Password);
+                        newuser.UserRole = role;
+                        newuser.Email = user.Email;
+                        newuser.Branch = user.Branch;
+                        newuser.LeadCompany = user.LeadCompany;
+                        newuser.UserID = user.UserID;
+                        newuser.Name = user.Name;
+                        newuser.LastLogin = DateTime.Now;
+                        newuser.RePassword = newuser.Password;
+                        newuser.RoleID = user.RoleID;
+                        newuser.DefaultPassword = true;
+                        context.Users.Add(newuser);
 
                         context.SaveChanges();
 
-                        message = "User Created Successfully";
+                        Message = "User Created Successfully";
+                        errorClass = "green";
 
                     }
-                    catch (Exception e)
+                    catch (DbEntityValidationException e)
                     {
-                        message = "Failed to create user. Please seek technical assistance";
-                        errorclass = "red";
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                           Utils.Log(string.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                 Utils.Log(string.Format("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage));
+                            }
+                        }
+                      
+                    
+                    Message = "Failed to create user. Please seek technical assistance";
+                        errorClass = "red";
                     }
                     break;
 
@@ -589,25 +628,28 @@ namespace InlaksIB.Controllers
                         olduser.Name = user.Name;
                         olduser.Email = user.Email;
                         olduser.RePassword = olduser.Password;
-
+                        olduser.Branch = user.Branch;
+                        olduser.LeadCompany = user.LeadCompany;
                         olduser.UserRole = role;
 
 
                         context.SaveChanges();
 
-                        message = "User Modified Successfully";
+                        Message = "User Modified Successfully";
 
                     }
                     catch (Exception e)
                     {
-                        message = "Failed to Modify user. Please seek technical assistance";
-                        errorclass = "red";
+                        Message = "Failed to Modify user. Please seek technical assistance";
+                        errorClass = "red";
                     }
                     break;
             }
 
+         
 
-            return View("CreateUser", new User() { errorclass = errorclass, Message = message });
+
+            return RedirectToAction ("UserSetup",new { id=user.UserID, mode="create"});
         }
 
         public ActionResult ChangePassword()
@@ -857,6 +899,18 @@ namespace InlaksIB.Controllers
                     pairs = warehouse.getViewColumns(param);
                     return JsonConvert.SerializeObject(pairs);
 
+                case "branchlist":
+                    var branches = new InlaksBIContext().Comapanies.Where(c => c.leadcompcode == param.Trim()).ToList();
+
+                    foreach (var br in branches)
+                    {
+                        ValuePair pair = new ValuePair();
+                        pair.ID = br.CompanyCode;
+                        pair.Value = br.CompanyName;
+                        pairs.Add(pair);
+                    }
+
+                    return JsonConvert.SerializeObject(pairs);
 
                 default:
                     return "";
@@ -1415,16 +1469,16 @@ namespace InlaksIB.Controllers
         {
             try
             {
-
+                var excelreports = new ExcelReports();
                 var startdate = Request.Form["startdate"];
                 var enddate = Request.Form["endate"];
                 var reportname = Request.Form["reportname"];
                 var downpath = HostingEnvironment.MapPath("~/exceldownloads/");
-                switch (reportname)
+                switch (reportname.Trim())
                 {
-                    case "failed items":
+                    case "Anti Money Laundering Report":
 
-                       Session["file"] = generateAMLReport(startdate, enddate,downpath,reportname);
+                       Session["file"] = excelreports.generateNPFAntiMoneyLaunderingReport(startdate, enddate,downpath,reportname);
 
                         break;
 
@@ -1442,105 +1496,10 @@ namespace InlaksIB.Controllers
 
 
 
-        string generateAMLReport(string startdate, string enddate, string downpath, string reportname)
-        {
-            var sql = "";
-
-            var db = new PostgreSQLDBInterface(new Settings().sourcedb);
-
-            var dt = db.getData(sql);
-
-            downpath = downpath + startdate + "-" + enddate + reportname + ".xlsx";
-
-
-            ExcelWorksheet oSheet;
-            ExcelPackage xlPackage;
-
-
-            FileInfo newFile = new FileInfo(downpath);
-
-            if (newFile.Exists)
-            {
-                newFile.Delete();
-            }
-            xlPackage = new ExcelPackage(newFile);
-
-
-            oSheet = xlPackage.Workbook.Worksheets.Add("Currency Transaction Report");
-
-            int count = 0; int curRow = 3;
 
 
 
-            var branchgroups = dt.AsEnumerable().GroupBy(r => r["branchcode"].ToString()).Select(grp => grp.ToList());
-
-
-            foreach (var branchdata in branchgroups)
-            {
-
-
-                oSheet.Cells[curRow, 2].Value = "NPF MICROFINANCE BANK PLC";
-                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
-                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
-                //oSheet.Cells[3, 1, 3, 13].Merge = true;
-
-                curRow = curRow + 1;
-
-                oSheet.Cells[curRow, 2].Value = branchdata[0]["branchname"].ToString();
-                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
-                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
-
-                curRow = curRow + 1;
-
-                oSheet.Cells[curRow, 2].Value = "BRANCH ADDRESS";
-                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
-                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
-
-                curRow = curRow + 1;
-
-                oSheet.Cells[curRow, 2].Value = "BRANCH NAME";
-                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
-                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
-
-                curRow = curRow + 1;
-
-                oSheet.Cells[curRow, 2].Value = "REPORT TITLE";
-                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
-                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
-
-                curRow = curRow + 1;
-
-                var headers = new string[] { "S/N", "BRANCH CODE", "BANK CODE", "REPORT TYPE", "CUSTOMER TYPE", "SURNAME/NAME OF ORGANISATION", "FIRST NAME", "MIDDLE NAME", "NATIONALITY", "D.O.B", "D.O.I", "OCCUPATION", "LINE OF BUS.", "TYPE OF IDENTIFICATION", "IDENTIFICATION NUMBER", "REGISTRATION CERTIFICATE NO.", "DATE OF ISSUE", "PLACE OF ISSUE", "ISSUING AUTHORITY", "CUSTOMER ADDRESS TYPE", "FIRST ADDRESS LINE", "SECOND ADDRESS LINE", "TOWN/CITY", "STATE", "TELEPHONE", "E-MAIL", "ACCOUNT TYPE", "ACCOUNT NO.", "ACCOUNT STATUS", "DATE ACCOUNT WAS OPENED", "LINK/CONNECTED ACCOUNTS", "TRANSACTION NUMBER", "TRANSACTION DATE", "TRANSACTION TYPE", "DR/CR", "TRANSACTION PARTICULARS", "CURRENCY TYPE", "AMOUNT", "PURPOSE OF TRANSACTION", "SOURCE/ORIGIN OF FUND", "NAME OF BENEFICIARY", "ADDRESS OF BENEFICIARY", "REASONS FOR SUSPICION" };
-                int curcel = 2;
-                foreach (var header in headers)
-                {
-                    oSheet.Cells[curRow, 2].Value = header;
-                    oSheet.Cells[curRow, 2].Style.Font.Bold = true;
-                    oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
-
-                    curcel = curcel + 1;
-                }
-
-
-                curRow = curRow + 1;
-
-                foreach (DataRow row in branchdata)
-                {
-                    oSheet.Cells[curRow, 2].Value = row[""].ToString();
-                    oSheet.Cells[curRow, 2].Style.Font.Bold = true;
-                    oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
-                }
-
-            }
-
-
-            return downpath;
-        }
-
-
-
-
-
+        [HttpGet]
         public void DownloadCurrentReportFile()
         {
             try
@@ -1555,10 +1514,15 @@ namespace InlaksIB.Controllers
                                    "attachment; filename=" + fileInfo.Name);
                 Response.WriteFile(fileInfo.FullName);
                 Response.Flush();
+
             }
             catch (Exception d)
             {
                 throw (d);
+            }
+            finally
+            {
+
             }
         }
 
