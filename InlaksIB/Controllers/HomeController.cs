@@ -89,7 +89,7 @@ namespace InlaksIB.Controllers
             switch (mode.ToLower())
             {
                 case "list":
-
+                    
                     return View("RoleSetup", new InlaksBIContext().Roles.Where(r => r.RoleID > 1));
 
                 case "create":
