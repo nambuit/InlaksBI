@@ -55,10 +55,11 @@ namespace InlaksIB.Controllers
         {
 
 
-            var reportid = id;//Request.QueryString.Get("id");
-            var report = new InlaksBIContext().Resources.FirstOrDefault(r => r.value == id);
-         id =  report.ResourceID.ToString();
+          //Request.QueryString.Get("id");
+            var report = new InlaksBIContext().Resources.FirstOrDefault(r => r.ResourceID.ToString() == id);
+       //  id =  report.ResourceID.ToString();
 
+            var reportid = report.value;
 
             switch (reportid.Trim().ToLower())
             {
@@ -222,7 +223,7 @@ namespace InlaksIB.Controllers
 
                     if (!string.IsNullOrEmpty(sch.MaxDate))
                     {
-                        sch.MaxDate = DateTime.ParseExact(sch.MaxDate, "dd MMM yyyy", new System.Globalization.CultureInfo("en-US")).ToString("dd-MM-yyyy");
+                        sch.MaxDate = DateTime.ParseExact(sch.MaxDate, "dd MMM yyyy", new CultureInfo("en-US")).ToString("dd-MM-yyyy");
                     }
 
                     ViewBag.schedule = sch;
@@ -460,6 +461,10 @@ namespace InlaksIB.Controllers
                         re.SubMenus = resource.SubMenus;
                         re.value = resource.value;
                         re.Url = resource.Url;
+                        if (re.Url.isNull())
+                        {
+                            re.Url = "";
+                        }
                         dbcontext.Resources.Add(re);
                         dbcontext.SaveChanges();
                         break;
@@ -1063,7 +1068,7 @@ namespace InlaksIB.Controllers
 
                         
 
-                        LoadCBNReturnsReport(dt, report,id);
+                        LoadCBNReturnsReport(dt, report,id, "Form MMFBR 762");
                         result = "success";
                         break;
 
@@ -1076,9 +1081,25 @@ namespace InlaksIB.Controllers
 
                         dt = db.getData(sql);
 
-                        LoadCBNReturnsReport(dt, report,id);
+                        LoadCBNReturnsReport(dt, report,id,"");
                         result = "success";
                         break;
+
+                    case "sch_inshd_dep":
+                        report = new SID_202();
+
+                        dt = new DataTable();
+
+
+                        sch_inshd_dep(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 202");
+
+                        result = "success";
+
+                        break;
+
+
 
                     case "ml_lend_model":
                         report = new SLMLL_711();
@@ -1088,7 +1109,7 @@ namespace InlaksIB.Controllers
 
                         ml_lend_model(dt, report);
 
-                        LoadCBNReturnsReport(dt, report, id);
+                        LoadCBNReturnsReport(dt, report, id,"");
 
                         result = "success";
                         
@@ -1101,7 +1122,7 @@ namespace InlaksIB.Controllers
 
                         sch_int_rates(dt, report);
 
-                        LoadCBNReturnsReport(dt, report, id);
+                        LoadCBNReturnsReport(dt, report, id,"");
 
                         result = "success";
                         break;
@@ -1114,7 +1135,7 @@ namespace InlaksIB.Controllers
 
                         pnlacct_montly(dt, report);
 
-                        LoadCBNReturnsReport(dt, report, id);
+                        LoadCBNReturnsReport(dt, report, id,"");
 
                         result = "success";
                         break;
@@ -1126,7 +1147,57 @@ namespace InlaksIB.Controllers
 
                         mem_items(dt, report);
 
-                        LoadCBNReturnsReport(dt, report, id);
+                        LoadCBNReturnsReport(dt, report, id,"");
+
+                        result = "success";
+                        break;
+
+                    case "sch_oth_liab":
+                        report = new SOL501_();
+
+                        dt = new DataTable();
+
+                        sch_oth_liab(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 501");
+
+                        result = "success";
+                        break;
+
+                    case "sch_othr_res":
+                        report = new SOL501_();
+
+                        dt = new DataTable();
+
+                        sch_othr_res(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 951");
+
+                        result = "success";
+                        break;
+
+                        
+
+                    case "sch_borr_agnc":
+                        report = new SBOA_651();
+
+                        dt = new DataTable();
+
+                        sch_borr_agnc(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 651");
+
+                        result = "success";
+                        break;
+
+                    case "sch_bal_other_banks":
+                        report = new SBDBN_221();
+
+                        dt = new DataTable();
+
+                        sch_bal_other_banks(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 221");
 
                         result = "success";
                         break;
@@ -1205,6 +1276,196 @@ namespace InlaksIB.Controllers
 
             dt.Rows.Add(row);
         }
+
+
+        private void sch_bal_other_banks(DataTable dt, ReportDocument report)
+        {
+
+            dt.AddTableColumns(new string[] { "Bank_Code", "Name_Of_Bank", "Amount_N'000" });
+
+
+
+
+            var sql = " select a.*,b.FirstName from DimAccount a inner join DimCustomer b on (a.Customer=b.CustomerId) where Category in (select CategoryId from factCategory where CategoryName like '%nostro%')";
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+
+            var data = db.getData(sql);
+
+            var dgroup = data.AsEnumerable().GroupBy(d => d["AccountTitle"]).Select(grp => grp.ToList());
+
+            //int count = 1;
+
+            foreach (var grp in dgroup)
+            {
+                var row = dt.NewRow();
+
+                row["Name_Of_Bank"] = grp[0]["FirstName"];
+                row["Amount_N'000"] = grp.Sum(g => g["BookValue"].toDecimal());
+
+                dt.Rows.Add(row);
+            }
+
+
+        }
+
+
+        private void sch_inshd_dep(DataTable dt, ReportDocument report)
+        {
+
+            dt.AddTableColumns(new string[] { "S/N", "Type_Of_Deposits", "N1_-_N100,000", "N100,001_&_Above", "Total_N'000" });
+
+
+
+
+            var sql = " select a.*,b.FirstName from DimAccount a inner join DimCustomer b on (a.Customer=b.CustomerId) where Category in (select CategoryId from factCategory where CategoryName like '%nostro%')";
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+
+            var data = db.getData(sql);
+
+            var dgroup = data.AsEnumerable().GroupBy(d => d["AccountTitle"]).Select(grp => grp.ToList());
+
+            //int count = 1;
+
+            foreach (var grp in dgroup)
+            {
+                var row = dt.NewRow();
+
+                row["Name_Of_Bank"] = grp[0]["FirstName"];
+                row["Amount_N'000"] = grp.Sum(g => g["BookValue"].toDecimal());
+
+                dt.Rows.Add(row);
+            }
+
+
+        }
+
+
+        
+
+
+               private void sch_othr_res(DataTable dt, ReportDocument report)
+        {
+
+            dt.AddTableColumns(new string[] { "S/N", "Item_Description", "Amount_N'000" });
+
+
+
+
+            var sql = "select* from DimAccount where Category in ('18009')";
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+
+            var data = db.getData(sql);
+
+            var dgroup = data.AsEnumerable().GroupBy(d => d["AccountTitle"]).Select(grp => grp.ToList());
+
+            int count = 1;
+
+            foreach (var grp in dgroup)
+            {
+                var row = dt.NewRow();
+                row["S/N"] = count++;
+                row["Item_Description"] = grp[0]["AccountTitle"];
+                row["Amount_N'000"] = grp.Sum(g => g["BookValue"].toDecimal());
+
+                dt.Rows.Add(row);
+            }
+
+
+        }
+
+
+        private void sch_borr_agnc(DataTable dt, ReportDocument report)
+        {
+
+            dt.AddTableColumns(new string[] { "S/N", "Name_Of_Lending_Institution", "Country", "Date_Facility_Granted","Tenor", "Amount_Granted_N'000" });
+
+  
+    
+
+            var sql = "select a.LINE_DESCRIPTION, b.GLAmount as Amount from LINE a inner join FactGL b on (a.LINE_ID=b.GLId) where LINE_DESCRIPTION  like '%CONCESSIONARY LOAN%'";
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+
+            var data = db.getData(sql);
+
+            var dgroup = data.AsEnumerable().GroupBy(d => d["LINE_DESCRIPTION"]).Select(grp => grp.ToList());
+
+            int count = 1;
+
+            foreach(var grp in dgroup)
+            {
+                var row = dt.NewRow();
+
+                row["Name_Of_Lending_Institution"] = grp[0]["LINE_DESCRIPTION"];
+                row["Country"] = "Nigeria";
+                row["S/N"] = count++;
+                row["Amount_Granted_N'000"] = grp.Sum(g => g["Amount"].toDecimal());
+
+                dt.Rows.Add(row);
+            }
+          
+
+        }
+
+
+
+
+
+
+        private void sch_oth_liab(DataTable dt, ReportDocument report)
+        {
+
+            dt.AddTableColumns(new string[] { "S/N", "Item_Description", "Amount_N'000" });
+
+            var lines = new string[] {"Accounts Payable",
+            "Unearned Income",
+            "Interest Accrued not Paid",
+            "Uncleared Effects / Transit items",
+            "Un - audited Profit to Date",
+            "Provision for Dimunition in the value of Investment",
+            "Provision for Losses on Off Balance Sheet Items",
+            "Interest -in-Suspense",
+            "Provision for Taxation",
+            "Provision for Other Loan Losses",
+            "Dividend Payable",
+            "Suspense Account",
+            "Deposits for Shares(Provide Breakdown)",
+            "Miscellaneous(Provide Breakdown)"
+};
+
+            int count = 1;
+
+            foreach(var line in lines){
+                var row = dt.NewRow();
+                row["S/N"] = count++;
+                row["Item_Description"] = line;
+
+                dt.Rows.Add(row);
+               
+            }
+
+            var sql = "select sum(glamount)from FactGL where GLId in  (select LINE_ID FROM[inlaksbiwarehouse].[dbo].[LINE] where LINE_ID like '%NAMBTBGL%' and LINE_DESCRIPTION like '%payable%' and type = 'detail' and APPID = 'AC')";
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype,new Settings().warehousedb);
+
+
+
+            dt.Rows[Array.IndexOf(lines,"Accounts Payable")][2] = db.ExecuteScalar(sql).toDecimal();
+
+            sql = "(select sum(GLAmount) as Total from FactGL where GLId in  (select LINE_ID FROM [inlaksbiwarehouse].[dbo].[LINE] where (LINE_DESCRIPTION like '%deposits%' or LINE_DESCRIPTION like '%deposit%')  and (type = 'detail' and LINE_ID like '%NAMBTBGL%' and APPID = 'AC') ))";
+
+
+            dt.Rows[Array.IndexOf(lines, "Miscellaneous(Provide Breakdown)")][2] = db.ExecuteScalar(sql).toDecimal();
+
+        }
+
 
         private void sch_int_rates(DataTable dt, ReportDocument report)
         {
@@ -1359,9 +1620,9 @@ namespace InlaksIB.Controllers
 
             dt.Columns.Add(myDataColumn);
 
-            var sql = "select a.*,b.* from \"AA_LOANS_IL\" a inner join  \"SECTOR\" b on (a.\"Sector\"=b.\"@ID\")";
+            var sql = "select a.CustomerID,b.CustomerSector,c.SectorName as SECTOR, d.BookValue as Amount from factArrangement a inner join DimCustomer b on (a.CustomerID=b.CustomerId) inner join factSector c on (b.CustomerSector= c.SectorId) inner join DimAccount d on (a.LinkedApplId = d.AccountId)   where a.ProductLine = 'lending'";
 
-            var db = new PostgreSQLDBInterface(new Settings().sourcedb);
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype,new Settings().warehousedb);
 
             var data = db.getData(sql);
 
@@ -1391,7 +1652,7 @@ namespace InlaksIB.Controllers
             {
                 var row = dt.NewRow();
 
-                row["SECTOR"] = grp[0]["SHORT_NAME"].ToString();
+                row["SECTOR"] = grp[0]["SECTOR"].ToString();
                 row["NUMBER_OF_LOANS"] = grp.Count;
                 var amount = grp.Sum(t => t["CONVERTED_AMOUNT"].toDecimal());
                 row["AMOUNT"] = amount;
@@ -1402,10 +1663,10 @@ namespace InlaksIB.Controllers
         }
 
 
+       
 
 
-
-        private void LoadCBNReturnsReport(DataTable dt, ReportDocument report, string id)
+        private void LoadCBNReturnsReport(DataTable dt, ReportDocument report, string id, string returncode)
         {
 
             report.SetDataSource(dt);
@@ -1421,7 +1682,7 @@ namespace InlaksIB.Controllers
             reportparams.Add(p);
 
             p = new ValuePair();
-            p.ID = "returnCode"; p.Value = "MMFBR M00";
+            p.ID = "returnCode"; p.Value = returncode;
             reportparams.Add(p);
 
             p = new ValuePair();
@@ -1482,7 +1743,13 @@ namespace InlaksIB.Controllers
 
                         break;
 
-                  
+                    case "Savings Accounts Balance Report":
+
+                        Session["file"] = excelreports.generateNPFSavingsAccountsBalanceReport(downpath, reportname);
+                        break;
+
+
+
                 }
 
                 return "Success";
@@ -1502,10 +1769,12 @@ namespace InlaksIB.Controllers
         [HttpGet]
         public void DownloadCurrentReportFile()
         {
+            string path = (string)Session["file"];
+            var fileInfo = new FileInfo(path);
             try
             {
-                string path = (string)Session["file"];
-                var fileInfo = new FileInfo(path);
+                //string path = (string)Session["file"];
+                //var fileInfo = new FileInfo(path);
 
 
                 Response.Clear();
@@ -1522,7 +1791,14 @@ namespace InlaksIB.Controllers
             }
             finally
             {
+                try
+                {
+                    fileInfo.Delete();
+                }
+                catch
+                {
 
+                }
             }
         }
 
