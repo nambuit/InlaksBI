@@ -1109,7 +1109,7 @@ namespace InlaksIB.Controllers
 
                         ml_lend_model(dt, report);
 
-                        LoadCBNReturnsReport(dt, report, id,"");
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 711");
 
                         result = "success";
                         
@@ -1314,33 +1314,64 @@ namespace InlaksIB.Controllers
         private void sch_inshd_dep(DataTable dt, ReportDocument report)
         {
 
-            dt.AddTableColumns(new string[] { "S/N", "Type_Of_Deposits", "N1_-_N100,000", "N100,001_&_Above", "Total_N'000" });
+            //dt.AddTableColumns(new string[] { "dem_n_of", "dem_Amt", "sav_n_of", "sav_Amt", "tt_n_of", "tt_Amt", "sod_n_of", "sod_Amt" });
 
+            var mydatacolumn = new DataColumn("dem_n_of", Type.GetType("System.Int32"));
 
+            dt.Columns.Add(mydatacolumn);
 
+            mydatacolumn = new DataColumn("dem_Amt", Type.GetType("System.Decimal"));
 
-            var sql = " select a.*,b.FirstName from DimAccount a inner join DimCustomer b on (a.Customer=b.CustomerId) where Category in (select CategoryId from factCategory where CategoryName like '%nostro%')";
+            dt.Columns.Add(mydatacolumn);
+
+            mydatacolumn = new DataColumn("sav_n_of", Type.GetType("System.Int32"));
+
+            dt.Columns.Add(mydatacolumn);
+
+            mydatacolumn = new DataColumn("sav_Amt", Type.GetType("System.Decimal"));
+
+            dt.Columns.Add(mydatacolumn);
+
+            mydatacolumn = new DataColumn("tt_n_of", Type.GetType("System.Int32"));
+
+            dt.Columns.Add(mydatacolumn);
+
+            mydatacolumn = new DataColumn("tt_Amt", Type.GetType("System.Decimal"));
+
+            dt.Columns.Add(mydatacolumn);
+
+            mydatacolumn = new DataColumn("sod_n_of", Type.GetType("System.Int32"));
+
+            dt.Columns.Add(mydatacolumn);
+
+            mydatacolumn = new DataColumn("sod_Amt", Type.GetType("System.Decimal"));
+
+            dt.Columns.Add(mydatacolumn);
 
             var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
 
 
-            var data = db.getData(sql);
+            var row = dt.NewRow();
 
-            var dgroup = data.AsEnumerable().GroupBy(d => d["AccountTitle"]).Select(grp => grp.ToList());
+            row["dem_n_of"] = db.ExecuteScalar("select count (AccountId) from DimAccount where Category in (select CategoryId from factCategory where  Category between 1001 and 1009) or Category = '14025'").toInt();
 
-            //int count = 1;
-
-            foreach (var grp in dgroup)
-            {
-                var row = dt.NewRow();
-
-                row["Name_Of_Bank"] = grp[0]["FirstName"];
-                row["Amount_N'000"] = grp.Sum(g => g["BookValue"].toDecimal());
-
-                dt.Rows.Add(row);
-            }
+            row["dem_Amt"] = db.ExecuteScalar("select sum(CAST(BookValue AS DECIMAL(20, 4))) from DimAccount where Category in (select CategoryId from factCategory where Category between 1001 and 1009) or Category = '14025'").toDecimal();
 
 
+            row["sav_n_of"] = db.ExecuteScalar("select count (AccountId) from DimAccount where Category in (select CategoryId from factCategory where CategoryId between 6000 and 6999 and CategoryName not like '%loan%') ").toInt();
+
+            row["sav_Amt"] = db.ExecuteScalar("select sum(CAST(BookValue AS DECIMAL(20, 4))) from DimAccount where Category in (select CategoryId from factCategory where CategoryId between 6000 and 6999 and CategoryName not like '%loan%') ").toDecimal();
+
+
+            row["tt_n_of"] = 0;
+            row["tt_Amt"] = 0;
+
+            row["sod_n_of"] = 0;
+            row["sod_Amt"] = 0;
+
+
+            dt.Rows.Add(row);
+            
         }
 
 
@@ -1558,31 +1589,53 @@ namespace InlaksIB.Controllers
 
             dt.Columns.Add(myDataColumn);
 
+            var models = new string[] { "Individuals", "Solidarity Group", "Neighborhood and Small Group Revolving Funds", "Village Banking", "Wholesale lending", "Credit Unions Staff", "Others - Specify" };
 
-            var sql = "SELECT  b.\"DESCRIPTION\" as Lending_Model, CAST(COALESCE(NULLIF(a.\"Amount\",''),'0') as decimal) as \"Amount\" FROM \"AA_LOANS_IL\" a inner join \"CATEGORY\" b on (a.\"Category\"=b.\"@ID\");";
 
-            var db = new PostgreSQLDBInterface(new Settings().sourcedb);
+
+
+            var sql = "select  a.ArrangementId,b.CustomerType,c.BookValue as Amount from factArrangement a join DimCustomer b on (a.CustomerID = b.CustomerId) join DimAccount c on (a.LinkedApplId=c.AccountId) where a.ProductLine ='LENDING'";
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype,new Settings().warehousedb);
 
             var data = db.getData(sql);
 
-     
+
+           // var amount = grp.Sum(t => t["Amount"].toDecimal());
+            //row["Amount_N'000"] = amount;
+            //row["%"] = (amount / total) * 100;
             var total = data.AsEnumerable().Sum(t => t["Amount"].toDecimal());
 
-            var sectgroup = data.AsEnumerable().GroupBy(r => r["Lending_Model"]).Select(grp => grp.ToList());
+            //var sectgroup = data.AsEnumerable().GroupBy(r => r["Lending_Model"]).Select(grp => grp.ToList());
             int i = 1;
 
-            foreach (var grp in sectgroup)
+            foreach (var model in models)
             {
                 var row = dt.NewRow();
                 row["S/N"] = i++;
-                row["Lending_Model"] = grp[0]["Lending_Model"].ToString();
-                row["Number"] = grp.Count;
-                var amount = grp.Sum(t => t["Amount"].toDecimal());
-                row["Amount_N'000"] = amount;
-                row["%"] = (amount / total) * 100;
+                row["Lending_Model"] = model;
+                row["Number"] = 0;
+                row["Amount_N'000"] = 0;
+                row["%"] = 0;
 
                 dt.Rows.Add(row);
             }
+
+            var individuals = data.AsEnumerable().Where(r => r["CustomerType"].ToString().Trim() == "I" || r["CustomerType"] == DBNull.Value);
+
+            dt.Rows[0]["Number"] = individuals.Count();
+            var amt = individuals.Sum(r => r["Amount"].toDecimal());
+            dt.Rows[0]["Amount_N'000"] = amt;
+            dt.Rows[0]["%"] = (amt / total) * 100;
+
+           var  others = data.AsEnumerable().Where(r => r["CustomerType"].ToString().Trim() == "NI");
+
+            dt.Rows[6]["Number"] = others.Count();
+            amt = others.Sum(r => r["Amount"].toDecimal());
+            dt.Rows[6]["Amount_N'000"] = amt;
+            dt.Rows[6]["%"] = (amt / total) * 100;
+
+
         }
 
         private void sec_analysis(DataTable dt, ReportDocument report)
@@ -1748,7 +1801,21 @@ namespace InlaksIB.Controllers
                         Session["file"] = excelreports.generateNPFSavingsAccountsBalanceReport(downpath, reportname);
                         break;
 
+                    case "Credit Bureau Report Individual":
 
+                        Session["file"] = excelreports.generateNPFUniformConsumerFormatReport(downpath, reportname);
+                        break;
+
+                    case "Credit Bureau Report Corporate":
+
+                        Session["file"] = excelreports.generateNPFUniformCorporateFormatReport(downpath, reportname);
+                        break;
+
+                    case "Loan Disbursement Report":
+
+                        Session["file"] = excelreports.generateNPFDisbursementReport(downpath, reportname,startdate,enddate);
+                        break;
+                        
 
                 }
 

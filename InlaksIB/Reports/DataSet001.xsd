@@ -12,7 +12,7 @@
   <xs:element name="DataSet001" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet001" msprop:Generator_UserDSName="DataSet001">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="pnldt" msprop:Generator_TableClassName="pnldtDataTable" msprop:Generator_TableVarName="tablepnldt" msprop:Generator_TablePropName="pnldt" msprop:Generator_RowDeletingName="pnldtRowDeleting" msprop:Generator_RowChangingName="pnldtRowChanging" msprop:Generator_RowEvHandlerName="pnldtRowChangeEventHandler" msprop:Generator_RowDeletedName="pnldtRowDeleted" msprop:Generator_UserTableName="pnldt" msprop:Generator_RowChangedName="pnldtRowChanged" msprop:Generator_RowEvArgName="pnldtRowChangeEvent" msprop:Generator_RowClassName="pnldtRow">
+        <xs:element name="pnldt" msprop:Generator_TableClassName="pnldtDataTable" msprop:Generator_TableVarName="tablepnldt" msprop:Generator_RowChangedName="pnldtRowChanged" msprop:Generator_TablePropName="pnldt" msprop:Generator_RowDeletingName="pnldtRowDeleting" msprop:Generator_RowChangingName="pnldtRowChanging" msprop:Generator_RowEvHandlerName="pnldtRowChangeEventHandler" msprop:Generator_RowDeletedName="pnldtRowDeleted" msprop:Generator_RowClassName="pnldtRow" msprop:Generator_UserTableName="pnldt" msprop:Generator_RowEvArgName="pnldtRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="int_income" msprop:Generator_ColumnVarNameInTable="columnint_income" msprop:Generator_ColumnPropNameInRow="int_income" msprop:Generator_ColumnPropNameInTable="int_incomeColumn" msprop:Generator_UserColumnName="int_income" type="xs:decimal" minOccurs="0" />
@@ -42,7 +42,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="mem_items" msprop:Generator_TableClassName="mem_itemsDataTable" msprop:Generator_TableVarName="tablemem_items" msprop:Generator_TablePropName="mem_items" msprop:Generator_RowDeletingName="mem_itemsRowDeleting" msprop:Generator_RowChangingName="mem_itemsRowChanging" msprop:Generator_RowEvHandlerName="mem_itemsRowChangeEventHandler" msprop:Generator_RowDeletedName="mem_itemsRowDeleted" msprop:Generator_UserTableName="mem_items" msprop:Generator_RowChangedName="mem_itemsRowChanged" msprop:Generator_RowEvArgName="mem_itemsRowChangeEvent" msprop:Generator_RowClassName="mem_itemsRow">
+        <xs:element name="mem_items" msprop:Generator_TableClassName="mem_itemsDataTable" msprop:Generator_TableVarName="tablemem_items" msprop:Generator_RowChangedName="mem_itemsRowChanged" msprop:Generator_TablePropName="mem_items" msprop:Generator_RowDeletingName="mem_itemsRowDeleting" msprop:Generator_RowChangingName="mem_itemsRowChanging" msprop:Generator_RowEvHandlerName="mem_itemsRowChangeEventHandler" msprop:Generator_RowDeletedName="mem_itemsRowDeleted" msprop:Generator_RowClassName="mem_itemsRow" msprop:Generator_UserTableName="mem_items" msprop:Generator_RowEvArgName="mem_itemsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="borrowers_male_cm" msprop:Generator_ColumnVarNameInTable="columnborrowers_male_cm" msprop:Generator_ColumnPropNameInRow="borrowers_male_cm" msprop:Generator_ColumnPropNameInTable="borrowers_male_cmColumn" msprop:Generator_UserColumnName="borrowers_male_cm" type="xs:string" minOccurs="0" />
@@ -66,6 +66,20 @@
               <xs:element name="juniorstaff_male_cm" msprop:Generator_ColumnVarNameInTable="columnjuniorstaff_male_cm" msprop:Generator_ColumnPropNameInRow="juniorstaff_male_cm" msprop:Generator_ColumnPropNameInTable="juniorstaff_male_cmColumn" msprop:Generator_UserColumnName="juniorstaff_male_cm" type="xs:string" minOccurs="0" />
               <xs:element name="juniorstaff_male_2dt" msprop:Generator_ColumnVarNameInTable="columnjuniorstaff_male_2dt" msprop:Generator_ColumnPropNameInRow="juniorstaff_male_2dt" msprop:Generator_ColumnPropNameInTable="juniorstaff_male_2dtColumn" msprop:Generator_UserColumnName="juniorstaff_male_2dt" type="xs:string" minOccurs="0" />
               <xs:element name="DataColumn1" msprop:Generator_ColumnVarNameInTable="columnDataColumn1" msprop:Generator_ColumnPropNameInRow="DataColumn1" msprop:Generator_ColumnPropNameInTable="DataColumn1Column" msprop:Generator_UserColumnName="DataColumn1" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="sch_ins_202" msprop:Generator_TableClassName="sch_ins_202DataTable" msprop:Generator_TableVarName="tablesch_ins_202" msprop:Generator_TablePropName="sch_ins_202" msprop:Generator_RowDeletingName="sch_ins_202RowDeleting" msprop:Generator_RowChangingName="sch_ins_202RowChanging" msprop:Generator_RowEvHandlerName="sch_ins_202RowChangeEventHandler" msprop:Generator_RowDeletedName="sch_ins_202RowDeleted" msprop:Generator_UserTableName="sch_ins_202" msprop:Generator_RowChangedName="sch_ins_202RowChanged" msprop:Generator_RowEvArgName="sch_ins_202RowChangeEvent" msprop:Generator_RowClassName="sch_ins_202Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dem_n_of" msprop:Generator_ColumnVarNameInTable="columndem_n_of" msprop:Generator_ColumnPropNameInRow="dem_n_of" msprop:Generator_ColumnPropNameInTable="dem_n_ofColumn" msprop:Generator_UserColumnName="dem_n_of" type="xs:int" minOccurs="0" />
+              <xs:element name="dem_Amt" msprop:Generator_ColumnVarNameInTable="columndem_Amt" msprop:Generator_ColumnPropNameInRow="dem_Amt" msprop:Generator_ColumnPropNameInTable="dem_AmtColumn" msprop:Generator_UserColumnName="dem_Amt" type="xs:decimal" minOccurs="0" />
+              <xs:element name="sav_n_of" msprop:Generator_ColumnVarNameInTable="columnsav_n_of" msprop:Generator_ColumnPropNameInRow="sav_n_of" msprop:Generator_ColumnPropNameInTable="sav_n_ofColumn" msprop:Generator_UserColumnName="sav_n_of" type="xs:int" minOccurs="0" />
+              <xs:element name="sav_Amt" msprop:Generator_ColumnVarNameInTable="columnsav_Amt" msprop:Generator_ColumnPropNameInRow="sav_Amt" msprop:Generator_ColumnPropNameInTable="sav_AmtColumn" msprop:Generator_UserColumnName="sav_Amt" type="xs:decimal" minOccurs="0" />
+              <xs:element name="tt_n_of" msprop:Generator_ColumnVarNameInTable="columntt_n_of" msprop:Generator_ColumnPropNameInRow="tt_n_of" msprop:Generator_ColumnPropNameInTable="tt_n_ofColumn" msprop:Generator_UserColumnName="tt_n_of" type="xs:int" minOccurs="0" />
+              <xs:element name="tt_Amt" msprop:Generator_ColumnVarNameInTable="columntt_Amt" msprop:Generator_ColumnPropNameInRow="tt_Amt" msprop:Generator_ColumnPropNameInTable="tt_AmtColumn" msprop:Generator_UserColumnName="tt_Amt" type="xs:decimal" minOccurs="0" />
+              <xs:element name="sod_n_of" msprop:Generator_ColumnVarNameInTable="columnsod_n_of" msprop:Generator_ColumnPropNameInRow="sod_n_of" msprop:Generator_ColumnPropNameInTable="sod_n_ofColumn" msprop:Generator_UserColumnName="sod_n_of" type="xs:int" minOccurs="0" />
+              <xs:element name="sod_Amt" msprop:Generator_ColumnVarNameInTable="columnsod_Amt" msprop:Generator_ColumnPropNameInRow="sod_Amt" msprop:Generator_ColumnPropNameInTable="sod_AmtColumn" msprop:Generator_UserColumnName="sod_Amt" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
