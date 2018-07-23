@@ -30,6 +30,8 @@ namespace InlaksIB.Reports {
         
         private sch_ins_202DataTable tablesch_ins_202;
         
+        private stmt_liab_300DataTable tablestmt_liab_300;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -66,6 +68,9 @@ namespace InlaksIB.Reports {
                 }
                 if ((ds.Tables["sch_ins_202"] != null)) {
                     base.Tables.Add(new sch_ins_202DataTable(ds.Tables["sch_ins_202"]));
+                }
+                if ((ds.Tables["stmt_liab_300"] != null)) {
+                    base.Tables.Add(new stmt_liab_300DataTable(ds.Tables["stmt_liab_300"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -112,6 +117,16 @@ namespace InlaksIB.Reports {
         public sch_ins_202DataTable sch_ins_202 {
             get {
                 return this.tablesch_ins_202;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public stmt_liab_300DataTable stmt_liab_300 {
+            get {
+                return this.tablestmt_liab_300;
             }
         }
         
@@ -191,6 +206,9 @@ namespace InlaksIB.Reports {
                 if ((ds.Tables["sch_ins_202"] != null)) {
                     base.Tables.Add(new sch_ins_202DataTable(ds.Tables["sch_ins_202"]));
                 }
+                if ((ds.Tables["stmt_liab_300"] != null)) {
+                    base.Tables.Add(new stmt_liab_300DataTable(ds.Tables["stmt_liab_300"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -242,6 +260,12 @@ namespace InlaksIB.Reports {
                     this.tablesch_ins_202.InitVars();
                 }
             }
+            this.tablestmt_liab_300 = ((stmt_liab_300DataTable)(base.Tables["stmt_liab_300"]));
+            if ((initTable == true)) {
+                if ((this.tablestmt_liab_300 != null)) {
+                    this.tablestmt_liab_300.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -258,6 +282,8 @@ namespace InlaksIB.Reports {
             base.Tables.Add(this.tablemem_items);
             this.tablesch_ins_202 = new sch_ins_202DataTable();
             base.Tables.Add(this.tablesch_ins_202);
+            this.tablestmt_liab_300 = new stmt_liab_300DataTable();
+            base.Tables.Add(this.tablestmt_liab_300);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -275,6 +301,12 @@ namespace InlaksIB.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerializesch_ins_202() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializestmt_liab_300() {
             return false;
         }
         
@@ -341,6 +373,9 @@ namespace InlaksIB.Reports {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void sch_ins_202RowChangeEventHandler(object sender, sch_ins_202RowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void stmt_liab_300RowChangeEventHandler(object sender, stmt_liab_300RowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -674,8 +709,8 @@ namespace InlaksIB.Reports {
                         decimal Penalties_Paid_, 
                         decimal Overheads, 
                         decimal Less_Provision_For_Taxation, 
-                        string eoi_items, 
-                        string tax_on_eoi, 
+                        decimal eoi_items, 
+                        decimal tax_on_eoi, 
                         decimal Net_Interest_Income, 
                         decimal Total_Other_Income, 
                         decimal Net_Income, 
@@ -791,9 +826,9 @@ namespace InlaksIB.Reports {
                 base.Columns.Add(this.columnOverheads);
                 this.columnLess_Provision_For_Taxation = new global::System.Data.DataColumn("Less_Provision_For_Taxation", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLess_Provision_For_Taxation);
-                this.columneoi_items = new global::System.Data.DataColumn("eoi_items", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columneoi_items = new global::System.Data.DataColumn("eoi_items", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columneoi_items);
-                this.columntax_on_eoi = new global::System.Data.DataColumn("tax_on_eoi", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columntax_on_eoi = new global::System.Data.DataColumn("tax_on_eoi", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columntax_on_eoi);
                 this.columnNet_Interest_Income = new global::System.Data.DataColumn("Net_Interest_Income", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNet_Interest_Income);
@@ -811,6 +846,11 @@ namespace InlaksIB.Reports {
                 base.Columns.Add(this.columnProfit_Loss_On_EOI_After_Tax);
                 this.columnProfit_Loss_After_Tax_EOI = new global::System.Data.DataColumn("Profit_Loss_After_Tax_EOI", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnProfit_Loss_After_Tax_EOI);
+                this.columnint_income.DefaultValue = ((decimal)(0m));
+                this.columnless_int_expense.DefaultValue = ((decimal)(0m));
+                this.columncommision.DefaultValue = ((decimal)(0m));
+                this.columneoi_items.DefaultValue = ((decimal)(0m));
+                this.columntax_on_eoi.DefaultValue = ((decimal)(0m));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1831,6 +1871,1119 @@ namespace InlaksIB.Reports {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class stmt_liab_300DataTable : global::System.Data.TypedTableBase<stmt_liab_300Row> {
+            
+            private global::System.Data.DataColumn columntbills;
+            
+            private global::System.Data.DataColumn columnunsecuredTB;
+            
+            private global::System.Data.DataColumn columnsecuredTB;
+            
+            private global::System.Data.DataColumn columnnotes;
+            
+            private global::System.Data.DataColumn columnbal_with_banks;
+            
+            private global::System.Data.DataColumn columnq_companies;
+            
+            private global::System.Data.DataColumn columnunq_companies;
+            
+            private global::System.Data.DataColumn columnsub_companies;
+            
+            private global::System.Data.DataColumn columnother_inv;
+            
+            private global::System.Data.DataColumn columnbanks_in_nig;
+            
+            private global::System.Data.DataColumn columnother_inst;
+            
+            private global::System.Data.DataColumn columnmicro_loans;
+            
+            private global::System.Data.DataColumn columnsmall_med_ent_loans;
+            
+            private global::System.Data.DataColumn columnbills_discounted;
+            
+            private global::System.Data.DataColumn columnhigher_purchase;
+            
+            private global::System.Data.DataColumn columnadv_under_micro_lease;
+            
+            private global::System.Data.DataColumn columnother_loans;
+            
+            private global::System.Data.DataColumn columnstaff_loans;
+            
+            private global::System.Data.DataColumn columnspecf_ln_lease_prov;
+            
+            private global::System.Data.DataColumn columngen_ln_lease_prov;
+            
+            private global::System.Data.DataColumn columntot_other_assets;
+            
+            private global::System.Data.DataColumn columnprov_loss_other_asssets;
+            
+            private global::System.Data.DataColumn columnfree_hold_land_build;
+            
+            private global::System.Data.DataColumn columnlease_hold_land_build;
+            
+            private global::System.Data.DataColumn columnplant_machinery;
+            
+            private global::System.Data.DataColumn columnfurniture_fixtures;
+            
+            private global::System.Data.DataColumn columnmotor_vehicles;
+            
+            private global::System.Data.DataColumn columnoffice_equipments;
+            
+            private global::System.Data.DataColumn columnless_accum_depre;
+            
+            private global::System.Data.DataColumn columndemand_deposits;
+            
+            private global::System.Data.DataColumn columnmandatory_deposits;
+            
+            private global::System.Data.DataColumn columnterm_time_deposits;
+            
+            private global::System.Data.DataColumn columnother_deposits;
+            
+            private global::System.Data.DataColumn columnfed_govt;
+            
+            private global::System.Data.DataColumn columnstate_govt;
+            
+            private global::System.Data.DataColumn columnlocal_govt;
+            
+            private global::System.Data.DataColumn columnforeign_agencies;
+            
+            private global::System.Data.DataColumn columnother_agencies;
+            
+            private global::System.Data.DataColumn columnr_debenture;
+            
+            private global::System.Data.DataColumn columnir_debenture;
+            
+            private global::System.Data.DataColumn columnauth_share_capital;
+            
+            private global::System.Data.DataColumn columniss_full_paid_capital;
+            
+            private global::System.Data.DataColumn columnord_shares;
+            
+            private global::System.Data.DataColumn columnpref_shares;
+            
+            private global::System.Data.DataColumn columnstatutory_reserves;
+            
+            private global::System.Data.DataColumn columnshare_premium;
+            
+            private global::System.Data.DataColumn columngeneral_reserves;
+            
+            private global::System.Data.DataColumn columnbonus_reserves;
+            
+            private global::System.Data.DataColumn columnrevaluation_reserves;
+            
+            private global::System.Data.DataColumn columnother_reserves;
+            
+            private global::System.Data.DataColumn columnretained_profit;
+            
+            private global::System.Data.DataColumn columnunaud_loss_todate;
+            
+            private global::System.Data.DataColumn columncoins;
+            
+            private global::System.Data.DataColumn columnother_liabs;
+            
+            private global::System.Data.DataColumn columnvol_sav_deposits;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public stmt_liab_300DataTable() {
+                this.TableName = "stmt_liab_300";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal stmt_liab_300DataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected stmt_liab_300DataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn tbillsColumn {
+                get {
+                    return this.columntbills;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn unsecuredTBColumn {
+                get {
+                    return this.columnunsecuredTB;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn securedTBColumn {
+                get {
+                    return this.columnsecuredTB;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn notesColumn {
+                get {
+                    return this.columnnotes;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn bal_with_banksColumn {
+                get {
+                    return this.columnbal_with_banks;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn q_companiesColumn {
+                get {
+                    return this.columnq_companies;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn unq_companiesColumn {
+                get {
+                    return this.columnunq_companies;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn sub_companiesColumn {
+                get {
+                    return this.columnsub_companies;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn other_invColumn {
+                get {
+                    return this.columnother_inv;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn banks_in_nigColumn {
+                get {
+                    return this.columnbanks_in_nig;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn other_instColumn {
+                get {
+                    return this.columnother_inst;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn micro_loansColumn {
+                get {
+                    return this.columnmicro_loans;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn small_med_ent_loansColumn {
+                get {
+                    return this.columnsmall_med_ent_loans;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn bills_discountedColumn {
+                get {
+                    return this.columnbills_discounted;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn higher_purchaseColumn {
+                get {
+                    return this.columnhigher_purchase;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn adv_under_micro_leaseColumn {
+                get {
+                    return this.columnadv_under_micro_lease;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn other_loansColumn {
+                get {
+                    return this.columnother_loans;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn staff_loansColumn {
+                get {
+                    return this.columnstaff_loans;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn specf_ln_lease_provColumn {
+                get {
+                    return this.columnspecf_ln_lease_prov;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn gen_ln_lease_provColumn {
+                get {
+                    return this.columngen_ln_lease_prov;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn tot_other_assetsColumn {
+                get {
+                    return this.columntot_other_assets;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn prov_loss_other_asssetsColumn {
+                get {
+                    return this.columnprov_loss_other_asssets;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn free_hold_land_buildColumn {
+                get {
+                    return this.columnfree_hold_land_build;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn lease_hold_land_buildColumn {
+                get {
+                    return this.columnlease_hold_land_build;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn plant_machineryColumn {
+                get {
+                    return this.columnplant_machinery;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn furniture_fixturesColumn {
+                get {
+                    return this.columnfurniture_fixtures;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn motor_vehiclesColumn {
+                get {
+                    return this.columnmotor_vehicles;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn office_equipmentsColumn {
+                get {
+                    return this.columnoffice_equipments;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn less_accum_depreColumn {
+                get {
+                    return this.columnless_accum_depre;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn demand_depositsColumn {
+                get {
+                    return this.columndemand_deposits;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn mandatory_depositsColumn {
+                get {
+                    return this.columnmandatory_deposits;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn term_time_depositsColumn {
+                get {
+                    return this.columnterm_time_deposits;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn other_depositsColumn {
+                get {
+                    return this.columnother_deposits;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fed_govtColumn {
+                get {
+                    return this.columnfed_govt;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn state_govtColumn {
+                get {
+                    return this.columnstate_govt;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn local_govtColumn {
+                get {
+                    return this.columnlocal_govt;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn foreign_agenciesColumn {
+                get {
+                    return this.columnforeign_agencies;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn other_agenciesColumn {
+                get {
+                    return this.columnother_agencies;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn r_debentureColumn {
+                get {
+                    return this.columnr_debenture;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ir_debentureColumn {
+                get {
+                    return this.columnir_debenture;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn auth_share_capitalColumn {
+                get {
+                    return this.columnauth_share_capital;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn iss_full_paid_capitalColumn {
+                get {
+                    return this.columniss_full_paid_capital;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ord_sharesColumn {
+                get {
+                    return this.columnord_shares;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn pref_sharesColumn {
+                get {
+                    return this.columnpref_shares;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn statutory_reservesColumn {
+                get {
+                    return this.columnstatutory_reserves;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn share_premiumColumn {
+                get {
+                    return this.columnshare_premium;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn general_reservesColumn {
+                get {
+                    return this.columngeneral_reserves;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn bonus_reservesColumn {
+                get {
+                    return this.columnbonus_reserves;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn revaluation_reservesColumn {
+                get {
+                    return this.columnrevaluation_reserves;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn other_reservesColumn {
+                get {
+                    return this.columnother_reserves;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn retained_profitColumn {
+                get {
+                    return this.columnretained_profit;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn unaud_loss_todateColumn {
+                get {
+                    return this.columnunaud_loss_todate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn coinsColumn {
+                get {
+                    return this.columncoins;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn other_liabsColumn {
+                get {
+                    return this.columnother_liabs;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn vol_sav_depositsColumn {
+                get {
+                    return this.columnvol_sav_deposits;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public stmt_liab_300Row this[int index] {
+                get {
+                    return ((stmt_liab_300Row)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event stmt_liab_300RowChangeEventHandler stmt_liab_300RowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event stmt_liab_300RowChangeEventHandler stmt_liab_300RowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event stmt_liab_300RowChangeEventHandler stmt_liab_300RowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event stmt_liab_300RowChangeEventHandler stmt_liab_300RowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Addstmt_liab_300Row(stmt_liab_300Row row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public stmt_liab_300Row Addstmt_liab_300Row(
+                        decimal tbills, 
+                        decimal unsecuredTB, 
+                        decimal securedTB, 
+                        decimal notes, 
+                        decimal bal_with_banks, 
+                        decimal q_companies, 
+                        decimal unq_companies, 
+                        decimal sub_companies, 
+                        decimal other_inv, 
+                        decimal banks_in_nig, 
+                        decimal other_inst, 
+                        decimal micro_loans, 
+                        decimal small_med_ent_loans, 
+                        decimal bills_discounted, 
+                        decimal higher_purchase, 
+                        decimal adv_under_micro_lease, 
+                        decimal other_loans, 
+                        decimal staff_loans, 
+                        decimal specf_ln_lease_prov, 
+                        decimal gen_ln_lease_prov, 
+                        decimal tot_other_assets, 
+                        decimal prov_loss_other_asssets, 
+                        decimal free_hold_land_build, 
+                        decimal lease_hold_land_build, 
+                        decimal plant_machinery, 
+                        decimal furniture_fixtures, 
+                        decimal motor_vehicles, 
+                        decimal office_equipments, 
+                        decimal less_accum_depre, 
+                        decimal demand_deposits, 
+                        decimal mandatory_deposits, 
+                        decimal term_time_deposits, 
+                        decimal other_deposits, 
+                        decimal fed_govt, 
+                        decimal state_govt, 
+                        decimal local_govt, 
+                        decimal foreign_agencies, 
+                        decimal other_agencies, 
+                        decimal r_debenture, 
+                        decimal ir_debenture, 
+                        decimal auth_share_capital, 
+                        decimal iss_full_paid_capital, 
+                        decimal ord_shares, 
+                        decimal pref_shares, 
+                        decimal statutory_reserves, 
+                        decimal share_premium, 
+                        decimal general_reserves, 
+                        decimal bonus_reserves, 
+                        decimal revaluation_reserves, 
+                        decimal other_reserves, 
+                        decimal retained_profit, 
+                        decimal unaud_loss_todate, 
+                        decimal coins, 
+                        decimal other_liabs, 
+                        decimal vol_sav_deposits) {
+                stmt_liab_300Row rowstmt_liab_300Row = ((stmt_liab_300Row)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        tbills,
+                        unsecuredTB,
+                        securedTB,
+                        notes,
+                        bal_with_banks,
+                        q_companies,
+                        unq_companies,
+                        sub_companies,
+                        other_inv,
+                        banks_in_nig,
+                        other_inst,
+                        micro_loans,
+                        small_med_ent_loans,
+                        bills_discounted,
+                        higher_purchase,
+                        adv_under_micro_lease,
+                        other_loans,
+                        staff_loans,
+                        specf_ln_lease_prov,
+                        gen_ln_lease_prov,
+                        tot_other_assets,
+                        prov_loss_other_asssets,
+                        free_hold_land_build,
+                        lease_hold_land_build,
+                        plant_machinery,
+                        furniture_fixtures,
+                        motor_vehicles,
+                        office_equipments,
+                        less_accum_depre,
+                        demand_deposits,
+                        mandatory_deposits,
+                        term_time_deposits,
+                        other_deposits,
+                        fed_govt,
+                        state_govt,
+                        local_govt,
+                        foreign_agencies,
+                        other_agencies,
+                        r_debenture,
+                        ir_debenture,
+                        auth_share_capital,
+                        iss_full_paid_capital,
+                        ord_shares,
+                        pref_shares,
+                        statutory_reserves,
+                        share_premium,
+                        general_reserves,
+                        bonus_reserves,
+                        revaluation_reserves,
+                        other_reserves,
+                        retained_profit,
+                        unaud_loss_todate,
+                        coins,
+                        other_liabs,
+                        vol_sav_deposits};
+                rowstmt_liab_300Row.ItemArray = columnValuesArray;
+                this.Rows.Add(rowstmt_liab_300Row);
+                return rowstmt_liab_300Row;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                stmt_liab_300DataTable cln = ((stmt_liab_300DataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new stmt_liab_300DataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columntbills = base.Columns["tbills"];
+                this.columnunsecuredTB = base.Columns["unsecuredTB"];
+                this.columnsecuredTB = base.Columns["securedTB"];
+                this.columnnotes = base.Columns["notes"];
+                this.columnbal_with_banks = base.Columns["bal_with_banks"];
+                this.columnq_companies = base.Columns["q_companies"];
+                this.columnunq_companies = base.Columns["unq_companies"];
+                this.columnsub_companies = base.Columns["sub_companies"];
+                this.columnother_inv = base.Columns["other_inv"];
+                this.columnbanks_in_nig = base.Columns["banks_in_nig"];
+                this.columnother_inst = base.Columns["other_inst"];
+                this.columnmicro_loans = base.Columns["micro_loans"];
+                this.columnsmall_med_ent_loans = base.Columns["small_med_ent_loans"];
+                this.columnbills_discounted = base.Columns["bills_discounted"];
+                this.columnhigher_purchase = base.Columns["higher_purchase"];
+                this.columnadv_under_micro_lease = base.Columns["adv_under_micro_lease"];
+                this.columnother_loans = base.Columns["other_loans"];
+                this.columnstaff_loans = base.Columns["staff_loans"];
+                this.columnspecf_ln_lease_prov = base.Columns["specf_ln_lease_prov"];
+                this.columngen_ln_lease_prov = base.Columns["gen_ln_lease_prov"];
+                this.columntot_other_assets = base.Columns["tot_other_assets"];
+                this.columnprov_loss_other_asssets = base.Columns["prov_loss_other_asssets"];
+                this.columnfree_hold_land_build = base.Columns["free_hold_land_build"];
+                this.columnlease_hold_land_build = base.Columns["lease_hold_land_build"];
+                this.columnplant_machinery = base.Columns["plant_machinery"];
+                this.columnfurniture_fixtures = base.Columns["furniture_fixtures"];
+                this.columnmotor_vehicles = base.Columns["motor_vehicles"];
+                this.columnoffice_equipments = base.Columns["office_equipments"];
+                this.columnless_accum_depre = base.Columns["less_accum_depre"];
+                this.columndemand_deposits = base.Columns["demand_deposits"];
+                this.columnmandatory_deposits = base.Columns["mandatory_deposits"];
+                this.columnterm_time_deposits = base.Columns["term_time_deposits"];
+                this.columnother_deposits = base.Columns["other_deposits"];
+                this.columnfed_govt = base.Columns["fed_govt"];
+                this.columnstate_govt = base.Columns["state_govt"];
+                this.columnlocal_govt = base.Columns["local_govt"];
+                this.columnforeign_agencies = base.Columns["foreign_agencies"];
+                this.columnother_agencies = base.Columns["other_agencies"];
+                this.columnr_debenture = base.Columns["r_debenture"];
+                this.columnir_debenture = base.Columns["ir_debenture"];
+                this.columnauth_share_capital = base.Columns["auth_share_capital"];
+                this.columniss_full_paid_capital = base.Columns["iss_full_paid_capital"];
+                this.columnord_shares = base.Columns["ord_shares"];
+                this.columnpref_shares = base.Columns["pref_shares"];
+                this.columnstatutory_reserves = base.Columns["statutory_reserves"];
+                this.columnshare_premium = base.Columns["share_premium"];
+                this.columngeneral_reserves = base.Columns["general_reserves"];
+                this.columnbonus_reserves = base.Columns["bonus_reserves"];
+                this.columnrevaluation_reserves = base.Columns["revaluation_reserves"];
+                this.columnother_reserves = base.Columns["other_reserves"];
+                this.columnretained_profit = base.Columns["retained_profit"];
+                this.columnunaud_loss_todate = base.Columns["unaud_loss_todate"];
+                this.columncoins = base.Columns["coins"];
+                this.columnother_liabs = base.Columns["other_liabs"];
+                this.columnvol_sav_deposits = base.Columns["vol_sav_deposits"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columntbills = new global::System.Data.DataColumn("tbills", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntbills);
+                this.columnunsecuredTB = new global::System.Data.DataColumn("unsecuredTB", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnunsecuredTB);
+                this.columnsecuredTB = new global::System.Data.DataColumn("securedTB", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsecuredTB);
+                this.columnnotes = new global::System.Data.DataColumn("notes", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnnotes);
+                this.columnbal_with_banks = new global::System.Data.DataColumn("bal_with_banks", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbal_with_banks);
+                this.columnq_companies = new global::System.Data.DataColumn("q_companies", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnq_companies);
+                this.columnunq_companies = new global::System.Data.DataColumn("unq_companies", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnunq_companies);
+                this.columnsub_companies = new global::System.Data.DataColumn("sub_companies", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsub_companies);
+                this.columnother_inv = new global::System.Data.DataColumn("other_inv", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnother_inv);
+                this.columnbanks_in_nig = new global::System.Data.DataColumn("banks_in_nig", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbanks_in_nig);
+                this.columnother_inst = new global::System.Data.DataColumn("other_inst", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnother_inst);
+                this.columnmicro_loans = new global::System.Data.DataColumn("micro_loans", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmicro_loans);
+                this.columnsmall_med_ent_loans = new global::System.Data.DataColumn("small_med_ent_loans", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsmall_med_ent_loans);
+                this.columnbills_discounted = new global::System.Data.DataColumn("bills_discounted", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbills_discounted);
+                this.columnhigher_purchase = new global::System.Data.DataColumn("higher_purchase", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnhigher_purchase);
+                this.columnadv_under_micro_lease = new global::System.Data.DataColumn("adv_under_micro_lease", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnadv_under_micro_lease);
+                this.columnother_loans = new global::System.Data.DataColumn("other_loans", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnother_loans);
+                this.columnstaff_loans = new global::System.Data.DataColumn("staff_loans", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnstaff_loans);
+                this.columnspecf_ln_lease_prov = new global::System.Data.DataColumn("specf_ln_lease_prov", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnspecf_ln_lease_prov);
+                this.columngen_ln_lease_prov = new global::System.Data.DataColumn("gen_ln_lease_prov", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columngen_ln_lease_prov);
+                this.columntot_other_assets = new global::System.Data.DataColumn("tot_other_assets", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntot_other_assets);
+                this.columnprov_loss_other_asssets = new global::System.Data.DataColumn("prov_loss_other_asssets", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnprov_loss_other_asssets);
+                this.columnfree_hold_land_build = new global::System.Data.DataColumn("free_hold_land_build", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfree_hold_land_build);
+                this.columnlease_hold_land_build = new global::System.Data.DataColumn("lease_hold_land_build", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnlease_hold_land_build);
+                this.columnplant_machinery = new global::System.Data.DataColumn("plant_machinery", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnplant_machinery);
+                this.columnfurniture_fixtures = new global::System.Data.DataColumn("furniture_fixtures", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfurniture_fixtures);
+                this.columnmotor_vehicles = new global::System.Data.DataColumn("motor_vehicles", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmotor_vehicles);
+                this.columnoffice_equipments = new global::System.Data.DataColumn("office_equipments", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnoffice_equipments);
+                this.columnless_accum_depre = new global::System.Data.DataColumn("less_accum_depre", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnless_accum_depre);
+                this.columndemand_deposits = new global::System.Data.DataColumn("demand_deposits", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columndemand_deposits);
+                this.columnmandatory_deposits = new global::System.Data.DataColumn("mandatory_deposits", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmandatory_deposits);
+                this.columnterm_time_deposits = new global::System.Data.DataColumn("term_time_deposits", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnterm_time_deposits);
+                this.columnother_deposits = new global::System.Data.DataColumn("other_deposits", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnother_deposits);
+                this.columnfed_govt = new global::System.Data.DataColumn("fed_govt", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfed_govt);
+                this.columnstate_govt = new global::System.Data.DataColumn("state_govt", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnstate_govt);
+                this.columnlocal_govt = new global::System.Data.DataColumn("local_govt", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnlocal_govt);
+                this.columnforeign_agencies = new global::System.Data.DataColumn("foreign_agencies", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnforeign_agencies);
+                this.columnother_agencies = new global::System.Data.DataColumn("other_agencies", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnother_agencies);
+                this.columnr_debenture = new global::System.Data.DataColumn("r_debenture", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnr_debenture);
+                this.columnir_debenture = new global::System.Data.DataColumn("ir_debenture", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnir_debenture);
+                this.columnauth_share_capital = new global::System.Data.DataColumn("auth_share_capital", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnauth_share_capital);
+                this.columniss_full_paid_capital = new global::System.Data.DataColumn("iss_full_paid_capital", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columniss_full_paid_capital);
+                this.columnord_shares = new global::System.Data.DataColumn("ord_shares", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnord_shares);
+                this.columnpref_shares = new global::System.Data.DataColumn("pref_shares", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnpref_shares);
+                this.columnstatutory_reserves = new global::System.Data.DataColumn("statutory_reserves", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnstatutory_reserves);
+                this.columnshare_premium = new global::System.Data.DataColumn("share_premium", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnshare_premium);
+                this.columngeneral_reserves = new global::System.Data.DataColumn("general_reserves", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columngeneral_reserves);
+                this.columnbonus_reserves = new global::System.Data.DataColumn("bonus_reserves", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbonus_reserves);
+                this.columnrevaluation_reserves = new global::System.Data.DataColumn("revaluation_reserves", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnrevaluation_reserves);
+                this.columnother_reserves = new global::System.Data.DataColumn("other_reserves", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnother_reserves);
+                this.columnretained_profit = new global::System.Data.DataColumn("retained_profit", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnretained_profit);
+                this.columnunaud_loss_todate = new global::System.Data.DataColumn("unaud_loss_todate", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnunaud_loss_todate);
+                this.columncoins = new global::System.Data.DataColumn("coins", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncoins);
+                this.columnother_liabs = new global::System.Data.DataColumn("other_liabs", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnother_liabs);
+                this.columnvol_sav_deposits = new global::System.Data.DataColumn("vol_sav_deposits", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnvol_sav_deposits);
+                this.columntbills.Caption = "notes";
+                this.columnunsecuredTB.Caption = "coins";
+                this.columnsecuredTB.Caption = "coins";
+                this.columnbal_with_banks.Caption = "coins";
+                this.columnq_companies.Caption = "coins";
+                this.columnunq_companies.Caption = "notes";
+                this.columnsub_companies.Caption = "coins";
+                this.columnother_inv.Caption = "coins";
+                this.columnbanks_in_nig.Caption = "coins";
+                this.columnother_inst.Caption = "coins";
+                this.columnmicro_loans.Caption = "notes";
+                this.columnsmall_med_ent_loans.Caption = "coins";
+                this.columnbills_discounted.Caption = "coins";
+                this.columnhigher_purchase.Caption = "coins";
+                this.columnadv_under_micro_lease.Caption = "notes";
+                this.columnother_loans.Caption = "coins";
+                this.columnstaff_loans.Caption = "coins";
+                this.columnspecf_ln_lease_prov.Caption = "notes";
+                this.columngen_ln_lease_prov.Caption = "coins";
+                this.columntot_other_assets.Caption = "coins";
+                this.columnprov_loss_other_asssets.Caption = "notes";
+                this.columnfree_hold_land_build.Caption = "coins";
+                this.columnlease_hold_land_build.Caption = "coins";
+                this.columnplant_machinery.Caption = "coins";
+                this.columnfurniture_fixtures.Caption = "coins";
+                this.columnmotor_vehicles.Caption = "notes";
+                this.columnoffice_equipments.Caption = "coins";
+                this.columnless_accum_depre.Caption = "coins";
+                this.columndemand_deposits.Caption = "coins";
+                this.columnmandatory_deposits.Caption = "coins";
+                this.columnterm_time_deposits.Caption = "coins";
+                this.columnother_deposits.Caption = "coins";
+                this.columnfed_govt.Caption = "notes";
+                this.columnstate_govt.Caption = "coins";
+                this.columnlocal_govt.Caption = "coins";
+                this.columnforeign_agencies.Caption = "notes";
+                this.columnother_agencies.Caption = "coins";
+                this.columnr_debenture.Caption = "coins";
+                this.columnir_debenture.Caption = "coins";
+                this.columnauth_share_capital.Caption = "coins";
+                this.columniss_full_paid_capital.Caption = "notes";
+                this.columnord_shares.Caption = "coins";
+                this.columnpref_shares.Caption = "coins";
+                this.columnstatutory_reserves.Caption = "coins";
+                this.columnshare_premium.Caption = "coins";
+                this.columngeneral_reserves.Caption = "volun_savg_deposits";
+                this.columnbonus_reserves.Caption = "notes";
+                this.columnrevaluation_reserves.Caption = "coins";
+                this.columnother_reserves.Caption = "coins";
+                this.columnretained_profit.Caption = "coins";
+                this.columnunaud_loss_todate.Caption = "coins";
+                this.columncoins.Caption = "notes";
+                this.columnother_liabs.Caption = "vol_sav_deposits";
+                this.columnother_liabs.DefaultValue = ((decimal)(0m));
+                this.columnvol_sav_deposits.DefaultValue = ((decimal)(0m));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public stmt_liab_300Row Newstmt_liab_300Row() {
+                return ((stmt_liab_300Row)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new stmt_liab_300Row(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(stmt_liab_300Row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.stmt_liab_300RowChanged != null)) {
+                    this.stmt_liab_300RowChanged(this, new stmt_liab_300RowChangeEvent(((stmt_liab_300Row)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.stmt_liab_300RowChanging != null)) {
+                    this.stmt_liab_300RowChanging(this, new stmt_liab_300RowChangeEvent(((stmt_liab_300Row)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.stmt_liab_300RowDeleted != null)) {
+                    this.stmt_liab_300RowDeleted(this, new stmt_liab_300RowChangeEvent(((stmt_liab_300Row)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.stmt_liab_300RowDeleting != null)) {
+                    this.stmt_liab_300RowDeleting(this, new stmt_liab_300RowChangeEvent(((stmt_liab_300Row)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Removestmt_liab_300Row(stmt_liab_300Row row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DataSet001 ds = new DataSet001();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "stmt_liab_300DataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class pnldtRow : global::System.Data.DataRow {
@@ -2070,10 +3223,10 @@ namespace InlaksIB.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string eoi_items {
+            public decimal eoi_items {
                 get {
                     try {
-                        return ((string)(this[this.tablepnldt.eoi_itemsColumn]));
+                        return ((decimal)(this[this.tablepnldt.eoi_itemsColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'eoi_items\' in table \'pnldt\' is DBNull.", e);
@@ -2086,10 +3239,10 @@ namespace InlaksIB.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string tax_on_eoi {
+            public decimal tax_on_eoi {
                 get {
                     try {
-                        return ((string)(this[this.tablepnldt.tax_on_eoiColumn]));
+                        return ((decimal)(this[this.tablepnldt.tax_on_eoiColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'tax_on_eoi\' in table \'pnldt\' is DBNull.", e);
@@ -3360,6 +4513,1561 @@ namespace InlaksIB.Reports {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class stmt_liab_300Row : global::System.Data.DataRow {
+            
+            private stmt_liab_300DataTable tablestmt_liab_300;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal stmt_liab_300Row(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablestmt_liab_300 = ((stmt_liab_300DataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal tbills {
+                get {
+                    if (this.IstbillsNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.tbillsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.tbillsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal unsecuredTB {
+                get {
+                    if (this.IsunsecuredTBNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.unsecuredTBColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.unsecuredTBColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal securedTB {
+                get {
+                    if (this.IssecuredTBNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.securedTBColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.securedTBColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal notes {
+                get {
+                    if (this.IsnotesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.notesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.notesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal bal_with_banks {
+                get {
+                    if (this.Isbal_with_banksNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.bal_with_banksColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.bal_with_banksColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal q_companies {
+                get {
+                    if (this.Isq_companiesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.q_companiesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.q_companiesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal unq_companies {
+                get {
+                    if (this.Isunq_companiesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.unq_companiesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.unq_companiesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal sub_companies {
+                get {
+                    if (this.Issub_companiesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.sub_companiesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.sub_companiesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal other_inv {
+                get {
+                    if (this.Isother_invNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.other_invColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.other_invColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal banks_in_nig {
+                get {
+                    if (this.Isbanks_in_nigNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.banks_in_nigColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.banks_in_nigColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal other_inst {
+                get {
+                    if (this.Isother_instNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.other_instColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.other_instColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal micro_loans {
+                get {
+                    if (this.Ismicro_loansNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.micro_loansColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.micro_loansColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal small_med_ent_loans {
+                get {
+                    if (this.Issmall_med_ent_loansNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.small_med_ent_loansColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.small_med_ent_loansColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal bills_discounted {
+                get {
+                    if (this.Isbills_discountedNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.bills_discountedColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.bills_discountedColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal higher_purchase {
+                get {
+                    if (this.Ishigher_purchaseNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.higher_purchaseColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.higher_purchaseColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal adv_under_micro_lease {
+                get {
+                    if (this.Isadv_under_micro_leaseNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.adv_under_micro_leaseColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.adv_under_micro_leaseColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal other_loans {
+                get {
+                    if (this.Isother_loansNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.other_loansColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.other_loansColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal staff_loans {
+                get {
+                    if (this.Isstaff_loansNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.staff_loansColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.staff_loansColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal specf_ln_lease_prov {
+                get {
+                    if (this.Isspecf_ln_lease_provNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.specf_ln_lease_provColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.specf_ln_lease_provColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal gen_ln_lease_prov {
+                get {
+                    if (this.Isgen_ln_lease_provNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.gen_ln_lease_provColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.gen_ln_lease_provColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal tot_other_assets {
+                get {
+                    if (this.Istot_other_assetsNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.tot_other_assetsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.tot_other_assetsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal prov_loss_other_asssets {
+                get {
+                    if (this.Isprov_loss_other_asssetsNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.prov_loss_other_asssetsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.prov_loss_other_asssetsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal free_hold_land_build {
+                get {
+                    if (this.Isfree_hold_land_buildNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.free_hold_land_buildColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.free_hold_land_buildColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal lease_hold_land_build {
+                get {
+                    if (this.Islease_hold_land_buildNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.lease_hold_land_buildColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.lease_hold_land_buildColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal plant_machinery {
+                get {
+                    if (this.Isplant_machineryNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.plant_machineryColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.plant_machineryColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal furniture_fixtures {
+                get {
+                    if (this.Isfurniture_fixturesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.furniture_fixturesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.furniture_fixturesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal motor_vehicles {
+                get {
+                    if (this.Ismotor_vehiclesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.motor_vehiclesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.motor_vehiclesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal office_equipments {
+                get {
+                    if (this.Isoffice_equipmentsNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.office_equipmentsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.office_equipmentsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal less_accum_depre {
+                get {
+                    if (this.Isless_accum_depreNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.less_accum_depreColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.less_accum_depreColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal demand_deposits {
+                get {
+                    if (this.Isdemand_depositsNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.demand_depositsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.demand_depositsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal mandatory_deposits {
+                get {
+                    if (this.Ismandatory_depositsNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.mandatory_depositsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.mandatory_depositsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal term_time_deposits {
+                get {
+                    if (this.Isterm_time_depositsNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.term_time_depositsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.term_time_depositsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal other_deposits {
+                get {
+                    if (this.Isother_depositsNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.other_depositsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.other_depositsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal fed_govt {
+                get {
+                    if (this.Isfed_govtNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.fed_govtColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.fed_govtColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal state_govt {
+                get {
+                    if (this.Isstate_govtNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.state_govtColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.state_govtColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal local_govt {
+                get {
+                    if (this.Islocal_govtNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.local_govtColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.local_govtColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal foreign_agencies {
+                get {
+                    if (this.Isforeign_agenciesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.foreign_agenciesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.foreign_agenciesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal other_agencies {
+                get {
+                    if (this.Isother_agenciesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.other_agenciesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.other_agenciesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal r_debenture {
+                get {
+                    if (this.Isr_debentureNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.r_debentureColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.r_debentureColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal ir_debenture {
+                get {
+                    if (this.Isir_debentureNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.ir_debentureColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.ir_debentureColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal auth_share_capital {
+                get {
+                    if (this.Isauth_share_capitalNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.auth_share_capitalColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.auth_share_capitalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal iss_full_paid_capital {
+                get {
+                    if (this.Isiss_full_paid_capitalNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.iss_full_paid_capitalColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.iss_full_paid_capitalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal ord_shares {
+                get {
+                    if (this.Isord_sharesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.ord_sharesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.ord_sharesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal pref_shares {
+                get {
+                    if (this.Ispref_sharesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.pref_sharesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.pref_sharesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal statutory_reserves {
+                get {
+                    if (this.Isstatutory_reservesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.statutory_reservesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.statutory_reservesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal share_premium {
+                get {
+                    if (this.Isshare_premiumNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.share_premiumColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.share_premiumColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal general_reserves {
+                get {
+                    if (this.Isgeneral_reservesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.general_reservesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.general_reservesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal bonus_reserves {
+                get {
+                    if (this.Isbonus_reservesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.bonus_reservesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.bonus_reservesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal revaluation_reserves {
+                get {
+                    if (this.Isrevaluation_reservesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.revaluation_reservesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.revaluation_reservesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal other_reserves {
+                get {
+                    if (this.Isother_reservesNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.other_reservesColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.other_reservesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal retained_profit {
+                get {
+                    if (this.Isretained_profitNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.retained_profitColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.retained_profitColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal unaud_loss_todate {
+                get {
+                    if (this.Isunaud_loss_todateNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.unaud_loss_todateColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.unaud_loss_todateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal coins {
+                get {
+                    if (this.IscoinsNull()) {
+                        return 0m;
+                    }
+                    else {
+                        return ((decimal)(this[this.tablestmt_liab_300.coinsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.coinsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal other_liabs {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablestmt_liab_300.other_liabsColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'other_liabs\' in table \'stmt_liab_300\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.other_liabsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal vol_sav_deposits {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablestmt_liab_300.vol_sav_depositsColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'vol_sav_deposits\' in table \'stmt_liab_300\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablestmt_liab_300.vol_sav_depositsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IstbillsNull() {
+                return this.IsNull(this.tablestmt_liab_300.tbillsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SettbillsNull() {
+                this[this.tablestmt_liab_300.tbillsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsunsecuredTBNull() {
+                return this.IsNull(this.tablestmt_liab_300.unsecuredTBColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetunsecuredTBNull() {
+                this[this.tablestmt_liab_300.unsecuredTBColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IssecuredTBNull() {
+                return this.IsNull(this.tablestmt_liab_300.securedTBColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetsecuredTBNull() {
+                this[this.tablestmt_liab_300.securedTBColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsnotesNull() {
+                return this.IsNull(this.tablestmt_liab_300.notesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetnotesNull() {
+                this[this.tablestmt_liab_300.notesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isbal_with_banksNull() {
+                return this.IsNull(this.tablestmt_liab_300.bal_with_banksColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setbal_with_banksNull() {
+                this[this.tablestmt_liab_300.bal_with_banksColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isq_companiesNull() {
+                return this.IsNull(this.tablestmt_liab_300.q_companiesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setq_companiesNull() {
+                this[this.tablestmt_liab_300.q_companiesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isunq_companiesNull() {
+                return this.IsNull(this.tablestmt_liab_300.unq_companiesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setunq_companiesNull() {
+                this[this.tablestmt_liab_300.unq_companiesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Issub_companiesNull() {
+                return this.IsNull(this.tablestmt_liab_300.sub_companiesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setsub_companiesNull() {
+                this[this.tablestmt_liab_300.sub_companiesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isother_invNull() {
+                return this.IsNull(this.tablestmt_liab_300.other_invColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setother_invNull() {
+                this[this.tablestmt_liab_300.other_invColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isbanks_in_nigNull() {
+                return this.IsNull(this.tablestmt_liab_300.banks_in_nigColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setbanks_in_nigNull() {
+                this[this.tablestmt_liab_300.banks_in_nigColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isother_instNull() {
+                return this.IsNull(this.tablestmt_liab_300.other_instColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setother_instNull() {
+                this[this.tablestmt_liab_300.other_instColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismicro_loansNull() {
+                return this.IsNull(this.tablestmt_liab_300.micro_loansColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmicro_loansNull() {
+                this[this.tablestmt_liab_300.micro_loansColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Issmall_med_ent_loansNull() {
+                return this.IsNull(this.tablestmt_liab_300.small_med_ent_loansColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setsmall_med_ent_loansNull() {
+                this[this.tablestmt_liab_300.small_med_ent_loansColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isbills_discountedNull() {
+                return this.IsNull(this.tablestmt_liab_300.bills_discountedColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setbills_discountedNull() {
+                this[this.tablestmt_liab_300.bills_discountedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ishigher_purchaseNull() {
+                return this.IsNull(this.tablestmt_liab_300.higher_purchaseColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Sethigher_purchaseNull() {
+                this[this.tablestmt_liab_300.higher_purchaseColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isadv_under_micro_leaseNull() {
+                return this.IsNull(this.tablestmt_liab_300.adv_under_micro_leaseColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setadv_under_micro_leaseNull() {
+                this[this.tablestmt_liab_300.adv_under_micro_leaseColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isother_loansNull() {
+                return this.IsNull(this.tablestmt_liab_300.other_loansColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setother_loansNull() {
+                this[this.tablestmt_liab_300.other_loansColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isstaff_loansNull() {
+                return this.IsNull(this.tablestmt_liab_300.staff_loansColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setstaff_loansNull() {
+                this[this.tablestmt_liab_300.staff_loansColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isspecf_ln_lease_provNull() {
+                return this.IsNull(this.tablestmt_liab_300.specf_ln_lease_provColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setspecf_ln_lease_provNull() {
+                this[this.tablestmt_liab_300.specf_ln_lease_provColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isgen_ln_lease_provNull() {
+                return this.IsNull(this.tablestmt_liab_300.gen_ln_lease_provColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setgen_ln_lease_provNull() {
+                this[this.tablestmt_liab_300.gen_ln_lease_provColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Istot_other_assetsNull() {
+                return this.IsNull(this.tablestmt_liab_300.tot_other_assetsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Settot_other_assetsNull() {
+                this[this.tablestmt_liab_300.tot_other_assetsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isprov_loss_other_asssetsNull() {
+                return this.IsNull(this.tablestmt_liab_300.prov_loss_other_asssetsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setprov_loss_other_asssetsNull() {
+                this[this.tablestmt_liab_300.prov_loss_other_asssetsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isfree_hold_land_buildNull() {
+                return this.IsNull(this.tablestmt_liab_300.free_hold_land_buildColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setfree_hold_land_buildNull() {
+                this[this.tablestmt_liab_300.free_hold_land_buildColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Islease_hold_land_buildNull() {
+                return this.IsNull(this.tablestmt_liab_300.lease_hold_land_buildColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setlease_hold_land_buildNull() {
+                this[this.tablestmt_liab_300.lease_hold_land_buildColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isplant_machineryNull() {
+                return this.IsNull(this.tablestmt_liab_300.plant_machineryColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setplant_machineryNull() {
+                this[this.tablestmt_liab_300.plant_machineryColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isfurniture_fixturesNull() {
+                return this.IsNull(this.tablestmt_liab_300.furniture_fixturesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setfurniture_fixturesNull() {
+                this[this.tablestmt_liab_300.furniture_fixturesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismotor_vehiclesNull() {
+                return this.IsNull(this.tablestmt_liab_300.motor_vehiclesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmotor_vehiclesNull() {
+                this[this.tablestmt_liab_300.motor_vehiclesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isoffice_equipmentsNull() {
+                return this.IsNull(this.tablestmt_liab_300.office_equipmentsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setoffice_equipmentsNull() {
+                this[this.tablestmt_liab_300.office_equipmentsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isless_accum_depreNull() {
+                return this.IsNull(this.tablestmt_liab_300.less_accum_depreColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setless_accum_depreNull() {
+                this[this.tablestmt_liab_300.less_accum_depreColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isdemand_depositsNull() {
+                return this.IsNull(this.tablestmt_liab_300.demand_depositsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setdemand_depositsNull() {
+                this[this.tablestmt_liab_300.demand_depositsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ismandatory_depositsNull() {
+                return this.IsNull(this.tablestmt_liab_300.mandatory_depositsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setmandatory_depositsNull() {
+                this[this.tablestmt_liab_300.mandatory_depositsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isterm_time_depositsNull() {
+                return this.IsNull(this.tablestmt_liab_300.term_time_depositsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setterm_time_depositsNull() {
+                this[this.tablestmt_liab_300.term_time_depositsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isother_depositsNull() {
+                return this.IsNull(this.tablestmt_liab_300.other_depositsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setother_depositsNull() {
+                this[this.tablestmt_liab_300.other_depositsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isfed_govtNull() {
+                return this.IsNull(this.tablestmt_liab_300.fed_govtColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setfed_govtNull() {
+                this[this.tablestmt_liab_300.fed_govtColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isstate_govtNull() {
+                return this.IsNull(this.tablestmt_liab_300.state_govtColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setstate_govtNull() {
+                this[this.tablestmt_liab_300.state_govtColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Islocal_govtNull() {
+                return this.IsNull(this.tablestmt_liab_300.local_govtColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setlocal_govtNull() {
+                this[this.tablestmt_liab_300.local_govtColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isforeign_agenciesNull() {
+                return this.IsNull(this.tablestmt_liab_300.foreign_agenciesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setforeign_agenciesNull() {
+                this[this.tablestmt_liab_300.foreign_agenciesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isother_agenciesNull() {
+                return this.IsNull(this.tablestmt_liab_300.other_agenciesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setother_agenciesNull() {
+                this[this.tablestmt_liab_300.other_agenciesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isr_debentureNull() {
+                return this.IsNull(this.tablestmt_liab_300.r_debentureColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setr_debentureNull() {
+                this[this.tablestmt_liab_300.r_debentureColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isir_debentureNull() {
+                return this.IsNull(this.tablestmt_liab_300.ir_debentureColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setir_debentureNull() {
+                this[this.tablestmt_liab_300.ir_debentureColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isauth_share_capitalNull() {
+                return this.IsNull(this.tablestmt_liab_300.auth_share_capitalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setauth_share_capitalNull() {
+                this[this.tablestmt_liab_300.auth_share_capitalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isiss_full_paid_capitalNull() {
+                return this.IsNull(this.tablestmt_liab_300.iss_full_paid_capitalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setiss_full_paid_capitalNull() {
+                this[this.tablestmt_liab_300.iss_full_paid_capitalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isord_sharesNull() {
+                return this.IsNull(this.tablestmt_liab_300.ord_sharesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setord_sharesNull() {
+                this[this.tablestmt_liab_300.ord_sharesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Ispref_sharesNull() {
+                return this.IsNull(this.tablestmt_liab_300.pref_sharesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setpref_sharesNull() {
+                this[this.tablestmt_liab_300.pref_sharesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isstatutory_reservesNull() {
+                return this.IsNull(this.tablestmt_liab_300.statutory_reservesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setstatutory_reservesNull() {
+                this[this.tablestmt_liab_300.statutory_reservesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isshare_premiumNull() {
+                return this.IsNull(this.tablestmt_liab_300.share_premiumColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setshare_premiumNull() {
+                this[this.tablestmt_liab_300.share_premiumColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isgeneral_reservesNull() {
+                return this.IsNull(this.tablestmt_liab_300.general_reservesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setgeneral_reservesNull() {
+                this[this.tablestmt_liab_300.general_reservesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isbonus_reservesNull() {
+                return this.IsNull(this.tablestmt_liab_300.bonus_reservesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setbonus_reservesNull() {
+                this[this.tablestmt_liab_300.bonus_reservesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isrevaluation_reservesNull() {
+                return this.IsNull(this.tablestmt_liab_300.revaluation_reservesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setrevaluation_reservesNull() {
+                this[this.tablestmt_liab_300.revaluation_reservesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isother_reservesNull() {
+                return this.IsNull(this.tablestmt_liab_300.other_reservesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setother_reservesNull() {
+                this[this.tablestmt_liab_300.other_reservesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isretained_profitNull() {
+                return this.IsNull(this.tablestmt_liab_300.retained_profitColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setretained_profitNull() {
+                this[this.tablestmt_liab_300.retained_profitColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isunaud_loss_todateNull() {
+                return this.IsNull(this.tablestmt_liab_300.unaud_loss_todateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setunaud_loss_todateNull() {
+                this[this.tablestmt_liab_300.unaud_loss_todateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IscoinsNull() {
+                return this.IsNull(this.tablestmt_liab_300.coinsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetcoinsNull() {
+                this[this.tablestmt_liab_300.coinsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isother_liabsNull() {
+                return this.IsNull(this.tablestmt_liab_300.other_liabsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setother_liabsNull() {
+                this[this.tablestmt_liab_300.other_liabsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isvol_sav_depositsNull() {
+                return this.IsNull(this.tablestmt_liab_300.vol_sav_depositsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setvol_sav_depositsNull() {
+                this[this.tablestmt_liab_300.vol_sav_depositsColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -3447,6 +6155,40 @@ namespace InlaksIB.Reports {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public sch_ins_202Row Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class stmt_liab_300RowChangeEvent : global::System.EventArgs {
+            
+            private stmt_liab_300Row eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public stmt_liab_300RowChangeEvent(stmt_liab_300Row row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public stmt_liab_300Row Row {
                 get {
                     return this.eventRow;
                 }

@@ -68,7 +68,7 @@ namespace InlaksIB.Controllers
 
                 case "excelwritter":
                     ViewBag.Title = report.ResourceName;
-
+                   
                     return View("ExcelReports");
                
             }
@@ -1122,7 +1122,7 @@ namespace InlaksIB.Controllers
 
                         sch_int_rates(dt, report);
 
-                        LoadCBNReturnsReport(dt, report, id,"");
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 764");
 
                         result = "success";
                         break;
@@ -1135,19 +1135,19 @@ namespace InlaksIB.Controllers
 
                         pnlacct_montly(dt, report);
 
-                        LoadCBNReturnsReport(dt, report, id,"");
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 1000");
 
                         result = "success";
                         break;
 
-                    case "mem_items":
-                        report = new mem001();
+                    case "mon_stmt_asst_liab":
+                        report = new MSAL_300();
 
                         dt = new DataTable();
 
-                        mem_items(dt, report);
+                        mon_stmt_asst_liab(dt, report);
 
-                        LoadCBNReturnsReport(dt, report, id,"");
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 300");
 
                         result = "success";
                         break;
@@ -1160,6 +1160,18 @@ namespace InlaksIB.Controllers
                         sch_oth_liab(dt, report);
 
                         LoadCBNReturnsReport(dt, report, id, "Form MMFBR 501");
+
+                        result = "success";
+                        break;
+
+                    case "breakdown_other_loans":
+                        report = new BOL_746();
+
+                        dt = new DataTable();
+
+                        breakdown_other_loans(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 746");
 
                         result = "success";
                         break;
@@ -1201,6 +1213,18 @@ namespace InlaksIB.Controllers
 
                         result = "success";
                         break;
+                    case "sum_loan_class":
+                        report = new SOLC_761();
+
+                        dt = new DataTable();
+
+                        sum_loan_class(dt, report);
+
+                        LoadCBNReturnsReport(dt, report, id, "Form MMFBR 761");
+
+                        result = "success";
+                        break;
+                        
 
                 }
 
@@ -1221,62 +1245,174 @@ namespace InlaksIB.Controllers
 
         private void pnlacct_montly(DataTable dt, ReportDocument report)
         {
-            dt.AddTableColumns(new string[] { "int_income", "less_int_expense", "commision", "Fees/Charges", "inc_from_inv", "oth_inc_from_non_fin",
-           "Staff_cost","Directors","Depreciation","Prov_For_Bad_Debts","Overheads","Bad_Debts_Written_Off","Penalties_Paid","eoi_items","tax_on_eoi","Less_Provision_For_Taxation" });
+            var detstb = new DataSet001.pnldtDataTable();
+
+
+
+
+
+            for (int i = 0; i < detstb.Columns.Count; i++)
+            {
+                var dcolumn = new DataColumn();
+                dcolumn.DataType = Type.GetType("System.Decimal");
+                dcolumn.ColumnName = detstb.Columns[i].ColumnName;
+                dt.Columns.Add(dcolumn);
+            }
+
+
+            // dt.AddTableColumns(columns);
+
+
+            var row = dt.NewRow();
+
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                row[i] = 0.00;
+            }
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+            var summary = db.getData("select Classification,sum(Amount) as Amount from v_npf1000 group by Classification order by Classification");
+
+           
+
+            row["int_income"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Interest Income").First()["Amount"].toDecimal();
+            row["less_int_expense"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Interest Expense").First()["Amount"].toDecimal();
+            row["commision"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Commissions").First()["Amount"].toDecimal();
+            row["Fees/Charges"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Fees/Charges").First()["Amount"].toDecimal();
+            row["inc_from_inv"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Income from Investments").First()["Amount"].toDecimal();
+            row["oth_inc_from_non_fin"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Other Income").First()["Amount"].toDecimal();
+            row["Staff_cost"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Staff Cost").First()["Amount"].toDecimal();
+            row["Directors"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Directrors").First()["Amount"].toDecimal();
+            row["Depreciation"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Depreciation").First()["Amount"].toDecimal();
+            row["Prov_For_Bad_Debts "] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Provision for bad debts").First()["Amount"].toDecimal();
+            row["Overheads"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Overheads").First()["Amount"].toDecimal();
+           // row["Bad_Debts_Written_Off "] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Bad Debts Written-Off").First()["Amount"].toDecimal();
+          //  row["Penalties_Paid "] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Penalties Paid").First()["Amount"].toDecimal();
+          
+
+
+            dt.Rows.Add(row);
+        }
+
+        private void mon_stmt_asst_liab(DataTable dt, ReportDocument report)
+        {
+           // dt.AddTableColumns(new string[] { "int_income", "less_int_expense", "commision", "Fees/Charges", "inc_from_inv", "oth_inc_from_non_fin",
+           //"Staff_cost","Directors","Depreciation","Prov_For_Bad_Debts","Overheads","Bad_Debts_Written_Off","Penalties_Paid","eoi_items","tax_on_eoi","Less_Provision_For_Taxation" });
+         // var destdt =  
+
+
+
+            var detstb = new DataSet001.stmt_liab_300DataTable();
+
+
+           
+
+
+            for(int i = 0; i < detstb.Columns.Count; i++)
+            {
+                var dcolumn = new DataColumn();
+                dcolumn.DataType = Type.GetType("System.Decimal");
+                dcolumn.ColumnName = detstb.Columns[i].ColumnName;
+                dt.Columns.Add(dcolumn);
+            }
+
+
+           // dt.AddTableColumns(columns);
+
+
+            var row = dt.NewRow();
+
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                row[i] = 0.00;
+            }
+
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+            var summary = db.getData("select Classification,sum(Amount) as Amount from v_npf300 group by Classification order by Classification");
+
+
+
             
 
-            var row = dt.NewRow();
-
-            row["int_income"] = 1342332.23;
-            row["less_int_expense"] = 42312.23;
-            row["commision"] = 3213231.32;
-            row["Fees/Charges"] = 3213231.32;
-            row["inc_from_inv"] = 3213231.32;
-            row["oth_inc_from_non_fin"] = 3213231.32;
-            row["Staff_cost"] = 3213231.32;
-            row["Directors"] = 3213231.32;
-            row["Depreciation"] = 3213231.32;
-            row["Prov_For_Bad_Debts"] = 3213231.32;
-            row["Overheads"] = 3213231.32;
-            row["Bad_Debts_Written_Off"] = 3213231.32;
-            row["Penalties_Paid"] = 2433423.24;
-            row["eoi_items"] = 33.23;
-            row["tax_on_eoi"] = 3433.23;
-            row["Less_Provision_For_Taxation"] = 3433.23;
-
+            row["Notes"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Notes").First()["Amount"].toDecimal(); 
+            row["bal_with_banks"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Balances with Banks").First()["Amount"].toDecimal();
+            row["tbills"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Treasury Bills").First()["Amount"].toDecimal();
+            row["unq_companies"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Unquoted Investments").First()["Amount"].toDecimal();
+            row["micro_loans"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Micro Loans").First()["Amount"].toDecimal();
+            row["other_loans"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Other Loans").First()["Amount"].toDecimal();
+            row["staff_loans"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Staff Loans").First()["Amount"].toDecimal();
+            row["tot_other_assets"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Total Other Assets").First()["Amount"].toDecimal();
+            row["prov_loss_other_asssets"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "provission for Losses on other assets").First()["Amount"].toDecimal();
+            row["free_hold_land_build"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Free hold Land and Building").First()["Amount"].toDecimal();
+            row["furniture_fixtures"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Furniture and Fixtures").First()["Amount"].toDecimal();
+            row["motor_vehicles"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Motor Vehicles").First()["Amount"].toDecimal();
+            row["office_equipments"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Office Equipment").First()["Amount"].toDecimal();
+            row["less_accum_depre"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Less Accumumlated depreciation").First()["Amount"].toDecimal();
+            row["demand_deposits"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Demand Deposit").First()["Amount"].toDecimal();
+            row["mandatory_deposits"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Madatory Savings").First()["Amount"].toDecimal();
+            row["vol_sav_deposits"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Voluntary Savings Deposit").First()["Amount"].toDecimal();
+            row["term_time_deposits"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Term/Time Deposits").First()["Amount"].toDecimal();
+            row["other_deposits"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Other Deposits").First()["Amount"].toDecimal();
+            row["other_agencies"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Other Loans").First()["Amount"].toDecimal();
+            row["ord_shares"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Ordinary Shares").First()["Amount"].toDecimal();
+            row["statutory_reserves"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Statutory Reserve").First()["Amount"].toDecimal();
+            row["share_premium"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Share Premium").First()["Amount"].toDecimal();
+            row["general_reserves"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "General Reserve").First()["Amount"].toDecimal();
+            row["ord_shares"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Ordinary Shares").First()["Amount"].toDecimal();
+            row["statutory_reserves"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Statutory Reserve").First()["Amount"].toDecimal();
+            row["retained_profit"] = summary.AsEnumerable().Where(r => r["Classification"].ToString().Trim() == "Retained Profit").First()["Amount"].toDecimal();
+            row["coins"] = 0.00;
 
             dt.Rows.Add(row);
         }
 
-        private void mem_items(DataTable dt, ReportDocument report)
+
+
+ 
+
+              private void sum_loan_class(DataTable dt, ReportDocument report)
         {
-            dt.AddTableColumns(new string[] { "int_income", "less_int_expense", "commision", "Fees/Charges", "inc_from_inv", "oth_inc_from_non_fin",
-           "Staff_cost","Directors","Depreciation","Prov_For_Bad_Debts","Overheads","Bad_Debts_Written_Off","Penalties_Paid","eoi_items","tax_on_eoi","Less_Provision_For_Taxation" });
+
+            dt.AddTableColumns(new string[] { "S/N", "Item_Description", "Amount_N'000" });
+
+            dt.Columns["Amount_N'000"].DataType = Type.GetType("System.Decimal");
 
 
-            var row = dt.NewRow();
+            var sql = "select LOAN_AMT+AccruedInterest as ob, case overduestatus when 'GRC' THEN 'Pass & Watch' when 'DEL' then 'Substandard' when 'NAB' THEN 'Doubtful' when 'LOS' then  'Lost' else 'Performing' end as  status from parsummary";
 
-            row["int_income"] = 1342332.23;
-            row["less_int_expense"] = 42312.23;
-            row["commision"] = 3213231.32;
-            row["Fees/Charges"] = 3213231.32;
-            row["inc_from_inv"] = 3213231.32;
-            row["oth_inc_from_non_fin"] = 3213231.32;
-            row["Staff_cost"] = 3213231.32;
-            row["Directors"] = 3213231.32;
-            row["Depreciation"] = 3213231.32;
-            row["Prov_For_Bad_Debts"] = 3213231.32;
-            row["Overheads"] = 3213231.32;
-            row["Bad_Debts_Written_Off"] = 3213231.32;
-            row["Penalties_Paid"] = 2433423.24;
-            row["eoi_items"] = 33.23;
-            row["tax_on_eoi"] = 3433.23;
-            row["Less_Provision_For_Taxation"] = 3433.23;
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
 
 
-            dt.Rows.Add(row);
+            var data = db.getData(sql);
+
+            var dgroup = data.AsEnumerable().GroupBy(d => d["status"]).Select(grp => grp.ToList());
+
+            var performing = dgroup.Where(d => d[0]["status"].ToString().CleanUp() == "performing");
+
+            int i = 1;
+
+            dt.Rows.Add(dt.NewRow().ItemArray = new object [] {i,performing.First().First()["status"].ToString(), performing.First().Sum(g => g["ob"].toDecimal())});
+            dt.Rows.Add(dt.NewRow().ItemArray = new object[] { null,"Non-Performing (Portfolio-At-Risk)",null });
+
+           
+
+            foreach (var grp in dgroup)
+            {
+                if (grp[0]["status"].ToString().CleanUp() != "performing")
+                {
+                    var row = dt.NewRow();
+                    row["S/N"] = i++;
+                    row["Item_Description"] = grp[0]["status"];
+                    row["Amount_N'000"] = grp.Sum(g => g["ob"].toDecimal());
+
+                    dt.Rows.Add(row);
+                }
+            }
+            sql = "select sum (a.ob) from (select LOAN_AMT+AccruedInterest as ob, case overduestatus when 'GRC' THEN 'Pass & Watch' when 'DEL' then 'Substandard' when 'NAB' THEN 'Doubtful' when 'LOS' then  'Lost' else 'Performing' end as  status from parsummary) a where a.[status] !='Performing'";
+            dt.Rows.Add(dt.NewRow().ItemArray = new object[] { i+1, "Total Porfolio-At-Risk", db.ExecuteScalar(sql).toDecimal()});
         }
-
 
         private void sch_bal_other_banks(DataTable dt, ReportDocument report)
         {
@@ -1498,6 +1634,70 @@ namespace InlaksIB.Controllers
         }
 
 
+
+        private void breakdown_other_loans(DataTable dt, ReportDocument report)
+        {
+
+            dt.AddTableColumns(new string[] { "S/N", "Names_Of_Beneficiary", "Date_Facility_Granted","Tenor", "Amount_Approved_N'000", "Outstanding_Balance_N'000", "Status_Of_Facility" });
+
+            var lines = new string[] {"TERM LOAN",
+            "OVERDRAFT",
+            "CONSUMER LOAN",
+            "SME LOAN"
+    
+};
+
+
+            dt.Columns[5].DataType = Type.GetType("System.Decimal");
+
+            int count = 1;
+
+            foreach (var line in lines)
+            {
+                var row = dt.NewRow();
+                row["S/N"] = count++;
+                row["Names_Of_Beneficiary"] = line;
+
+                dt.Rows.Add(row);
+
+            }
+
+
+
+            var sql = "select sum(abs(OutstandingBalance)) from loansummary where product like '%TermLoan%'";
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+
+
+            dt.Rows[Array.IndexOf(lines, "TERM LOAN")][5] = db.ExecuteScalar(sql).toDecimal();
+
+            sql = "select sum(abs(OutstandingBalance)) from loansummary where product like '%consumer%'";
+
+
+            dt.Rows[Array.IndexOf(lines, "CONSUMER LOAN")][5] = db.ExecuteScalar(sql).toDecimal();
+
+
+
+
+           // dt.Rows[Array.IndexOf(lines, "TERM LOAN")][5] = db.ExecuteScalar(sql).toDecimal();
+
+            sql = "select sum(abs(OutstandingBalance)) from loansummary where product like '%sme%'";
+
+
+            dt.Rows[Array.IndexOf(lines, "SME LOAN")][5] = db.ExecuteScalar(sql).toDecimal();
+
+            sql = "select  abs(sum(TRY_CONVERT(DECIMAL(28,2), OverdraftAmount))) from OverdueAccounts where TRY_CONVERT(DECIMAL(28,2), OverdraftAmount) < 0";
+
+            dt.Rows[Array.IndexOf(lines, "OVERDRAFT")][5] = db.ExecuteScalar(sql).toDecimal();
+
+
+        }
+
+
+        
+
+
         private void sch_int_rates(DataTable dt, ReportDocument report)
         {
 
@@ -1505,10 +1705,9 @@ namespace InlaksIB.Controllers
             
           
 
-            var sql = "select distinct a.\"CONDITION_CODE\", a.\"DESCRIPTION\" as Type_of_Account,b.\"CR_INT_RATE\" as interest_rate, b.\"GROUP_CY_DATE\", TRIM(both 'N D' from(substring(b.\"GROUP_CY_DATE\" FROM 5 FOR 9))) as effective_date from \"ACCT_GEN_CONDITION\" a join \"GROUP_CREDIT_INT\" b on \n" +
-                     "(a.\"CONDITION_CODE\"=TRIM(both 'N' from substring(b.\"GROUP_CY_DATE\",'..')))";
+            var sql = "select * from creditinterestsummary";
 
-            var db = new PostgreSQLDBInterface(new Settings().sourcedb);
+            var db = new SQLServerDBInterfac(new Settings().warehousedb);
 
             var data = db.getData(sql);
 
@@ -1516,7 +1715,7 @@ namespace InlaksIB.Controllers
 
             foreach(DataRow row in data.Rows)
             {
-                var datestr = row["effective_date"].ToString();
+                var datestr = row["effective_date"].ToString().Trim();
 
                 var efdate = DateTime.ParseExact(datestr,"yyyyMMdd", new CultureInfo("en-US"));
 
@@ -1536,7 +1735,16 @@ namespace InlaksIB.Controllers
 
                 foreach(DataRow grprow in grp)
                 {
-                    row[grprow["AgeGroup"].ToString()] = grprow["interest_rate"].ToString() + "%";
+                   // row[grprow["AgeGroup"].ToString()] = grprow["interest_rate"].ToString() + "%";  this is to effect age analysis of interest rate.
+
+                   foreach(DataColumn column in dt.Columns)
+                    {
+                        if (column.ColumnName.Trim() != "TYPE_OF_ACCOUNT")
+                        {
+                            row[column.ColumnName] = grprow["interest_rate"].ToString() + "%";
+                        }
+                    }
+
                 }
 
                 dt.Rows.Add(row);
@@ -1787,6 +1995,10 @@ namespace InlaksIB.Controllers
                 var startdate = Request.Form["startdate"];
                 var enddate = Request.Form["endate"];
                 var reportname = Request.Form["reportname"];
+                var classification = Request.Form["classification"];
+                var branch = Request.Form["branch"];
+                var userid = Request.Form["userid"];
+
                 var downpath = HostingEnvironment.MapPath("~/exceldownloads/");
                 switch (reportname.Trim())
                 {
@@ -1815,7 +2027,23 @@ namespace InlaksIB.Controllers
 
                         Session["file"] = excelreports.generateNPFDisbursementReport(downpath, reportname,startdate,enddate);
                         break;
-                        
+
+                    case "Portfolio at Risk":
+                        Session["file"] = excelreports.generateNPFPortfolio_at_Risk(downpath, reportname, classification);
+                        break;
+
+                    case "Trial Balance Extract":
+                        Session["file"] = excelreports.generateTrialBalanceExtract(downpath, reportname);
+                        break;
+
+                    case "NPF Management Accounts":
+                        Session["file"] = excelreports.generateNPFManagementAccounts(downpath, reportname);
+                        break;
+
+                    case "T24 Audit Trails":
+                        Session["file"] = excelreports.generateAuditTrailReport(startdate,enddate, reportname,downpath,branch,userid);
+                        break;
+
 
                 }
 

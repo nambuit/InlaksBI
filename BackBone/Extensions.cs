@@ -366,6 +366,20 @@ namespace BackBone
 
         }
 
+        public static bool IsNumeric(this Object input)
+        {
+            if (input.ToString().CleanUp().StartsWith("0"))
+            {
+                return false;
+            }
+
+            else
+            {
+                return Regex.IsMatch(input.ToString().CleanUp(), @"^\d+$");
+            }
+
+        }
+
         /// <summary>
         /// attempts to get a string collection of all numeric values in the string that represents an input object
         /// </summary>

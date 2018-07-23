@@ -260,11 +260,11 @@ namespace BackBone
             }
         }
 
-        public void MergeData(MergeDetails details)
+        public int MergeData(MergeDetails details)
         {
             StringBuilder querybuilder = new StringBuilder();
 
-            querybuilder.Append("MERGE [" + details.destDB + "].[dbo].[" + details.destTb + "] AS target USING [" + details.sourceDB + "].[dbo].[" + details.sourceTb + "] AS source ON(LTRIM(RTRIM(source." + details.sourcereference + ")) = LTRIM(RTRIM(target." + details.destreference + ")))");
+            querybuilder.Append("MERGE [" + details.destDB + "].[dbo].[" + details.destTb + "] AS target USING (SELECT DISTINCT * FROM  [" + details.sourceDB + "].[dbo].[" + details.sourceTb + "] where "+details.sourcereference+" in (select distinct "+details.sourcereference+ " from [" + details.sourceDB + "].[dbo].[" + details.sourceTb + "])) AS source ON (LTRIM(RTRIM(source." + details.sourcereference + ")) = LTRIM(RTRIM(target." + details.destreference + ")))");
 
             var dt = getData("select TOP 1 * from " + details.sourceTb);
 
@@ -303,7 +303,7 @@ namespace BackBone
 
          int result =   Execute(query);
 
-          
+            return result;
 
         }
 

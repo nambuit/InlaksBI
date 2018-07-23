@@ -622,11 +622,44 @@ function ProcessExcel(reportname){
     $("#busy").show();
 
     var url = localStorage.baseurl + "Home/LaunchExcel";
+    
+    var startdate = "";
+    var enddate = ""
+    var classification = "";
+    var branch = "";
+    var userid = "";
 
-    var startdate = document.getElementsByName("startdate")[0].value;
-    var enddate = document.getElementsByName("enddate")[0].value;
 
-    var formdata = $.param({ reportname: reportname, startdate: startdate, endate:enddate });
+    try {
+        switch (reportname) {
+
+            case "Portfolio at Risk":
+                classification = document.getElementsByName("classification")[0].value;
+                break;
+
+            case "T24 Audit Trails":
+                startdate = document.getElementsByName("startdate")[0].value;
+                enddate = document.getElementsByName("enddate")[0].value;
+                branch = document.getElementsByName("company")[0].value;
+                userid = document.getElementsByName("userid")[0].value;
+
+                break;
+
+            default:
+             startdate = document.getElementsByName("startdate")[0].value;
+             enddate = document.getElementsByName("enddate")[0].value;
+
+           
+        }
+       
+        
+    }
+    catch(Exceptiion){
+
+    }
+
+
+    var formdata = $.param({ reportname: reportname, startdate: startdate, endate: enddate, classification: classification,userid:userid,branch:branch });
 
     $.ajax({
         url: url,

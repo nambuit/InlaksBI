@@ -21,6 +21,8 @@ namespace InlaksIB
 
             try
             {
+                Context.Session["warehousedbconstr"] = new Settings().warehousedb;
+                Context.Session["dbtype"] = new Settings().warehousedbtype;
                 using (var db = new InlaksBIContext())
                 {
 

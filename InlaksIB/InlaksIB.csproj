@@ -414,6 +414,12 @@
     <Compile Include="Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\BOL_746.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BOL_746.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\crmbase1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -447,6 +453,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet8.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSet9.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet9.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reports\due_bal221.cs">
       <AutoGen>True</AutoGen>
@@ -617,6 +628,17 @@
     <Content Include="Reports\DataSet8.xss">
       <DependentUpon>DataSet8.xsd</DependentUpon>
     </Content>
+    <Content Include="Reports\DataSet9.xss">
+      <DependentUpon>DataSet9.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSet9.xsc">
+      <DependentUpon>DataSet9.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSet9.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet9.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Reports\mbase1.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>mbase11.Designer.cs</LastGenOutput>
@@ -714,6 +736,10 @@
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\BOL_746.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>BOL_746.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\crmbase1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crmbase1.cs</LastGenOutput>

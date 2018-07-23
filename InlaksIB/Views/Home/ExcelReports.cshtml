@@ -2,33 +2,118 @@
 @{
     
     Layout = "~/Views/Home/HomeLayout.cshtml";
+
+    var instruction = "Select report start and end date:";
+    if (@ViewBag.Title == "Portfolio at Risk")
+    {
+         instruction = "Select Analysis Type:";
+    }
+
+    var companies = new InlaksBIContext().Comapanies.ToList();
 }
 
 <div class="col-md-9">
     <div class="content-box-large">
         <div class="panel-heading">
             <div class="panel-title">@ViewBag.Title</div>
+          
         </div>
         <div class="panel-body">
-            <label for="sd">Select report start and end date:</label>
+            <label for="sd">@instruction</label>
             <div class="form-group">
               
-                <div id="sd" data-name="startdate"  class="col-md-4 bfh-datepicker" data-format="y-m-d" data-date="today">
-                  
-                </div>
-               
-              
-               
-                <div data-name="enddate"  class="col-md-4 bfh-datepicker" data-format="y-m-d" data-date="today">
 
-                </div>
-              
-                <button onclick="ProcessExcel('@ViewBag.Title')" class="btn  btn-success">Download Report
-                
-                </button>
-            </div>
-            
-         
+                @switch ((string)@ViewBag.Title)
+                {
+                    default:
+                        <div id="sd" data-name="startdate" class="col-md-4 bfh-datepicker" data-format="y-m-d" data-date="today">
+
+                        </div>
+
+
+
+
+                        <div data-name="enddate" class="col-md-4 bfh-datepicker" data-format="y-m-d" data-date="today">
+
+                        </div>
+                            break;
+
+                        case "Portfolio at Risk":
+                        <div class="col-md-4">
+                            <select  padding-right:5px;" name="classification"   class="form-control">
+                                <option value="BranchName">By Branch</option>
+                                <option value="product_name">By Product</option>
+                                <option value="SECTOR">By Sector</option>
+                                <option value="consolidated">Consolidated</option>
+                            </select>
+                            </div>
+                        break;
+
+                    case "T24 Audit Trails":
+
+                        <fieldset style="padding-bottom:4em;">
+                            <div id="sd" data-name="startdate" class="col-md-4 bfh-datepicker" data-format="y-m-d" data-date="today">
+
+                            </div>
+
+
+
+                            <div data-name="enddate" class="col-md-4 bfh-datepicker" data-format="y-m-d" data-date="today">
+
+                            </div>
+                            </fieldset>
+
+                            <fieldset style="padding:4em;">
+
+                                <div class="col-md-4">
+                                    <label for="compselect">Select target Company</label>
+                                    <select padding-right:5px;" id="compselect"  name="company" class="form-control select2">
+                                        @{
+                                            <option value="null">ALL</option>
+                                            foreach (var comp in companies)
+                                            {
+                                                <option value="@comp.leadcompcode">@comp.CompanyName</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="user">Select target User </label>
+                                    <select name="userid" id="user" class="form-control select2">
+                                        @{
+                                            <option value="null">ALL</option>
+
+                                            var users = new InlaksBIContext().getDBInterface((string)Session["dbtype"], (string)Session["warehousedbconstr"]).getData("select distinct [USERID] from factProtocol");
+
+                                            foreach (System.Data.DataRow user in users.Rows)
+                                            {
+                                                <option value="@user["USERID"]">@user["USERID"]</option>
+                                            }
+
+
+                                        }
+
+
+                                    </select>
+                                </div>
+
+                            </fieldset>
+
+                            break;
+                            }
+
+                <fieldset style="margin-left:6%">
+
+                    <button onclick="ProcessExcel('@ViewBag.Title')" class="btn  btn-success">
+                        Download Report
+
+                    </button>
+                </fieldset>
+                        </div>
+
+           
             <div class="form-group">
                 <img style="margin-left:33%" id="busy" src="~/img/waiting_icon.gif" />
 

@@ -35,6 +35,8 @@ namespace InlaksIB.Controllers
             //TryValidateModel(user);
             // if (string.IsNullOrEmpty(user.UserID) || string.IsNullOrEmpty(user.Password)) return View("Login",new User());
             var mode = "";
+            Session["warehousedbconstr"] = new Properties.Settings().warehousedb;
+            Session["dbtype"] = new Properties.Settings().warehousedbtype;
             try
             {
                 bool valid = false;
