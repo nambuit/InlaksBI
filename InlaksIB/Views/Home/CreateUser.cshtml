@@ -17,21 +17,33 @@
                     <label class="control-label" style="color:@Model.errorclass" for="RoleID">@Model.Message</label>
                 </div>
                 var mode = (string)ViewBag.mode;
+                var curuser = (User)Session["User"];
+                bool isAdmin = curuser.UserRole.RoleID == 1;
                 if (!string.IsNullOrEmpty(mode) && mode == "edit")
                 {
                     Html.RenderPartial("EditUser", Model);
                 }
                 else
+                    if (!string.IsNullOrEmpty(mode) && mode == "resetpassword")
                 {
+                    Html.RenderPartial("ResetPassword", Model);
+                }
+                else
+                {
+
+                    var curcomp = new InlaksBIContext().Comapanies.Where(c => c.leadcompcode == curuser.LeadCompany).FirstOrDefault();
+
 
                     using (Html.BeginForm("ProcessUser", "home", new { mode = "create" }, FormMethod.Post))
                     {
-                        @Html.AntiForgeryToken()
-                        var roles = new InlaksBIContext().Roles.AsEnumerable();
+                                    @Html.AntiForgeryToken()
+
+                        var test = curcomp.CompanyMnemonic.CleanUp();
+                        var roles = isAdmin ? new InlaksBIContext().Roles.Where(r => r.RoleID != 1) : new InlaksBIContext().Roles.Where(r => r.RoleName.Trim().ToLower().Contains(test));
                         var listItems = new List<SelectListItem>();
                         var leadcompanies = new List<SelectListItem>();
 
-                        foreach (var role in roles)
+                        foreach (var role in roles.Where(r=>r.RoleName.Trim().ToLower().Contains(curcomp.CompanyMnemonic.Trim().ToLower())))
                         {
                             listItems.Add(new SelectListItem { Text = role.RoleName,   Value = role.RoleID.ToString() });
                         }
@@ -138,7 +150,21 @@
 
                 }
             }
-            @{ var users = new InlaksBIContext().Users.Where(u=>u.UserID!="admin");
+           
+        </div>
+    </div>
+
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">Users</div>
+        </div>
+        <div class="panel-body">
+            @{
+                var user = (User)Session["User"];
+
+
+
+                var users = isAdmin ? new InlaksBIContext().Users.Where(u => u.UserID != "admin") : new InlaksBIContext().Users.Where(u => u.LeadCompany == user.LeadCompany);
                 Html.RenderPartial("ListUsers", users);
             }
         </div>

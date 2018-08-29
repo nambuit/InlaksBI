@@ -31,6 +31,9 @@ namespace InlaksIB
      
         public string InstanceID { get; set; }
 
+        [Display(Name = "Report Type")]
+        public string report_type { get; set; }
+
     }
 
     public class ReportModel
@@ -44,7 +47,8 @@ namespace InlaksIB
 
         public string dataSet { get; set; }
 
-      
+        public string report_type { get; set; }
+
         public  List<DataSetFilterModel> Filters { get; set; }
         public int ReportID { get; set; }
 

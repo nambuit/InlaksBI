@@ -6,13 +6,13 @@
 
 
 
-<div class="col-md-9">
+<div class="col-md-9" >
 
 <div class="content-box-large">
     <div class="panel-heading">
         <div class="panel-title">@ViewBag.Title</div>
     </div>
-    <div id="rptpanel" class="panel-body" style="min-height:400px;">
+    <div id="rptpanel" class="panel-body" style="min-height:400px; overflow:auto">
         <div id="export" class="btn-group">
             <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa"></i> Export Table Data</button>
             <ul class="dropdown-menu " role="menu">
@@ -39,9 +39,13 @@
 
 
             </ul>
+
+
+            
+
         </div>
 
-        <div id="output" style="width:920px; overflow:auto"></div>
+        <div id="output"></div>
  
 
 </div>

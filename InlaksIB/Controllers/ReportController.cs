@@ -63,7 +63,9 @@ namespace InlaksIB.Controllers
                         IsIncluded = filter.IsIncluded,
                         ReportID = filter.Report.ReportID,
                         Operator = filter.Operator
-
+                         
+                 
+                        
                     });
 
 
@@ -74,6 +76,8 @@ namespace InlaksIB.Controllers
                 reportmodel.ResourcID = report[0].Resource.ResourceID;
 
                 reportmodel.pivotConfig = report[0].pivotConfig;
+
+                reportmodel.report_type = report[0].report_type;
 
                 var rid = report[0].ReportID;
 
@@ -184,6 +188,8 @@ namespace InlaksIB.Controllers
 
                 var pivotconfig = Request.Form["pivotconfig"];
 
+                var report_type = Request.Form["report_type"];
+
                 var resourceid = Request.Form["resourceid"].toInt();
 
                 var resource = db.Resources.FirstOrDefault(r => r.ResourceID == resourceid);
@@ -196,6 +202,7 @@ namespace InlaksIB.Controllers
                 report.pivotConfig = pivotconfig;
                 report.InstanceID = Guid.NewGuid().ToString();
                 report.dataSet = dataset;
+                report.report_type = report_type;
 
                 //foreach(var filter in filters)
                 //{

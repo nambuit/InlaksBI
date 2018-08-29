@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<InlaksIB.User>
 
 
-<table class="table">
-    <tr>
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="migtable">
+    <thead>
+        <tr>
         <th>
             @Html.DisplayNameFor(model => model.UserID)
         </th>
@@ -18,32 +19,37 @@
         <th>
             @Html.DisplayNameFor(model => model.LastLogin)
         </th>
-  
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Branch)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastLogin)
-        </td>
-   
-        <td>
-            @Html.ActionLink("Edit User Details","UserSetup", new { id=item.UserID, mode="edit" }) 
-        </td>
+        <th></th><th></th>
     </tr>
-}
+    </thead>
+    <tbody>
+            @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastLogin)
+            </td>
 
+            <td>
+                @Html.ActionLink("Edit User Details", "UserSetup", new { id = item.UserID, mode = "edit" })
+            </td>
+            <td>
+                @Html.ActionLink("Reset User Password", "UserSetup", new { id = item.UserID, mode = "resetpassword" })
+            </td>
+        </tr>
+    }
+        </tbody>
 </table>

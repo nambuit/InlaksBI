@@ -359,6 +359,12 @@ namespace InlaksIB.Controllers
                     ViewBag.mode = "edit";
                     return View("CreateUser", user);
 
+                case "resetpassword":
+                    ViewBag.mode = "resetpassword";
+                    return View("CreateUser", user);
+                    
+                    break;
+
                 default:
                     ViewBag.mode = "create";
                     return View("CreateUser", user);
@@ -564,7 +570,8 @@ namespace InlaksIB.Controllers
 
         public ActionResult ProcessUser(User user, string id, string mode)
         {
-            
+            IPasswordHasher hash = new BasicHash();
+
             errorClass = "green";
             var context = new InlaksBIContext();
             switch (mode)
@@ -576,7 +583,7 @@ namespace InlaksIB.Controllers
 
                         var role = context.Roles.FirstOrDefault(r => r.RoleID == user.RoleID);
 
-                        IPasswordHasher hash = new BasicHash();
+                     
                         var newuser = context.Users.Create();
                         newuser.Password = hash.HashPassword(user.Password);
                         newuser.RePassword = (user.Password);
@@ -649,6 +656,36 @@ namespace InlaksIB.Controllers
                         errorClass = "red";
                     }
                     break;
+
+                case "resetpassword":
+                    ViewBag.mode = "resetpassword";
+                    try
+                    {
+
+
+
+                        var olduser = context.Users.FirstOrDefault(u => u.UserID == id);
+
+
+
+                  
+                       olduser.Password = hash.HashPassword(user.Password);
+                        olduser.RePassword = olduser.Password;
+                        olduser.DefaultPassword = true;
+
+
+                        context.SaveChanges();
+
+                        Message = "Password Reset Successful";
+
+                    }
+                    catch (Exception e)
+                    {
+                        Message = "Failed to Modify user. Please seek technical assistance";
+                        errorClass = "red";
+                    }
+                    break;
+                  
             }
 
          
@@ -694,11 +731,14 @@ namespace InlaksIB.Controllers
         [HttpGet]
         public string RoleResources(int id)
         {
-            var rolesresources = new InlaksBIContext().RolesResources.ToList();
+            var curuser = (User)Session["User"];
+            bool isAdmin = curuser.UserRole.RoleID == 1;
+
+            var rolesresources = isAdmin? new InlaksBIContext().RolesResources.ToList(): new InlaksBIContext().RolesResources.ToList().Where(r=>r.Resource.Module.Industry.AccessFlag==curuser.LeadCompany);
 
             var selected = rolesresources.Where(r => r.Role.RoleID == id).ToList();
 
-            var others = new InlaksBIContext().Resources.ToList();
+            var others = isAdmin ? new InlaksBIContext().Resources.ToList() : new InlaksBIContext().Resources.Where(r => r.Module.Industry.AccessFlag == curuser.LeadCompany).ToList();
 
             var resourcelist = new List<RoleResourceList>();
 
@@ -845,6 +885,7 @@ namespace InlaksIB.Controllers
                 {
                     olduser.Password = new BasicHash().HashPassword(change.NewPassword);
                     olduser.RePassword = olduser.Password;
+                    olduser.DefaultPassword = false;
                     context.SaveChanges();
                     message = "Password Changed Sucessfully";
                     errorclass = "green";
@@ -867,6 +908,7 @@ namespace InlaksIB.Controllers
         [HttpGet]
         public string getValuePair(string id, string param)
         {
+            var sql = "";
             if (param.isNull())
             {
 
@@ -916,6 +958,33 @@ namespace InlaksIB.Controllers
                     }
 
                     return JsonConvert.SerializeObject(pairs);
+                   
+                case "subclass":
+
+                  sql = "select  distinct "+param+" from parsummary";
+
+                    pairs = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb).getValuePair(param,param,sql);
+
+                    
+
+                    return JsonConvert.SerializeObject(pairs);
+
+                case "showproducts":
+
+                    sql = "select distinct product from Category_products";
+                
+
+                        
+                    sql =  sql + (param.Equals("null")?"": " where CategoryName='" + param+"'");
+
+                 
+
+                    pairs = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb).getValuePair("product", "product", sql);
+
+
+
+                    return JsonConvert.SerializeObject(pairs);
+
 
                 default:
                     return "";
@@ -1998,6 +2067,8 @@ namespace InlaksIB.Controllers
                 var classification = Request.Form["classification"];
                 var branch = Request.Form["branch"];
                 var userid = Request.Form["userid"];
+                var subclass = Request.Form["subclass"];
+                var product = Request.Form["product"];
 
                 var downpath = HostingEnvironment.MapPath("~/exceldownloads/");
                 switch (reportname.Trim())
@@ -2007,6 +2078,26 @@ namespace InlaksIB.Controllers
                        Session["file"] = excelreports.generateNPFAntiMoneyLaunderingReport(startdate, enddate,downpath,reportname);
 
                         break;
+
+
+                    case "Categ Extract":
+
+                        Session["file"] = excelreports.generateCategExtractReport(startdate, enddate, downpath, reportname,branch,userid,product);
+
+                        break;
+
+                    case "Stmt Extract":
+
+                        Session["file"] = excelreports.generateStmtExtractReport(startdate, enddate, downpath, reportname, branch);
+
+                        break;
+
+                    case "Consol Spec Extract":
+
+                        Session["file"] = excelreports.generateConsolSpecExtractReport(startdate, enddate, downpath, reportname, branch);
+
+                        break;
+
 
                     case "Savings Accounts Balance Report":
 
@@ -2029,7 +2120,7 @@ namespace InlaksIB.Controllers
                         break;
 
                     case "Portfolio at Risk":
-                        Session["file"] = excelreports.generateNPFPortfolio_at_Risk(downpath, reportname, classification);
+                        Session["file"] = excelreports.generateNPFPortfolio_at_Risk(downpath, reportname, classification,subclass);
                         break;
 
                     case "Trial Balance Extract":
@@ -2042,6 +2133,10 @@ namespace InlaksIB.Controllers
 
                     case "T24 Audit Trails":
                         Session["file"] = excelreports.generateAuditTrailReport(startdate,enddate, reportname,downpath,branch,userid);
+                        break;
+
+                    case "Repayments Report":
+                        Session["file"] = excelreports.generateLoanRepaymentsReport(downpath, reportname, classification,startdate,enddate);
                         break;
 
 

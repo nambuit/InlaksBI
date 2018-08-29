@@ -13,8 +13,9 @@ var operatorslist = '<select class="form-control operator" >'+
 
 $('#example').dataTable();
 $('#migtable').dataTable();
+$('.migtable').dataTable();
 $('#input').dataTable();
-
+$("#subselgrp").hide();
 
 $(document).ready(function () {
     $("#busy").hide();
@@ -26,7 +27,8 @@ $(document).ready(function () {
     $("#columnlist").hide();
     $("#branchlist").hide();
     $("#reportview").hide();
-   
+
+    $(".form-control").trigger('change');
     $("#finalcontrols").hide();
     if (localStorage.baseurl == 'undefined' ||localStorage.baseurl == null) {
         localStorage.baseurl = $("#baseurl").val();
@@ -117,54 +119,78 @@ $(document).ready(function () {
                         var data = $.parseJSON(result);
                    
 
+
                         try {
-                            function saveState(config) {
+
+                            var rtype = params.report_type;
+                            if (rtype == "dynamic") {
                                 $("#state").show();
                                 $("#print").show();
-                                $('.pvtRendererArea').attr('id', 'pvt');
-                                $('.pvtRenderer').attr('onchange', 'enableExport(this)');
-                                $('.pvtTable').attr("id", "pvtTable");
-                            
-                           
-                                //   $('.rowexpanded').removeClass('rowexpanded').addClass('rowcollapsed');
-                                var config_copy = JSON.parse(JSON.stringify(config));
-                                // alert(localStorage.currentconfig);
-                                //delete some values which are functions
-                                delete config_copy["aggregators"];
-                                delete config_copy["renderers"];
-                                //delete some bulky default values
-                                delete config_copy["rendererOptions"];
-                                delete config_copy["localeStrings"];
-                                localStorage.setItem('pivotdatakey', JSON.stringify(config_copy));
-                                // alert(localStorage.pivotdatakey);
-                            }
-                  
-                            //      google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
-                           
-                            var dataClass = $.pivotUtilities.SubtotalPivotData;
-                           
-                            var renderers = $.extend($.pivotUtilities.renderers,
-                                                         $.pivotUtilities.subtotal_renderers,
-                                                         $.pivotUtilities.gchart_renderers,
-                                                          $.pivotUtilities.export_renderers
-
-                                                          );
-                           
-                            currentconfig.onRefresh = saveState;
-                            currentconfig.renderers = renderers;
-                            currentconfig.dataClass = dataClass;
-                            // currentconfig.rendererName = "Table With Subtotal";
-
-                            currentconfig.rendererOptions = {
-                                collapseRowsAt: 0,             
                           
-                                collapseColsAt: 1
-                                //arrowCollapsed: "[+] ",
-                                //arrowExpanded: "[-] ",
-                            };
-                         
-                            $("#output").pivotUI(data, currentconfig, true);
-                   
+
+
+                                function saveState(config) {
+                                    $("#state").show();
+                                    $("#print").show();
+                                    $('.pvtRendererArea').attr('id', 'pvt');
+                                    $('.pvtRenderer').attr('onchange', 'enableExport(this)');
+                                    $('.pvtTable').attr("id", "pvtTable");
+
+
+                                    //   $('.rowexpanded').removeClass('rowexpanded').addClass('rowcollapsed');
+                                    var config_copy = JSON.parse(JSON.stringify(config));
+                                    // alert(localStorage.currentconfig);
+                                    //delete some values which are functions
+                                    delete config_copy["aggregators"];
+                                    delete config_copy["renderers"];
+                                    //delete some bulky default values
+                                    delete config_copy["rendererOptions"];
+                                    delete config_copy["localeStrings"];
+                                    localStorage.setItem('pivotdatakey', JSON.stringify(config_copy));
+                                    // alert(localStorage.pivotdatakey);
+                                }
+
+                                //      google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
+
+                                var dataClass = $.pivotUtilities.SubtotalPivotData;
+
+                                var renderers = $.extend($.pivotUtilities.renderers,
+                                                             $.pivotUtilities.subtotal_renderers,
+                                                             $.pivotUtilities.gchart_renderers,
+                                                              $.pivotUtilities.export_renderers
+
+                                                              );
+
+                                currentconfig.onRefresh = saveState;
+                                currentconfig.renderers = renderers;
+                                currentconfig.dataClass = dataClass;
+                                // currentconfig.rendererName = "Table With Subtotal";
+
+                                currentconfig.rendererOptions = {
+                                    collapseRowsAt: 0,
+
+                                    collapseColsAt: 1
+                                    //arrowCollapsed: "[+] ",
+                                    //arrowExpanded: "[-] ",
+                                };
+
+                                $("#output").pivotUI(data, currentconfig, true);
+
+                            }
+                            else {
+                                var tablestr = getTableString(data);
+
+                                document.getElementById("output").innerHTML = tablestr;
+
+                           
+                                $('.migtable').DataTable({
+                                    dom: 'Bfrtip',
+                                    buttons: [
+                                        'copy', 'csv', 'excel', 'pdf', 'print'
+                                    ]
+                                });
+
+                            }
 
                             //    var renderer = $.pivotUtilities.subtotal_renderers[currentconfig.rendererName];
                             //    currentconfig.renderer = renderer;
@@ -393,9 +419,21 @@ function processSubmit(object){
                     }
                 };
 
-                        var data = $.parseJSON(result);
-      
-                        $("#buildoutput").pivotUI(data, config, true);
+                var data = $.parseJSON(result);
+                var rtype = $("#report_type").val();
+                if (rtype == "dynamic") {
+
+                    $("#buildoutput").pivotUI(data, config, true);
+                }
+                else {
+
+
+                    var tablestr = getTableString(data);
+
+                    document.getElementById("buildoutput").innerHTML = tablestr;
+
+                    $('.migtable').dataTable();
+                }
 
                         $("#reportview").LoadingOverlay("hide");
 
@@ -419,6 +457,53 @@ function processSubmit(object){
 
 }
 
+
+function format(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+function getTableString(data) {
+
+    var tablestr = [];
+
+    tablestr.push("<table style='padding:5px;' class='display nowrap pvtTable migtable'><thead><tr>");
+
+    var headers = Object.keys(data[0]);
+
+    for (var i = 0; i < headers.length; i++) {
+
+        tablestr.push("<th>" + headers[i] + "</th>");
+    }
+
+    tablestr.push("</tr></thead><tbody>");
+
+
+    for (var i = 0; i < data.length; i++) {
+        tablestr.push("<tr>");
+
+        var row = data[i];
+
+        for (var k = 0; k < headers.length; k++) {
+            var field = headers[k];
+            var value = data[i][field];
+           
+            value = (field.toLocaleLowerCase().search("amount") !== -1 || field.toLocaleLowerCase().search("amt") !== -1 || field.toLocaleLowerCase().search("interest") !== -1) ? format(value) : value;
+
+            tablestr.push("<td>" + value + "</td>");
+        }
+        tablestr.push("</tr>");
+
+
+    }
+    tablestr.push("</tbody></table>");
+
+
+
+    return tablestr.join("");
+}
+
+
 function processReport() {
 
     $.confirm({
@@ -429,7 +514,7 @@ function processReport() {
                 var filters = getFilters();
                 var pivotconfig = localStorage.pivotdatakey;
 
-                var formdata = $.param({ dataset: $("#dataset").val(), filters: JSON.stringify(filters), pivotconfig: pivotconfig, resourceid: $("#resource").val()});
+                var formdata = $.param({ dataset: $("#dataset").val(), filters: JSON.stringify(filters), pivotconfig: pivotconfig, resourceid: $("#resource").val(), report_type: $("#report_type").val() });
 
                 $.ajax({
                     url: localStorage.baseurl + "Report/ProcessReport",
@@ -628,21 +713,41 @@ function ProcessExcel(reportname){
     var classification = "";
     var branch = "";
     var userid = "";
-
+    var subclass = "null";
+    var product = "";
+    
 
     try {
         switch (reportname) {
 
             case "Portfolio at Risk":
                 classification = document.getElementsByName("classification")[0].value;
+                subclass = document.getElementsByName("subclass")[0].value;
                 break;
 
-            case "T24 Audit Trails":
+            case "Repayments Report":
+                classification = document.getElementsByName("classification")[0].value;
+                startdate = document.getElementsByName("startdate")[0].value;
+                enddate = document.getElementsByName("enddate")[0].value;
+                break;
+            
+
+            case "T24 Audit Trails": case "Categ Extract":
                 startdate = document.getElementsByName("startdate")[0].value;
                 enddate = document.getElementsByName("enddate")[0].value;
                 branch = document.getElementsByName("company")[0].value;
                 userid = document.getElementsByName("userid")[0].value;
+                if (reportname = "Categ Extract") {
+                    product = document.getElementsByName("product")[0].value;
+                }
 
+
+                break;
+            case "Consol Spec Extract":
+            case "Stmt Extract":
+                startdate = document.getElementsByName("startdate")[0].value;
+                enddate = document.getElementsByName("enddate")[0].value;
+                branch = document.getElementsByName("company")[0].value;
                 break;
 
             default:
@@ -659,7 +764,7 @@ function ProcessExcel(reportname){
     }
 
 
-    var formdata = $.param({ reportname: reportname, startdate: startdate, endate: enddate, classification: classification,userid:userid,branch:branch });
+    var formdata = $.param({ reportname: reportname, startdate: startdate, endate: enddate, classification: classification, userid: userid, branch: branch, subclass: subclass,product:product });
 
     $.ajax({
         url: url,
@@ -691,5 +796,87 @@ function ProcessExcel(reportname){
 
 
 
+
+}
+
+
+function showSubselect(object) {
+
+    
+
+    var dataset = object.value;
+
+
+    if (dataset == "consolidated") {
+        return;
+    }
+
+    var myrand = Math.floor(Math.random() * 1000000);
+    $("#subselgrp").show();
+
+    var labeltext = "";
+
+    switch (dataset) {
+        case "BranchName":
+            labeltext = "Select tartget Branch:"
+            break;
+        case "product_name":
+            labeltext = "Select tartget Product:"
+            break;
+        case "SECTOR":
+            labeltext = "Select tartget Sector:"
+            break;
+    }
+
+    document.getElementById("subclass").innerHTML = labeltext;
+
+    jQuery.ajax({
+        url: "../getValuePair/subclass?param=" + dataset + "&rand=" + myrand,
+        type: "GET",
+        success: function (result) {
+            var data = $.parseJSON(result);
+
+            $("#subselect").empty();
+
+            $("#subselect").append("<option value='null'>ALL</option>");
+
+            for (var i = 0; i < data.length; i++) {
+
+                $("#subselect").append("<option value='" + data[i].ID + "'>" + data[i].Value + "</option>");
+            }
+        }
+    });
+
+}
+
+function showProducts(object) {
+
+
+
+    var dataset = object.value;
+
+
+
+    var myrand = Math.floor(Math.random() * 1000000);
+
+
+
+
+    jQuery.ajax({
+        url: "../getValuePair/showProducts?param=" + dataset + "&rand=" + myrand,
+        type: "GET",
+        success: function (result) {
+            var data = $.parseJSON(result);
+
+            $("#product").empty();
+
+            $("#product").append("<option value='null'>ALL</option>");
+
+            for (var i = 0; i < data.length; i++) {
+
+                $("#product").append("<option value='" + data[i].ID + "'>" + data[i].Value + "</option>");
+            }
+        }
+    });
 
 }

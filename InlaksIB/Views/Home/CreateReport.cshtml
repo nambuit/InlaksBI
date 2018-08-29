@@ -48,6 +48,18 @@
             </div>
         </div>
 
+        <div id="reporttype" class="form-group">
+            @Html.LabelFor(model => model.report_type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="report_type" name="report_type" class="form-control select2">
+                    <option value="dynamic">Analysis</option>
+                    <option value="static">Static Table</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.report_type, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
         <div id="columnlist" class="form-group">
             @Html.LabelFor(model => model.Filters, htmlAttributes: new { @class = "control-label col-md-2" })
             <div style="overflow:auto; max-height:200px;" class="col-md-10">
@@ -63,7 +75,6 @@
 
             </div>
         </div>
-
 
 
 

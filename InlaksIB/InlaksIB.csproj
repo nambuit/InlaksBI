@@ -228,7 +228,10 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\calendar.js" />
     <Content Include="js\core\base64.js" />
+    <Content Include="js\core\datatablesbuttons.css" />
+    <Content Include="js\core\datatables_scripts.js" />
     <Content Include="js\core\html2canvas.js" />
+    <Content Include="js\core\datatables.css" />
     <Content Include="js\core\jquery-confirm.min.js" />
     <Content Include="js\core\jquery-ui-1.9.2.custom.min.js" />
     <Content Include="js\core\jquery-ui.js" />
@@ -720,6 +723,7 @@
     <Content Include="Views\Home\DataSetSetup.cshtml" />
     <Content Include="Views\Home\CreateDataSet.cshtml" />
     <Content Include="Views\Home\ExcelReports.cshtml" />
+    <Content Include="Views\Home\ResetPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

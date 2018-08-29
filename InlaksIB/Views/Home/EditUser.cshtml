@@ -5,10 +5,15 @@
     @Html.AntiForgeryToken()
 
     @Html.AntiForgeryToken()
-    var roles = new InlaksBIContext().Roles.AsEnumerable();
+
     var listItems = new List<SelectListItem>();
     var leadcompanies = new List<SelectListItem>();
 
+    var curuser = (User)Session["User"];
+    var curcomp = new InlaksBIContext().Comapanies.Where(c => c.leadcompcode == curuser.LeadCompany).FirstOrDefault();
+    bool isAdmin = curuser.UserRole.RoleID == 1;
+    var test = curcomp.CompanyMnemonic.CleanUp();
+    var roles = isAdmin ? new InlaksBIContext().Roles.Where(r => r.RoleID != 1) : new InlaksBIContext().Roles.Where(r => r.RoleName.Trim().ToLower().Contains(test));
     foreach (var role in roles)
     {
         listItems.Add(new SelectListItem { Text = role.RoleName, Value = role.RoleID.ToString() });

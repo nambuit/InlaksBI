@@ -16,6 +16,520 @@ namespace InlaksIB.Classes
     {
 
 
+
+        public string generateConsolSpecExtractReport(string startdate, string enddate, string downpath, string reportname, string company)
+        {
+
+            //DateTime start = DateTime.ParseExact(startdate, "yyyy-MM-dd", new System.Globalization.CultureInfo("en-US"));
+            // DateTime end = DateTime.ParseExact(enddate, "yyyy-MM-dd", new System.Globalization.CultureInfo("en-US"));
+
+            // var filter = filtervalue.CleanUp().Equals("null") ? "" : " and CategoryName='" + filtervalue + "'";
+
+            var filter = (company.CleanUp().Equals("null") ? "" : " and BranchId='" + company + "'");
+
+            var sql = "select * from ConsolSpecExtract where BusinessDate between '" + startdate + "'  and '" + enddate + "'" + filter;
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+            var dt = db.getData(sql);
+
+            if (dt.Rows.Count == 0)
+            {
+                throw new Exception("No records found!");
+            }
+
+            downpath = downpath + startdate + "-" + enddate + reportname + ".xlsx";
+
+
+            ExcelWorksheet oSheet;
+            ExcelPackage xlPackage;
+
+
+            FileInfo newFile = new FileInfo(downpath);
+
+            if (newFile.Exists)
+            {
+                newFile.Delete();
+            }
+            xlPackage = new ExcelPackage(newFile);
+
+
+            oSheet = xlPackage.Workbook.Worksheets.Add(reportname);
+
+            int curRow = 3;
+
+
+            var headers = new string[dt.Columns.Count];// { "EntryID", "AccountID", "OldAccountNo", "BranchId", "Amount", "CustomerId",  "CustomerName", "Telephone", "CustomerAddress", "ValueDate", "Currency", "OurReference", "TransactionReference", "PostDate", "Inputer", "Authoriser", "CrDr", "Time", "BranchName", "BranchAddress", "Narrative", "Birthdate" };
+            var Column = new string[dt.Columns.Count];
+
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                Column[i] = dt.Columns[i].ColumnName;
+                headers[i] = dt.Columns[i].ColumnName;
+
+            }
+
+
+
+            //dt = new DataView(dt).ToTable(false, headers);
+
+
+            var branchgroups = dt.AsEnumerable().GroupBy(r => r["BranchId"].ToString()).Select(grp => grp.ToList());
+
+
+            foreach (var branchdata in branchgroups)
+            {
+
+
+                oSheet.Cells[curRow, 2].Value = "NPF MICROFINANCE BANK PLC";
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+                //oSheet.Cells[3, 1, 3, 13].Merge = true;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = branchdata[0]["BranchName"].ToString();
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+
+                oSheet.Cells[curRow, 2].Value = reportname;
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 2;
+
+
+                System.Drawing.Color green = new System.Drawing.Color();
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    oSheet.Cells[curRow, i + 1].Value = headers[i];
+                    oSheet.Cells[curRow, i + 1].Style.Font.Bold = true;
+                    oSheet.Cells[curRow, i + 1].Style.Font.UnderLine = true;
+                    oSheet.Cells[curRow, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.LightGray;
+                    oSheet.Cells[curRow, i + 1].Style.Fill.BackgroundColor.SetColor(green);
+                }
+
+                curRow = curRow + 1;
+
+                for (int i = 0; i < headers.Length; i++)
+                {
+
+                    oSheet.Cells[curRow, i + 1].Value = "";
+                }
+
+                if (dt.Rows.Count != 0)
+                {
+                    int count = 0;
+
+                    foreach (var drow in branchdata.AsEnumerable())
+                    {
+                        count = count + 1;
+                        //throw new Exception("No records found!");
+                        for (int i = 0; i < headers.Length; i++)
+                        {
+                            if (Column[i].isNull())
+                            {
+                                Column[i] = "";
+                            }
+
+                            if (Column[i] != "")
+                            {
+                                if (Column[i].Trim() == "SN")
+                                {
+                                    oSheet.Cells[curRow, i + 1].Value = count;
+                                }
+                                else
+                                {
+
+
+                                    oSheet.Cells[curRow, i + 1].Value = drow[Column[i]].ToString();
+
+                                    if (Column[i].Trim() == "Amount")
+                                    {
+                                        oSheet.Cells[curRow, i + 1].Value = drow[Column[i]].toDecimal();
+                                        oSheet.Cells[curRow, i + 1].Style.Numberformat.Format = "#,##0.00";
+                                    }
+
+                                }
+
+
+
+
+                            }
+
+                            else
+
+                            {
+
+                                oSheet.Cells[curRow, i + 1].Value = "";
+
+                            }
+                        }
+
+                        curRow = curRow + 1;
+
+                    }
+                }
+
+
+                curRow = curRow + 4;
+
+            }
+
+            xlPackage.Save();
+
+            return downpath;
+        }
+
+
+        public string generateStmtExtractReport(string startdate, string enddate, string downpath, string reportname, string company)
+        {
+
+            //DateTime start = DateTime.ParseExact(startdate, "yyyy-MM-dd", new System.Globalization.CultureInfo("en-US"));
+            // DateTime end = DateTime.ParseExact(enddate, "yyyy-MM-dd", new System.Globalization.CultureInfo("en-US"));
+
+           // var filter = filtervalue.CleanUp().Equals("null") ? "" : " and CategoryName='" + filtervalue + "'";
+
+          var  filter =  (company.CleanUp().Equals("null") ? "" : " and BranchId='" + company + "'");
+
+            var sql = "select * from StmtExtract where BusinessDate between '" + startdate + "'  and '" + enddate + "'"+filter;
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+            var dt = db.getData(sql);
+
+            if (dt.Rows.Count == 0)
+            {
+                throw new Exception("No records found!");
+            }
+
+            downpath = downpath + startdate + "-" + enddate + reportname + ".xlsx";
+
+
+            ExcelWorksheet oSheet;
+            ExcelPackage xlPackage;
+
+
+            FileInfo newFile = new FileInfo(downpath);
+
+            if (newFile.Exists)
+            {
+                newFile.Delete();
+            }
+            xlPackage = new ExcelPackage(newFile);
+
+
+            oSheet = xlPackage.Workbook.Worksheets.Add(reportname);
+
+            int curRow = 3;
+
+
+            var headers = new string[dt.Columns.Count];// { "EntryID", "AccountID", "OldAccountNo", "BranchId", "Amount", "CustomerId",  "CustomerName", "Telephone", "CustomerAddress", "ValueDate", "Currency", "OurReference", "TransactionReference", "PostDate", "Inputer", "Authoriser", "CrDr", "Time", "BranchName", "BranchAddress", "Narrative", "Birthdate" };
+            var Column = new string[dt.Columns.Count];
+
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                Column[i] = dt.Columns[i].ColumnName;
+                headers[i] = dt.Columns[i].ColumnName;
+
+            }
+
+
+
+            //dt = new DataView(dt).ToTable(false, headers);
+
+
+            var branchgroups = dt.AsEnumerable().GroupBy(r => r["BranchId"].ToString()).Select(grp => grp.ToList());
+
+
+            foreach (var branchdata in branchgroups)
+            {
+
+
+                oSheet.Cells[curRow, 2].Value = "NPF MICROFINANCE BANK PLC";
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+                //oSheet.Cells[3, 1, 3, 13].Merge = true;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = branchdata[0]["BranchName"].ToString();
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+
+                oSheet.Cells[curRow, 2].Value = reportname;
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 2;
+
+
+                System.Drawing.Color green = new System.Drawing.Color();
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    oSheet.Cells[curRow, i + 1].Value = headers[i];
+                    oSheet.Cells[curRow, i + 1].Style.Font.Bold = true;
+                    oSheet.Cells[curRow, i + 1].Style.Font.UnderLine = true;
+                    oSheet.Cells[curRow, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.LightGray;
+                    oSheet.Cells[curRow, i + 1].Style.Fill.BackgroundColor.SetColor(green);
+                }
+
+                curRow = curRow + 1;
+
+                for (int i = 0; i < headers.Length; i++)
+                {
+
+                    oSheet.Cells[curRow, i + 1].Value = "";
+                }
+
+                if (dt.Rows.Count != 0)
+                {
+                    int count = 0;
+
+                    foreach (var drow in branchdata.AsEnumerable())
+                    {
+                        count = count + 1;
+                        //throw new Exception("No records found!");
+                        for (int i = 0; i < headers.Length; i++)
+                        {
+                            if (Column[i].isNull())
+                            {
+                                Column[i] = "";
+                            }
+
+                            if (Column[i] != "")
+                            {
+                                if (Column[i].Trim() == "SN")
+                                {
+                                    oSheet.Cells[curRow, i + 1].Value = count;
+                                }
+                                else
+                                {
+
+
+                                    oSheet.Cells[curRow, i + 1].Value = drow[Column[i]].ToString();
+
+                                    if (Column[i].Trim() == "Amount")
+                                    {
+                                        oSheet.Cells[curRow, i + 1].Value = drow[Column[i]].toDecimal();
+                                        oSheet.Cells[curRow, i + 1].Style.Numberformat.Format = "#,##0.00";
+                                    }
+
+                                }
+
+
+
+
+                            }
+
+                            else
+
+                            {
+
+                                oSheet.Cells[curRow, i + 1].Value = "";
+
+                            }
+                        }
+
+                        curRow = curRow + 1;
+
+                    }
+                }
+
+
+                curRow = curRow + 4;
+
+            }
+
+            xlPackage.Save();
+
+            return downpath;
+        }
+
+
+
+        public string generateCategExtractReport(string startdate, string enddate, string downpath, string reportname, string company,string filtervalue, string product)
+        {
+
+            //DateTime start = DateTime.ParseExact(startdate, "yyyy-MM-dd", new System.Globalization.CultureInfo("en-US"));
+            // DateTime end = DateTime.ParseExact(enddate, "yyyy-MM-dd", new System.Globalization.CultureInfo("en-US"));
+
+            var filter = filtervalue.CleanUp().Equals("null") ? "" : " and CategoryName='"+filtervalue+"'";
+
+            filter = filter+(company.CleanUp().Equals("null") ? "" : " and BranchId='" + company + "'");
+
+            filter = filter + (product.CleanUp().Equals("null") ? "" : " and Product='" + product + "'");
+
+            var sql = "select * from CategExtract where BusinessDate between '" + startdate + "'  and '" + enddate + "'"+filter;
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+            var dt = db.getData(sql);
+
+            if (dt.Rows.Count == 0)
+            {
+                throw new Exception("No records found!");
+            }
+
+            downpath = downpath + startdate + "-" + enddate + reportname + ".xlsx";
+
+
+            ExcelWorksheet oSheet;
+            ExcelPackage xlPackage;
+
+
+            FileInfo newFile = new FileInfo(downpath);
+
+            if (newFile.Exists)
+            {
+                newFile.Delete();
+            }
+            xlPackage = new ExcelPackage(newFile);
+
+
+            oSheet = xlPackage.Workbook.Worksheets.Add(reportname);
+
+            int curRow = 3;
+
+
+            var headers = new string[dt.Columns.Count];// { "EntryID", "AccountID", "OldAccountNo", "BranchId", "Amount", "CustomerId",  "CustomerName", "Telephone", "CustomerAddress", "ValueDate", "Currency", "OurReference", "TransactionReference", "PostDate", "Inputer", "Authoriser", "CrDr", "Time", "BranchName", "BranchAddress", "Narrative", "Birthdate" };
+            var Column = new string[dt.Columns.Count];
+
+            for(int i =0;i< dt.Columns.Count;i++)
+            {
+                Column[i] = dt.Columns[i].ColumnName;
+                headers[i] = dt.Columns[i].ColumnName;
+
+            }
+
+         
+
+            //dt = new DataView(dt).ToTable(false, headers);
+
+
+            var branchgroups = dt.AsEnumerable().GroupBy(r => r["BranchId"].ToString()).Select(grp => grp.ToList());
+
+
+            foreach (var branchdata in branchgroups)
+            {
+
+
+                oSheet.Cells[curRow, 2].Value = "NPF MICROFINANCE BANK PLC";
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+                //oSheet.Cells[3, 1, 3, 13].Merge = true;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = branchdata[0]["BranchName"].ToString();
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+
+                oSheet.Cells[curRow, 2].Value = reportname;
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 2;
+
+
+                System.Drawing.Color green = new System.Drawing.Color();
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    oSheet.Cells[curRow, i + 1].Value = headers[i];
+                    oSheet.Cells[curRow, i + 1].Style.Font.Bold = true;
+                    oSheet.Cells[curRow, i + 1].Style.Font.UnderLine = true;
+                    oSheet.Cells[curRow, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.LightGray;
+                    oSheet.Cells[curRow, i + 1].Style.Fill.BackgroundColor.SetColor(green);
+                }
+
+                curRow = curRow + 1;
+
+                for (int i = 0; i < headers.Length; i++)
+                {
+
+                    oSheet.Cells[curRow, i + 1].Value = "";
+                }
+
+                if (dt.Rows.Count != 0)
+                {
+                    int count = 0;
+
+                    foreach (var drow in branchdata.AsEnumerable())
+                    {
+                        count = count + 1;
+                        //throw new Exception("No records found!");
+                        for (int i = 0; i < headers.Length; i++)
+                        {
+                            if (Column[i].isNull())
+                            {
+                                Column[i] = "";
+                            }
+
+                            if (Column[i] != "")
+                            {
+                                if (Column[i].Trim() == "SN")
+                                {
+                                    oSheet.Cells[curRow, i + 1].Value = count;
+                                }
+                                else
+                                {
+
+
+                                    oSheet.Cells[curRow, i + 1].Value = drow[Column[i]].ToString();
+
+                                    if (Column[i].Trim() == "Amount")
+                                    {
+                                        oSheet.Cells[curRow, i + 1].Value = drow[Column[i]].toDecimal();
+                                        oSheet.Cells[curRow, i + 1].Style.Numberformat.Format = "#,##0.00";
+                                    }
+
+                                }
+
+
+
+
+                            }
+
+                            else
+
+                            {
+
+                                oSheet.Cells[curRow, i + 1].Value = "";
+
+                            }
+                        }
+
+                        curRow = curRow + 1;
+
+                    }
+                }
+
+
+                curRow = curRow + 4;
+
+            }
+
+            xlPackage.Save();
+
+            return downpath;
+        }
+
+
+
+
+
+
+
+
         public string generateNPFAntiMoneyLaunderingReport(string startdate, string enddate, string downpath, string reportname)
         {
 
@@ -193,7 +707,7 @@ namespace InlaksIB.Classes
             var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
 
             var dt = db.getData(sql);
-
+            
             downpath = downpath + DateTime.Now.ToString("dd-MMM-yyyy") + reportname + ".xlsx";
 
 
@@ -210,19 +724,26 @@ namespace InlaksIB.Classes
             }
             xlPackage = new ExcelPackage(newFile);
 
+            var referenceid = Guid.NewGuid().ToString();
 
-  
+            int curRow = 2;
 
-           
+            var summarydata = db.getData("select top 1 * from summarytemp");
+
+            summarydata = summarydata.Clone();
+
+            
 
 
             var sheetgroups = dt.AsEnumerable().GroupBy(r => r["SheetName"].ToString()).Select(grp => grp.ToList());
 
             foreach (var sheetgrp in sheetgroups)
             {
+                curRow = 2;
+
                 currentsheet = xlPackage.Workbook.Worksheets.Add(sheetgrp[0]["SheetName"].ToString());
 
-                int curRow = 2;
+                
 
                 var acctclassgroup = sheetgrp.GroupBy(r => r["AcctClass"].ToString()).Select(grp => grp.ToList());
 
@@ -266,14 +787,18 @@ namespace InlaksIB.Classes
                             {
 
                                 var desc = row["Item_Description"].ToString();
+                                bool isSummary = row["SummaryMarker"].ToString().CleanUp() == "summaryitem";
+
+                                string title = ""; decimal amt=decimal.Zero;
+
 
                                 if (desc.Contains("$"))
                                 {
                                     var key = desc.Split('$')[0];
                                     var value = desc.Split('$')[1];
 
-                                    IEnumerable<DataRow> valid; decimal amt;
-                                    string title = row["Totals"].ToString().ToUpper().Trim();
+                                    IEnumerable<DataRow> valid; 
+                                     title = row["Totals"].ToString().ToUpper().Trim();
 
                                     switch (key.CleanUp())
                                     {
@@ -352,11 +877,54 @@ namespace InlaksIB.Classes
 
                                             break;
 
+                                        case "globalsum":
+
+                                            currentsheet.Cells[curRow, 2].Value = title;
+                                            currentsheet.Cells[curRow, 2].Style.Font.Bold = true;
+                                            currentsheet.Cells[curRow, 2].Style.Font.Size = 12;
+                                            currentsheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                                            valid = dt.AsEnumerable().Where(r => r["GlobalSum"].ToString().Trim() == value.Trim() && !r["Item_Description"].ToString().Contains("$"));
+
+                                            amt = valid.Sum(r => r["Amount"].toDecimal());
+
+                                            currentsheet.Cells[curRow, 3].Value = amt;
+                                            currentsheet.Cells[curRow, 3].Style.Font.Bold = true;
+                                            currentsheet.Cells[curRow, 2].Style.Font.Size = 12;
+                                            currentsheet.Cells[curRow, 3].Style.Numberformat.Format = "#,##0.00";
+
+
+
+                                            break;
+
+                                        case "netsum":
+
+                                            currentsheet.Cells[curRow, 2].Value = title;
+                                            currentsheet.Cells[curRow, 2].Style.Font.Bold = true;
+                                            currentsheet.Cells[curRow, 2].Style.Font.Size = 12;
+                                            currentsheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                                            valid = dt.AsEnumerable().Where(r => r["NetSum"].ToString().Trim() == value.Trim() && !r["Item_Description"].ToString().Contains("$"));
+
+                                            amt = valid.Sum(r => r["Amount"].toDecimal());
+
+                                            currentsheet.Cells[curRow, 3].Value = amt;
+                                            currentsheet.Cells[curRow, 3].Style.Font.Bold = true;
+                                            currentsheet.Cells[curRow, 2].Style.Font.Size = 12;
+                                            currentsheet.Cells[curRow, 3].Style.Numberformat.Format = "#,##0.00";
+
+
+
+                                            break;
+
+
                                     }
 
                                 }
                                 else
                                 {
+                                    title = row["Item_Description"].ToString();
+                                    amt = row["Amount"].toDecimal();
                                     currentsheet.Cells[curRow, 2].Value = row["Item_Description"].ToString();
                                     currentsheet.Cells[curRow, 2].Style.Font.Bold = false;
                                     currentsheet.Cells[curRow, 2].Style.Font.UnderLine = false;
@@ -365,6 +933,20 @@ namespace InlaksIB.Classes
                                     currentsheet.Cells[curRow, 3].Value = row["Amount"].toDecimal();
                                     currentsheet.Cells[curRow, 3].Style.Font.Bold = false;
                                     currentsheet.Cells[curRow, 3].Style.Numberformat.Format = "#,##0.00";
+                                }
+
+
+                                if (isSummary)
+                                {
+                                    var srow = summarydata.NewRow();
+
+                                    srow["Item_Description"] = title;
+                                    srow["Reference"] = referenceid;
+                                    srow["Amount"] = amt;
+                                    srow["Reporting_Month"] = DateTime.Now.ToString("MMM yyyy");
+                                    srow["UniqueReference"] = srow["Item_Description"].ToString() + srow["Reporting_Month"].ToString();
+
+                                    summarydata.Rows.Add(srow);
                                 }
 
                                 curRow = curRow + 1;
@@ -381,7 +963,153 @@ namespace InlaksIB.Classes
 
             }
 
-            xlPackage.Save();
+
+
+            db.CopyDataTableToDB(summarydata, "summarytemp");
+
+            currentsheet = xlPackage.Workbook.Worksheets.Add("SUMMARY");
+
+            curRow = 2;
+
+            sql = "  select a.*, (select v.Amount from (select * from summarytemp where reference ='"+referenceid+"') v where ltrim(rtrim(a.SummaryMap))= ltrim(rtrim(Item_Description))) as Amount  from [dbo].[NPF_MA_SUMMARY_PARAMS] a ";
+
+            dt = db.getData(sql);
+
+           var summclassgroup = dt.AsEnumerable().GroupBy(r => r["AcctClass"].ToString()).Select(grp => grp.ToList());
+
+
+            foreach (var acctclass in summclassgroup)
+            {
+                currentsheet.Cells[curRow, 2].Value = acctclass[0]["AcctClass"].ToString().ToUpper();
+                currentsheet.Cells[curRow, 2].Style.Font.Bold = true;
+                currentsheet.Cells[curRow, 2].Style.Font.Size = 18;
+                currentsheet.Cells[curRow, 2].Style.Font.UnderLine = true;
+
+                curRow = curRow + 2;
+
+
+
+                        foreach (DataRow row in acctclass)
+                        {
+
+                            var desc = row["Item_Description"].ToString();
+                      
+
+                            string title = ""; decimal amt = decimal.Zero;
+
+
+                            if (desc.Contains("$"))
+                            {
+                                var key = desc.Split('$')[0];
+                                var value = desc.Split('$')[1];
+
+                                IEnumerable<DataRow> valid;
+                                title = row["TotalDesc"].ToString().ToUpper().Trim();
+
+                                switch (key.CleanUp())
+                                {
+                                    case "sub-total":
+                                        currentsheet.Cells[curRow, 2].Value = title;
+                                        currentsheet.Cells[curRow, 2].Style.Font.Bold = true;
+                                currentsheet.Cells[curRow, 2].Style.Font.Size = 12;
+                                currentsheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                                        valid = dt.AsEnumerable().Where(r => r["SubTotals"].ToString().Trim() == value.Trim() && !r["Item_Description"].ToString().Contains("$"));
+
+                                        amt = valid.Sum(r => r["Amount"].toDecimal());
+
+                                        currentsheet.Cells[curRow, 3].Value = amt;
+                                        currentsheet.Cells[curRow, 3].Style.Font.Bold = true;
+                                        currentsheet.Cells[curRow, 3].Style.Numberformat.Format = "#,##0.00";
+                                        break;
+
+                                    case "grandtotal":
+
+                                        currentsheet.Cells[curRow, 2].Value = title;
+                                        currentsheet.Cells[curRow, 2].Style.Font.Bold = true;
+                                        currentsheet.Cells[curRow, 2].Style.Font.Size = 14;
+                                        currentsheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                                        valid = dt.AsEnumerable().Where(r => r["AcctClass"].ToString().Trim() == value.Trim() && !r["Item_Description"].ToString().Contains("$"));
+
+                                        amt = valid.Sum(r => r["Amount"].toDecimal());
+
+                                        currentsheet.Cells[curRow, 3].Value = amt;
+                                        currentsheet.Cells[curRow, 3].Style.Font.Bold = true;
+                                        currentsheet.Cells[curRow, 2].Style.Font.Size = 14;
+                                        currentsheet.Cells[curRow, 3].Style.Numberformat.Format = "#,##0.00";
+
+
+
+                                        break;
+
+                            case "customsum":
+
+                                currentsheet.Cells[curRow, 2].Value = title;
+                                currentsheet.Cells[curRow, 2].Style.Font.Bold = true;
+                                currentsheet.Cells[curRow, 2].Style.Font.Size = 16;
+                                currentsheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                                valid = dt.AsEnumerable().Where(r => r["CustomSum"].ToString().Trim() == value.Trim() && !r["Item_Description"].ToString().Contains("$"));
+
+                                amt = valid.Sum(r => r["Amount"].toDecimal());
+
+                                currentsheet.Cells[curRow, 3].Value = amt;
+                                currentsheet.Cells[curRow, 3].Style.Font.Bold = true;
+                                currentsheet.Cells[curRow, 2].Style.Font.Size = 16;
+                                currentsheet.Cells[curRow, 3].Style.Numberformat.Format = "#,##0.00";
+
+
+
+                                break;
+
+
+
+                        }
+
+                            }
+                            else
+                            {
+                                title = row["Item_Description"].ToString();
+                                amt = row["Amount"].toDecimal();
+                                currentsheet.Cells[curRow, 2].Value = row["Item_Description"].ToString();
+                                currentsheet.Cells[curRow, 2].Style.Font.Bold = false;
+                                currentsheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+
+                                currentsheet.Cells[curRow, 3].Value = row["Amount"].toDecimal();
+                                currentsheet.Cells[curRow, 3].Style.Font.Bold = false;
+                                currentsheet.Cells[curRow, 3].Style.Numberformat.Format = "#,##0.00";
+                            }
+
+
+
+                            curRow = curRow + 1;
+                        
+
+                        curRow = curRow + 1;
+                    }
+      
+
+                curRow = curRow + 2;
+
+            }
+
+            var details = new MergeDetails();
+
+            details.destDB = "inlaksbiwarehouse";
+            details.sourceDB = "inlaksbiwarehouse";
+            details.sourcereference = "UniqueReference";
+            details.destreference = "UniqueReference";
+            details.destTb = "factnpfmasummary";
+            details.sourceTb = "summarytemp";
+
+            var count = new SQLServerDBInterfac(new Settings().warehousedb).MergeData(details);
+
+            db.Execute("truncate table summarytemp");
+
+
+        xlPackage.Save();
 
             return downpath;
         }
@@ -1447,7 +2175,7 @@ namespace InlaksIB.Classes
             return downpath;
         }
 
-        public string generateNPFPortfolio_at_Risk(string downpath, string reportname, string classification)
+        public string generateNPFPortfolio_at_Risk(string downpath, string reportname, string classification,string subclass)
         {
 
             string today = DateTime.Now.ToString("dd-MM-yyyy");
@@ -1473,14 +2201,15 @@ namespace InlaksIB.Classes
 
             DataTable PrintTable = new DataTable();
 
-           
+
 
             //implement Corporate browser method
 
             //   var sql = "select a.*,b.FirstName,c.AccountTitle,b.BVN,b.BirthDate,b.NationalIdentityNum,b.Gender,b.MaritalStatus,b.DefaultPhone,c.ClosedDate,b.Address,b.IsEmployee,b.Occupation,b.MiddleName,b.LastName,b.CustomerType,b.EmailAddress from factArrangement a JOIN DimCustomer b on (a.CustomerID = b.CustomerId) JOIN DimAccount C on (a.LinkedApplId = c.AccountId) where ProductLine = 'Lending'  and b.CustomerType = 'NI'";
 
+            var filter = subclass.CleanUp().Equals("null") ? "" : " where " + classification + "='"+ subclass + "'";
 
-            var sql = "Select *,'All Branches' as consolidated from parsummary";
+            var sql = "Select *,'All Branches' as consolidated from parsummary"+filter;
 
             var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
 
@@ -1737,6 +2466,167 @@ namespace InlaksIB.Classes
 
         }
 
+
+
+        public string generateLoanRepaymentsReport(string downpath, string reportname, string classification, string StartDate, string EndDate)
+        {
+
+         
+
+
+            var sd = DateTime.ParseExact(StartDate, "yyyy-MM-dd", new CultureInfo("en-Us")).ToString("dd-MMM-yyyy");
+
+            var ed = DateTime.ParseExact(EndDate, "yyyy-MM-dd", new CultureInfo("en-Us")).ToString("dd-MMM-yyyy");
+
+            ExcelWorksheet oSheet;
+            //ExcelWorksheet CreditInformationSheet;
+            ExcelPackage xlPackage;
+
+            downpath = downpath + sd + "-" + ed + "_" + reportname + ".xlsx";
+
+            FileInfo newFile = new FileInfo(downpath);
+
+            if (newFile.Exists)
+            {
+                newFile.Delete();
+            }
+
+            xlPackage = new ExcelPackage(newFile);
+
+            oSheet = xlPackage.Workbook.Worksheets.Add("Repayments Report Sheet");
+
+            // CreditInformationSheet = xlPackage.Workbook.Worksheets.Add("Credit Information Sheet");
+
+            int curRow = 1;
+
+        
+
+
+       
+
+
+            var sql = "select * from loanrepayments where SettledDate between '" + sd+"' and '"+ed+"'";
+
+            var db = new InlaksBIContext().getDBInterface(new Settings().warehousedbtype, new Settings().warehousedb);
+
+            var dt = db.getData(sql);
+
+            //if (dt.Rows.Count == 0)
+            //{
+            //    throw new Exception("No records found!");
+            //}
+
+
+
+            //  bool isconsolidated = classification.CleanUp().Equals("consolidated");
+
+
+            var classgrp = dt.AsEnumerable().GroupBy(r => r[classification]).Select(grp => grp.ToList());
+
+
+
+
+            curRow = 3;
+
+            foreach (var grp in classgrp)
+            {
+                var totalrepayments = grp.Sum(r => r["PaymentAmount"].toDecimal());
+                var totprinpaid = grp.Sum(r => r["Or_Pr_Amount"].toDecimal());
+
+                var totintpaid = grp.Sum(r => r["InterestPaid"].toDecimal());
+
+
+
+                oSheet.Cells[curRow, 2].Value = "NPF MICROFINANCE BANK PLC";
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+                //oSheet.Cells[3, 1, 3, 13].Merge = true;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = reportname;
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = grp[0][classification].ToString();
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = "TOTAL REPAYMENTS: " + totalrepayments.ToString("#,##0.00");
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+                oSheet.Cells[curRow, 2].Value = "TOTAL PRINCIPAL REPAID: " + totprinpaid.ToString("#,##0.00");
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+                curRow = curRow + 1;
+
+
+                oSheet.Cells[curRow, 2].Value = "TOTAL INTEREST REPAID: " + totintpaid.ToString("#,##0.00");
+                oSheet.Cells[curRow, 2].Style.Font.Bold = true;
+                oSheet.Cells[curRow, 2].Style.Font.UnderLine = false;
+
+
+                curRow = curRow + 2;
+
+
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+
+                    oSheet.Cells[curRow, 2 + i].Value = dt.Columns[i].ColumnName;
+                    oSheet.Cells[curRow, 2 + i].Style.Font.Bold = true;
+                    oSheet.Cells[curRow, 2 + i].Style.Font.UnderLine = false;
+
+                }
+
+                curRow = curRow + 1;
+
+                foreach (DataRow row in grp)
+                {
+
+
+                    for (int i = 0; i < dt.Columns.Count; i++)
+                    {
+
+                        if (dt.Columns[i].ColumnName.Contains("InterestPaid") || dt.Columns[i].ColumnName.Contains("Amount"))
+                        {
+                            oSheet.Cells[curRow, i + 2].Value = row[i].toDecimal();
+                            oSheet.Cells[curRow, i + 2].Style.Numberformat.Format = "#,##0.00";
+                        }
+                        else
+                        {
+
+                            oSheet.Cells[curRow, i + 2].Value = row[i].ToString();
+                        }
+
+                    }
+
+                    curRow = curRow + 1;
+
+                }
+                curRow = curRow + 4;
+
+
+            }
+
+
+
+
+
+            xlPackage.Save();
+
+            return downpath;
+
+
+        }
 
 
 

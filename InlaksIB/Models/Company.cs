@@ -20,7 +20,9 @@ namespace InlaksIB
 
         public string CompanyName { get; set; }
 
-        
+        public string CompanyMnemonic { get; set; }
+
+
 
     }
 
@@ -37,6 +39,8 @@ namespace InlaksIB
         public string leadcompcode { get; set; }
 
         public string CompanyName { get; set; }
+
+        public string CompanyMnemonic { get; set;}
 
 
 

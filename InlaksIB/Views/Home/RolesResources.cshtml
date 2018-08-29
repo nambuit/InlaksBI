@@ -18,7 +18,14 @@
               //  var se = new InlaksIB.Controllers.HomeController().getRoleResources(1);
                 @Html.AntiForgeryToken()
 
-                var roles = new InlaksBIContext().Roles.Where(r => r.RoleID != 1);
+                var user = (User)Session["User"];
+
+                bool isAdmin = user.UserRole.RoleID == 1;
+
+                var curcomp = new InlaksBIContext().Comapanies.Where(c => c.leadcompcode == user.LeadCompany).FirstOrDefault();
+                var test = curcomp.CompanyMnemonic.CleanUp();
+                var roles = isAdmin? new InlaksBIContext().Roles.Where(r => r.RoleID != 1): new InlaksBIContext().Roles.Where(r => r.RoleName.Trim().ToLower().Contains(test));
+
                 <div class="form-horizontal" style="width:80%;">
 
                     <div class="form-group">

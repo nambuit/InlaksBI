@@ -91,6 +91,12 @@ namespace InlaksIB.Controllers
                 Session["LoggedIn"] = "True";
                 Session["User"] = dbuser;
 
+
+                if (dbuser.DefaultPassword)
+                {
+                    return RedirectToAction("ChangePassword","Home", new PasswordChange());
+                }
+
                 return RedirectToAction("Index", "Home");
 
 
